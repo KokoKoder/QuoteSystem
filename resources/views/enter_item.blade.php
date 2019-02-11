@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$item_description=mysqli_real_escape_string($conn,$_POST["item_description"]);
 	}
 	else{
-	    $item_description='';
+	    $item_description='0';
 	}
 	if ($_POST["package_length"]!=""){
 	$package_length=mysqli_real_escape_string($conn,$_POST["package_length"]);
