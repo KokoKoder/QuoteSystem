@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$sql = "INSERT INTO items(item_name,supplier_sku,item_supplier_id,item_price,item_length,item_width,item_height,item_weight,item_description,package_length,package_width,package_height,package_weight,item_per_pack)
 		VALUES ('$item_name','$supplier_sku','$item_supplier_id','$item_price', '$item_length','$item_width','$item_height','$item_weight','$item_description','$package_length','$package_width','$package_height','$package_weight','$item_per_pack')";
 		if ($conn->query($sql) === TRUE) {
-			echo "New record created successfully in orders tab";
+			echo "New record created successfully in items tab";
 		} else {
 			echo "Error: " . $sql . "<br>" . $conn->error;
 		}
