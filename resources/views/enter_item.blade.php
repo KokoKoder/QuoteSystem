@@ -120,12 +120,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	@csrf
 		<div class="row">
 			<div class="input-field col s6">
-			  <input placeholder="Product name" id="item_name" name="item_name" type="text" class="validate">
+			  <input placeholder="Product name*" id="item_name" name="item_name" type="text" class="validate">
 			  <span>@php if (isset($err_duplicate_item)){echo $err_duplicate_item;}@endphp</span>
 			</div>
 			<div class="input-field col s6">
 			  <input id="item_price" name="item_price" type="text" class="validate">
-			  <label for="item_price">Item price in € - Bulk price without taxes. Ex: 25.68</label>
+			  <label for="item_price">Item price* in € - Bulk price without taxes. Ex: 25.68</label>
 			</div>
 		</div>
 		<div class="row">
@@ -137,13 +137,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 						list($option_supplier_id,$option_supplier_name)=preg_split("[,]",$supplier);
 						 $item_supplier_filter.='<option value="'.$option_supplier_id.'">'.$option_supplier_name.'</option>';
 					}
-					echo '<option selected disabled value="">supplier filter</option>'.$item_supplier_filter;
+					echo '<option selected disabled value="">supplier filter*</option>'.$item_supplier_filter;
 				?>
 				</select>
 			 </div>
 			 <div class="input-field col s6">
 			  <input id="supplier_sku" type="text" name="supplier_sku" class="validate" >
-			  <label for="supplier_sku">supplier_sku</label>
+			  <label for="supplier_sku">supplier_sku*</label>
 			 </div>
 		</div>
 		<div class="row">
