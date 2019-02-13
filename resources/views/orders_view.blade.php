@@ -52,7 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
 		JOIN orders_status ON orders_status.order_id=orders_table.order_id
 		JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id
-		";
+        WHERE order_status_list.order_status_name<>'completed';		
+";
 	}
 }
 
@@ -63,6 +64,7 @@ else{
 	JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
 	JOIN orders_status ON orders_status.order_id=orders_table.order_id
 	JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id
+    WHERE order_status_list.order_status_name<>'completed';	
 	";
 }
 

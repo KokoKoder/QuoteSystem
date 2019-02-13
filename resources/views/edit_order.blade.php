@@ -159,7 +159,7 @@
 	</div>
 	</div>
 	<div class="row">
-	<p><a class="btn" href="{{route('add_item_to_order_form')}}">add item</a></p>
+	<p><a  href="{{route('add_item_to_order_form')}}">add item</a></p>
 	</div>
 </div>
 <?php
