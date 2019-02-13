@@ -98,9 +98,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 		if (isset($_SESSION["order_id"]) ){
 		    if (!isset($_SESSION['err_message'])){$_SESSION['product_name']=$item_name;}
-		$url=route('add_item_to_order_form');
-		header("Location: ".$url);
-		exit;
+    		$url=route('add_item_to_order_form');
+    		header("Location: ".$url);
+    		exit;
 		}
 		else{
 			$url=route('enter_item');
