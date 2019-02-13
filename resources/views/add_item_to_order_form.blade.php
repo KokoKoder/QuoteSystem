@@ -14,7 +14,8 @@
 	</div>
     <div class="section">
 		<div class="row">
-		<span><?php if(isset($_SESSION["Err_missing_data"])){echo $_SESSION["Err_missing_data"];} ?></span>
+		<span><?php if(isset($_SESSION["Err_missing_data"])){echo $_SESSION["Err_missing_data"];} 
+		if(isset($_SESSION["err_message"])){echo $_SESSION["err_message"];}?></span>
 			<form autocomplete="off" method="POST" action="{{route('add_item_to_order')}}" class="col s12">
 			@csrf
 			  <div class="row">

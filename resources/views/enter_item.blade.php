@@ -4,11 +4,13 @@
 #connect to the database
 include(app_path().'/includes/connect.php');
 include(app_path().'/includes/get_suppliers_list.php');
+$pattern = '[,]';
+$replacement = '.';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	session_start();
 	#get the form value
 	$item_name=mysqli_real_escape_string($conn,$_POST["item_name"]);
-	$item_price=mysqli_real_escape_string($conn,$_POST["item_price"]);
+	$item_price=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_price"]));
 	$item_supplier_id=mysqli_real_escape_string($conn,$_POST["supplier_id"]);
 	if ($_POST["supplier_sku"]!=''){
 	$supplier_sku=mysqli_real_escape_string($conn,$_POST["supplier_sku"]);
@@ -17,55 +19,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$supplier_sku="";
 	}
 	if ($_POST["item_height"]!=""){
-		$item_height=mysqli_real_escape_string($conn,$_POST["item_height"]);
+	    $item_height=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_height"]));
 	}
 	else{
 		$item_height='0';
 	}
 	if ($_POST["item_weight"]!=""){
-		$item_weight=mysqli_real_escape_string($conn,$_POST["item_weight"]);
+	    $item_weight=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_weight"]));
 	}
 	else{
 		$item_weight='0';
 	}
 	if ($_POST["item_length"]!=""){
-	   $item_length=mysqli_real_escape_string($conn,$_POST["item_length"]);
+	    $item_length=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_length"]));
 	}
 	else{
 	    $item_length='0';
 	}
 	if ($_POST["item_width"]!=""){
-	   $item_width=mysqli_real_escape_string($conn,$_POST["item_width"]);
+	    $item_width=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_width"]));
 	}
 	else{
 	    $item_width='0';
 	}
 	if ($_POST["item_description"]!=""){
-	$item_description=mysqli_real_escape_string($conn,$_POST["item_description"]);
+	    $item_description=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_description"]));
 	}
 	else{
 	    $item_description='0';
 	}
 	if ($_POST["package_length"]!=""){
-	$package_length=mysqli_real_escape_string($conn,$_POST["package_length"]);
+	    $package_length=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["package_length"]));
 	}
 	else{
 	    $package_length='0';
 	}
 	if ($_POST["package_width"]!=""){
-	    $package_width=mysqli_real_escape_string($conn,$_POST["package_width"]);
+	    $package_width=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["package_width"]));
 	}
 	else{
 	    $package_width='0';
 	}
 	if ($_POST["package_height"]!=""){
-	$package_height=mysqli_real_escape_string($conn,$_POST["package_height"]);
+	    $package_height=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["package_height"]));
 	}
 	else{
 	    $package_height='0';
 	}
 	if ($_POST["package_weight"]!=""){
-	$package_weight=mysqli_real_escape_string($conn,$_POST["package_weight"]);
+	    $package_weight=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["package_weight"]));
 	}
 	else{
 	    $package_weight='0';
@@ -88,13 +90,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		if ($conn->query($sql) === TRUE) {
 			echo "New record created successfully in items tab";
 		} else {
-			echo "Error: " . $sql . "<br>" . $conn->error;
+		    $_SESSION('err_message')="Error: " . $sql . "<br>" . $conn->error;
+		    echo  $_SESSION['err_message'];
 		}
 		
 		$conn->close();
 		
-		if (isset($_SESSION["order_id"])){
-		$_SESSION['product_name']=$item_name;
+		if (isset($_SESSION["order_id"]) ){
+		    if (!isset($_SESSION['err_message'])){$_SESSION['product_name']=$item_name;}
 		$url=route('add_item_to_order_form');
 		header("Location: ".$url);
 		exit;
