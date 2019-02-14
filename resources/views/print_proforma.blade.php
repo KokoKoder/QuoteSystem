@@ -129,6 +129,8 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 						$customer_result=mysqli_query($conn,$customer_sql);
 						if (mysqli_num_rows($customer_result) > 0) {
 							while($row = mysqli_fetch_assoc($customer_result)) {
+							    if($row["vat_id"]){$has_vat_id=1;};
+							    if(isset($has_vat_id) && $lang="fi"){$has_vat_id=1;$VAT_rate=0;};
 								echo '<table class="cst_details">
 								<tr><td>'.$customer_str.'</td><td>'.$row["customer_name"].'</td></tr>
 								<tr><td>'.$address_str.'</td><td>'.$row["customer_address"].'</td></tr>
@@ -192,15 +194,17 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 						$kogumaksumus_display=number_format($kogumaksumus,2,',',' ');
 						$kogumaksumus=(float)$kogumaksumus;
 						$VAT=number_format($VAT,2);
+						var_dump(isset($has_vat_id));
+						var_dump($lang);
 						echo '<tr class="item_list"><td></td><td></td><td></td><td></td></tr>
-						<tr><td></td><td></td><td><b>Tooted kokku</b></td><td class="price_align"><b>'.$total.'</b></td></tr>
-						<tr class="item_list"><td></td><td></td><td><b>Käibemaks 20%</b></td><td class="price_align">'.$VAT.'</td></tr>
-						<tr><td></td><td></td><td><b>Kogumaksumus käibemaksuga</b></td><td class="price_align"><b>'.$kogumaksumus_display.'</b></td></tr>';	
-						if ($lan="ee"){
+						<tr><td></td><td></td><td><b>Tooted kokku</b></td><td class="price_align"><b>'.$total.'</b></td></tr>';
+						if(isset($has_vat_id) && $lang=="fi"){echo '<tr class="item_list"><td></td><td></td><td><b>'.$VAT_str.'</b></td><td class="price_align">'.$VAT.'</td></tr>';}
+						echo '<tr><td></td><td></td><td><b>Kogumaksumus käibemaksuga</b></td><td class="price_align"><b>'.$kogumaksumus_display.'</b></td></tr>';	
+						if ($lang="ee"){
 						    $ettemaks=$kogumaksumus/2;
 						    $ettemaks=number_format($ettemaks,2,',',' ');
 						    var_dump($ettemaks);
-						    echo '<tr class="item_list"><td><b>'.$payment_condition.'</b></td><td></td><td></td><td class="price_align"><b>'.$ettemaks.'</b></td></tr>';
+						    echo '<tr class="item_list"><td></td><td></td><td><b>'.$payment_condition.'</b></td><td class="price_align"><b>'.$ettemaks.'</b></td></tr>';
 						}
 						?>
 						
