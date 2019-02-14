@@ -114,4 +114,7 @@ class HomeController extends Controller
 	public function edit_custom_order_item(){
 		return view('edit_custom_order_item');
 	}
+	public function print_proforma(){
+	    return view('print_proforma');
+	}
 }

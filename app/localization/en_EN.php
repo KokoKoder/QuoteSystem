@@ -17,4 +17,6 @@ $total_str='Total';
 $VAT_str='VAT 20%';
 $totalvat_str='Total with VAT';
 $transport_not_included_str='Transport cost not included';
+$payment_condition_str='Payment condition: ';
+$payment_condition='Payment in advance 50% ';
 ?>

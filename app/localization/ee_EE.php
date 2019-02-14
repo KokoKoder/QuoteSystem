@@ -25,4 +25,6 @@ käesoleva lepingu täitmisega seotud küsimustes juhenduvad osapooled Eesti Vab
 seadustest ja õigusaktidest. Kõik vaidlused lahendatakse kokkuleppe teel, kokkuleppe
 mittesaavutamisel hageja asukohajärgses kohtus. Arvel olev kaup kuulub kauba
 müüjale, kuni raha laekumiseni müüja arvele.';
+$payment_condition_str='Maksetingimus: ';
+$payment_condition='Ettemaks 50%';
 ?>

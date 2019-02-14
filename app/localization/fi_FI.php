@@ -22,4 +22,6 @@ Tavaran myyjällä on oikeus vaatia viivästyskorkoa jokaisesta päivästä, jok
 määräajan (viivästyskoron määrä on merkitty laskuun). Kaikkiin riitatilanteisiin etsitään ensin ratkaisua
 osapuolten välillä tai sen jälkeen hakijan sijaintipaikan oikeudessa. Laskussa merkityt tuotteet ovat
 myyjän omaisuutta, kunnes koko summa on maksettu myyjän tilille.';
+$payment_condition_str='';
+$payment_condition='';
 ?>

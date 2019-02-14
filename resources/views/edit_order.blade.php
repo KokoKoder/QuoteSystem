@@ -71,6 +71,7 @@
 			</div>
 			<div class="input-field col s3">
 				<p ><a onclick="print_invoice()">Print invoice</a><br></p>
+				<p ><a onclick="print_proforma()">Print proforma</a><br></p>
 			</div>
 			<div class="input-field col s6">
 				<table>
@@ -209,6 +210,23 @@ switch ($vendor_set_name){
 			function print_invoice(){
 				if(!$('#printLinkIframe')[0]) {
 					var print_url='@php echo route('print_invoice').'?order_id='.$order_id.'&lang='.$lang;@endphp';
+					console.log(print_url);
+					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
+					$('body').append(iframe);
+					$('#printLinkIframe').on('load',function() {  
+						frames['printLinkIframe'].focus();
+						frames['printLinkIframe'].print();
+					});
+				}else{
+					console.log('iframe already exists'); 
+						frames['printLinkIframe'].focus();
+						frames['printLinkIframe'].print();
+
+				}
+			}
+			function print_proforma(){
+				if(!$('#printLinkIframe')[0]) {
+					var print_url='@php echo route('print_proforma').'?order_id='.$order_id.'&lang='.$lang;@endphp';
 					console.log(print_url);
 					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
 					$('body').append(iframe);
