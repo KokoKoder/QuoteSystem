@@ -11,9 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$order_id=$_SESSION["order_id"];
 	#get the form value
 	if(empty($_POST["custom_item_name"])){
-		
 		$err_name="name is required";
-		echo $err_name;
 	}
 	else{
 		$custom_item_name=mysqli_real_escape_string($conn,$_POST["custom_item_name"]);
