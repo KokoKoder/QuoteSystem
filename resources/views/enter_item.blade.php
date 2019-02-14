@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		if ($conn->query($sql) === TRUE) {
 			echo "New record created successfully in items tab";
 		} else {
-		    $_SESSION('err_message')="Error: " . $sql . "<br>" . $conn->error;
+		    $_SESSION['err_message']="Error: " . $sql . "<br>" . $conn->error;
 		    echo  $_SESSION['err_message'];
 		}
 		
