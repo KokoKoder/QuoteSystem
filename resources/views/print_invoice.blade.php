@@ -17,7 +17,9 @@ if (!empty($_GET["lang"])){
 }
 $total="0";
 $order_id=94;
-function price($price,$coeff=1){return number_format(round($coeff*$price,2),2);}
+$coeff=1;
+$VAT_rate=0.2;
+function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +34,9 @@ function price($price,$coeff=1){return number_format(round($coeff*$price,2),2);}
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection,print"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection,print"/>
    <style>
-  
+    .price_align{
+    text-align:right
+    }
 	.vert-bottom-block{
 		height:120px; position: relative;
 	}
@@ -129,7 +133,7 @@ function price($price,$coeff=1){return number_format(round($coeff*$price,2),2);}
 			<div class="row">
 				<div class="col s12">
 					<table>
-						<tr class="item_list_header"><th>Nimetus</th><th>Kogus</th><th>Hind €</th><th>Kokku €</th></tr>
+						<tr class="item_list_header"><th>Nimetus</th><th>Kogus</th><th class="price_align">Hind €</th><th class="price_align">Kokku €</th></tr>
 						<?php
 						
 						if (!empty($_GET["order_id"])){
@@ -145,8 +149,10 @@ function price($price,$coeff=1){return number_format(round($coeff*$price,2),2);}
 						$result=mysqli_query($conn,$sql);
 						if (mysqli_num_rows($result) > 0) {
 							while($row = mysqli_fetch_assoc($result)) {
-								$subtotal=($row['item_quantity']*price($row['item_price'],1));
-								echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td>'.price($row['item_price'],1).'</td><td>'.number_format(($total+=$subtotal),2).'</td></tr>';	
+							    $subtotal=$row['item_quantity']*price($row['item_price'],$coeff);
+							    $total+=$subtotal;
+							    $subtotal=number_format($subtotal,2);
+								echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.price($row['item_price'],1).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
 								}		
 						}
 						$sql2="SELECT * 
@@ -156,18 +162,21 @@ function price($price,$coeff=1){return number_format(round($coeff*$price,2),2);}
 						WHERE orders_table.order_id='$order_id'";
 						$result2=mysqli_query($conn,$sql2);
 						if (mysqli_num_rows($result2) > 0) {
-							
 							while($row = mysqli_fetch_assoc($result2)) {
-							    $subtotal=number_format($row['item_quantity']*price($row['custom_item_price'],1),2);
-								echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td>'.price($row['custom_item_price'],1).'</td><td>'.number_format(($total+=$subtotal),2).'</td></tr>';
+							    $subtotal=$row['item_quantity']*price($row['custom_item_price'],$coeff);
+							    $total+=$subtotal;
+							    $subtotal=number_format($subtotal,2);
+							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.price($row['custom_item_price'],1).'</td><td class="price_align">'.$subtotal.'</td></tr>';
 								};		
 						}
-						$VAT=0.2*$total;
+						$VAT=$VAT_rate*$total;
 						$kogumaksumus=$VAT+$total;
+						$kogumaksumus=number_format($kogumaksumus,2);
+						$VAT=number_format($VAT,2);
 						echo '<tr class="item_list"><td></td><td></td><td></td><td></td><td></td></tr>
-						<tr><td></td><td></td><td><b>Tooted kokku</b></td><td><b>'.number_format($total,2).'</b></td></tr>
-						<tr class="item_list"><td></td><td></td><td><b>Käibemaks 20%</b></td><td>'.number_format($VAT,2).'</td></tr>
-						<tr><td></td><td></td><td><b>Kogumaksumus käibemaksuga</b></td><td><b>'.number_format($kogumaksumus,2).'</b></td></tr>';	
+						<tr><td></td><td></td><td><b>Tooted kokku</b></td><td class="price_align"><b>'.$total.'</b></td></tr>
+						<tr class="item_list"><td></td><td></td><td><b>Käibemaks 20%</b></td><td class="price_align">'.$VAT.'</td></tr>
+						<tr><td></td><td></td><td><b>Kogumaksumus käibemaksuga</b></td><td class="price_align"><b>'.$kogumaksumus.'</b></td></tr>';	
 						?>
 					</table>
 				</div>

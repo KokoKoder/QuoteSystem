@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$err_price="price is required";
 	}
 	else{
-	    $custom_item_price=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["custom_item_price"]));
+	    $custom_item_price=number_format(mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["custom_item_price"])),2);
 	}
 	if (empty($_POST["custom_item_description"])){
 		$custom_item_description="";
@@ -142,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="input-field col s6">
 		<p><b>Item price in €</b></p>
-          <input placeholder="Bulk price without tax. Ex: 25.68" id="custom_item_price" name="custom_item_price" type="text" class="validate">
+          <input placeholder="Net sales price (without tax). Ex: 25.68" id="custom_item_price" name="custom_item_price" type="text" class="validate">
         </div>
       </div>
 	  <div class="row">
