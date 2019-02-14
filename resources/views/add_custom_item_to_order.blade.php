@@ -4,6 +4,8 @@
 #connect to the database
 include(app_path().'/includes/connect.php');
 include(app_path().'/includes/get_suppliers_list.php');
+$pattern = '[,]';
+$replacement = '.';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	session_start();
 	$order_id=$_SESSION["order_id"];
@@ -21,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$err_price="price is required";
 	}
 	else{
-		$custom_item_price=mysqli_real_escape_string($conn,$_POST["custom_item_price"]);
+	    $custom_item_price=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["custom_item_price"]));
 	}
 	if (empty($_POST["custom_item_description"])){
 		$custom_item_description="";

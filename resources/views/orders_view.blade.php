@@ -50,10 +50,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		FROM orders_table 
 		JOIN customers ON orders_table.customer_id= customers.customer_id 
 		JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
-		JOIN orders_status ON orders_status.order_id=orders_table.order_id
-		JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id
-        WHERE order_status_list.order_status_name<>'Completed' OR order_status_list.order_status_name<>'Canceled';		
-";
+		JOIN orders_status ON orders_status.order_id=orders_table.order_id AND orders_status.order_status_id<>'5' AND orders_status.order_status_id<>'6'
+		JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id";
+
 	}
 }
 
@@ -62,10 +61,8 @@ else{
 	FROM orders_table 
 	JOIN customers ON orders_table.customer_id= customers.customer_id 
 	JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
-	JOIN orders_status ON orders_status.order_id=orders_table.order_id
-	JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id
-    WHERE order_status_list.order_status_name<>'Completed' OR order_status_list.order_status_name<>'Canceled';	
-	";
+	JOIN orders_status ON orders_status.order_id=orders_table.order_id AND orders_status.order_status_id<>'5' AND orders_status.order_status_id<>'6' 
+	JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id ";
 }
 
 ?>
