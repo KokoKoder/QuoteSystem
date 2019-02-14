@@ -64,12 +64,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 
 	if ($error) {
-	  echo "Name, price, quantity ,supplier required"; 
-	  if(isset($err_name)){echo $err_name;}
-	  if(isset($err_price)){echo $err_price;}
-	  if(isset($err_supplier)){echo $err_supplier;}
-	  if(isset($err_quantity)){echo $err_quantity;}
-	  exit();
+	  $err_message= "Name, price, quantity ,supplier required"; 
+	  if(isset($err_name)){$err_message .= $err_name;}
+	  if(isset($err_price)){$err_message .= $err_price;}
+	  if(isset($err_supplier)){$err_message .= $err_supplier;}
+	  if(isset($err_quantity)){$err_message .= $err_quantity;}
 	} 
 	else {
 		if($custom_schedule_date==""){
@@ -137,6 +136,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class="row">
     <form id="this_form" method="post" action="{{route('add_custom_item_to_order')}}" class="col s12">
 	@csrf
+	@php if (isset($error)) {echo $err_message;} @endphp
       <div class="row">
         <div class="input-field col s6">
 			<p><b>Product name</b></p>
