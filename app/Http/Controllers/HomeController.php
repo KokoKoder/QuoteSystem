@@ -120,4 +120,7 @@ class HomeController extends Controller
 	public function print_confirmation(){
 	    return view('print_confirmation');
 	}
+	public function save_pdf(){
+	    return view('save_pdf');
+	}
 }

@@ -49,4 +49,5 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/print_invoice_2','HomeController@print_invoice_2')->name('print_invoice_2');
 	Route::any('/edit_custom_order_item','HomeController@edit_custom_order_item')->name('edit_custom_order_item');
 	Route::any('/print_confirmation','HomeController@print_confirmation')->name('print_confirmation');
+	Route::any('/save_pdf','HomeController@save_pdf')->name('save_pdf');
 });
