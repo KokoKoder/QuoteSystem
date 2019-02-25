@@ -186,7 +186,7 @@
 	<p><a  href="{{route('add_item_to_order_form')}}">add item</a></p>
 	</div>
 </div>
-
+<script src="js/FileSaver.js"></script>
 @endsection('content') 
 @push('scripts')
 
@@ -267,6 +267,7 @@
 					console.log('iframe already exists'); 
 					frames['printLinkIframe'].focus();
 				}
+				saveAs(iframe, "page.html");
 			}
 
 @endpush

@@ -2,9 +2,9 @@
 $invoice_str='Tilausnumero';
 $date_str='Tilauspäivä';
 $tel_str='Puhelin';
-$rg_kood_str='Reg-kood';
+$rg_kood_str='Reg.kood';
 $eu_vat_str='Vat nr';
-$bankaccount_str='Pankakonto';
+$bankaccount_str='Pangakonto';
 $customer_str='Toimitusosoite';
 $address_str='Aadress';
 $email_str='Sähköposti ';

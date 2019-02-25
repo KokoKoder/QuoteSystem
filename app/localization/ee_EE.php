@@ -2,9 +2,9 @@
 $invoice_str='Arve nr';
 $date_str='Kuupäev';
 $tel_str='Tel';
-$rg_kood_str='Reg-kood';
+$rg_kood_str='Reg. kood';
 $eu_vat_str='KMKR';
-$bankaccount_str='Pankakonto';
+$bankaccount_str='Pangakonto';
 $customer_str='Tellija';
 $address_str='Aadress';
 $email_str='E-post';

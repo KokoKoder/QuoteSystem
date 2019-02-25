@@ -1,6 +1,5 @@
 <?php
-include(app_path().'/includes/connect.php');
-require(app_path().'/includes/fpdf.php');
+require('../fpdf.php');
 
 $pdf = new FPDF();
 $pdf->AddPage();
