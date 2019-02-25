@@ -89,9 +89,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	    $item_per_pack='0';
 	}
 	
-	$duplicate_check_sql = "SELECT item_name FROM items WHERE item_name = '$item_name'";
-	$check_results = mysqli_query($conn, $duplicate_check_sql);
-	if(!isset($err_empty_name) XOR !isset($err_empty_supplier) ){
+
+	if(!empty($item_name) and !empty($item_supplier_id) ){
+	    $duplicate_check_sql = "SELECT item_name FROM items WHERE item_name = '$item_name'";
+	    $check_results = mysqli_query($conn, $duplicate_check_sql);
     	if (mysqli_num_rows($check_results) > 0) {
     		$err_duplicate_item="Item already exists - change name";
     	}
@@ -137,7 +138,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		<div class="row">
 			<div class="input-field col s6">
 			  <input placeholder="Product name*" id="item_name" name="item_name" type="text" class="validate">
-			  <span>@php if (isset($err_duplicate_item)){echo $err_duplicate_item;}@endphp</span>
+			  <span>@php if (isset($err_duplicate_item)){echo $err_duplicate_item;}
+			  if (isset($err_empty_name)){echo $err_empty_name;}
+			   if (isset($err_empty_supplier)){echo $err_empty_supplier;}
+			  @endphp</span>
 			</div>
 			<div class="input-field col s6">
 			  <input id="item_price" name="item_price" type="text" class="validate">
