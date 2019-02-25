@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::any('/edit_custom_order_item','HomeController@edit_custom_order_item')->name('edit_custom_order_item');
 	Route::any('/print_confirmation','HomeController@print_confirmation')->name('print_confirmation')->middleware('auth');
 	Route::any('/save_pdf','HomeController@save_pdf');
+	Route::any('/pdf_invoice','HomeController@pdf_invoice');
 });
 Auth::routes();
 

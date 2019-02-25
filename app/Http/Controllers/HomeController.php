@@ -108,5 +108,8 @@ class HomeController extends Controller
 	public function save_pdf(){
 	    return view('save_pdf');
 	}
+	public function pdf_invoice(){
+	    return view('pdf_invoice');
+	}
 }
 ?>
