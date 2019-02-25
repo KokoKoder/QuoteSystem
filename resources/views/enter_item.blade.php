@@ -88,37 +88,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	else{
 	    $item_per_pack='0';
 	}
+	
 	$duplicate_check_sql = "SELECT item_name FROM items WHERE item_name = '$item_name'";
 	$check_results = mysqli_query($conn, $duplicate_check_sql);
-	
-	if (mysqli_num_rows($check_results) > 0) {
-		$err_duplicate_item="Item already exists - change name";
-	}
-	elseif(isset($err_empty_name) OR isset($err_empty_supplier) ){
-	    #do not proceed with sql query
-	}
-	else{
-		$sql = "INSERT INTO items(item_name,supplier_sku,item_supplier_id,item_price,item_length,item_width,item_height,item_weight,item_description,package_length,package_width,package_height,package_weight,item_per_pack)
-		VALUES ('$item_name','$supplier_sku','$item_supplier_id','$item_price', '$item_length','$item_width','$item_height','$item_weight','$item_description','$package_length','$package_width','$package_height','$package_weight','$item_per_pack')";
-		if ($conn->query($sql) === TRUE) {
-			echo "New record created successfully in items tab";
-		} else {
-		    $_SESSION['err_message']="Error: " . $sql . "<br>" . $conn->error;
-		    echo  $_SESSION['err_message'];
-		}
-		
-		$conn->close();
-		
-		if (isset($_SESSION["order_id"]) ){
-		    if (!isset($_SESSION['err_message'])){$_SESSION['product_name']=$item_name;}
-    		$url=route('add_item_to_order_form');
-    		header("Location: ".$url);
-    		exit;
-		}
-		else{
-			$url=route('enter_item');
-			header("Location: ".$url);
-		}
+	if(!isset($err_empty_name) XOR !isset($err_empty_supplier) ){
+    	if (mysqli_num_rows($check_results) > 0) {
+    		$err_duplicate_item="Item already exists - change name";
+    	}
+    
+    	else{
+    		$sql = "INSERT INTO items(item_name,supplier_sku,item_supplier_id,item_price,item_length,item_width,item_height,item_weight,item_description,package_length,package_width,package_height,package_weight,item_per_pack)
+    		VALUES ('$item_name','$supplier_sku','$item_supplier_id','$item_price', '$item_length','$item_width','$item_height','$item_weight','$item_description','$package_length','$package_width','$package_height','$package_weight','$item_per_pack')";
+    		if ($conn->query($sql) === TRUE) {
+    			echo "New record created successfully in items tab";
+    		} else {
+    		    $_SESSION['err_message']="Error: " . $sql . "<br>" . $conn->error;
+    		    echo  $_SESSION['err_message'];
+    		}
+    		
+    		$conn->close();
+    		
+    		if (isset($_SESSION["order_id"]) ){
+    		    if (!isset($_SESSION['err_message'])){$_SESSION['product_name']=$item_name;}
+        		$url=route('add_item_to_order_form');
+        		header("Location: ".$url);
+        		exit;
+    		}
+    		else{
+    			$url=route('enter_item');
+    			header("Location: ".$url);
+    		}
+    	}
 	}
 }
 ?>
