@@ -149,10 +149,10 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 						$result=mysqli_query($conn,$sql);
 						if (mysqli_num_rows($result) > 0) {
 							while($row = mysqli_fetch_assoc($result)) {
-							    $subtotal=$row['item_quantity']*price($row['item_price'],$coeff);
+							    $subtotal=$row["item_quantity"]*price($row["item_price"],$coeff);
 							    $total+=$subtotal;
 							    $subtotal=number_format($subtotal,2);
-								echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.price($row['item_price'],1).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
+								echo '<tr><td>'.$row["item_name"].'</td><td>'.$row["item_quantity"].'</td><td class="price_align">'.price($row["item_price"],1).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
 								}		
 						}
 						$sql2="SELECT * 
@@ -163,10 +163,10 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 						$result2=mysqli_query($conn,$sql2);
 						if (mysqli_num_rows($result2) > 0) {
 							while($row = mysqli_fetch_assoc($result2)) {
-							    $subtotal=$row['item_quantity']*price($row['custom_item_price'],$coeff);
+							    $subtotal=$row["item_quantity"]*price($row["custom_item_price"],$coeff);
 							    $total+=$subtotal;
 							    $subtotal=number_format($subtotal,2);
-							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.price($row['custom_item_price'],1).'</td><td class="price_align">'.$subtotal.'</td></tr>';
+							    echo '<tr><td>'.$row["item_name"].'<br>'.$row["custom_item_description"].'</td><td>'.$row["item_quantity"].'</td><td class="price_align">'.price($row["custom_item_price"],1).'</td><td class="price_align">'.$subtotal.'</td></tr>';
 								};		
 						}
 						$VAT=$VAT_rate*$total;

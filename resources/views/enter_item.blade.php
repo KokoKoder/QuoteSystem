@@ -16,7 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	    $err_empty_name="Name is mandatory - enter a name";
 	}
 	$item_price=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_price"]));
-	if ($_POST["supplier_id"]!=""){
+	
+	if (isset($_POST["supplier_id"]) and !empty($_POST["supplier_id"])){
 	   $item_supplier_id=mysqli_real_escape_string($conn,$_POST["supplier_id"]);
 	}
 	else{
