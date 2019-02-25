@@ -9,9 +9,19 @@ $replacement = '.';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	session_start();
 	#get the form value
-	$item_name=mysqli_real_escape_string($conn,$_POST["item_name"]);
+	if ($_POST["item_name"]!=""){
+	   $item_name=mysqli_real_escape_string($conn,$_POST["item_name"]);
+	}
+	else{
+	    $err_empty_name="Name is mandatory - enter a name";
+	}
 	$item_price=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_price"]));
-	$item_supplier_id=mysqli_real_escape_string($conn,$_POST["supplier_id"]);
+	if ($_POST["supplier_id"]!=""){
+	   $item_supplier_id=mysqli_real_escape_string($conn,$_POST["supplier_id"]);
+	}
+	else{
+	    $err_empty_supplier="supplier name is mandatory - choose a supplier from the list<br><a href='https://orders.furnest.ee/enter_supplier'>enter supplier</a>";
+	}
 	if ($_POST["supplier_sku"]!=''){
 	$supplier_sku=mysqli_real_escape_string($conn,$_POST["supplier_sku"]);
 	}
@@ -80,10 +90,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 	$duplicate_check_sql = "SELECT item_name FROM items WHERE item_name = '$item_name'";
 	$check_results = mysqli_query($conn, $duplicate_check_sql);
+	
 	if (mysqli_num_rows($check_results) > 0) {
 		$err_duplicate_item="Item already exists - change name";
 	}
-
+	elseif(isset($err_empty_name) OR isset($err_empty_supplier) ){
+	    #do not proceed with sql query
+	}
 	else{
 		$sql = "INSERT INTO items(item_name,supplier_sku,item_supplier_id,item_price,item_length,item_width,item_height,item_weight,item_description,package_length,package_width,package_height,package_weight,item_per_pack)
 		VALUES ('$item_name','$supplier_sku','$item_supplier_id','$item_price', '$item_length','$item_width','$item_height','$item_weight','$item_description','$package_length','$package_width','$package_height','$package_weight','$item_per_pack')";
