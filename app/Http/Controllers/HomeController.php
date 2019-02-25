@@ -6,8 +6,6 @@ use App\User;
 
 class HomeController extends Controller
 {
-     * @return void
-     */
 
     public function index()
     {
