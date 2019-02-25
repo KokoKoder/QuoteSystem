@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use PDF;
 
-class HomeController extends Controller
+class PHPController extends Controller
 {
     function generate_pdf() {
         $data = [
