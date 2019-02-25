@@ -91,7 +91,7 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 								$vendor_email=$row['email'];
 								$vendor_reg_nbr=$row['rg_kood'];
 								$vendor_eu_vat_nb=$row['eu_vat_nb'];
-								echo '<div class="col s12 " ><div ><h3>'.$invoice_str.' : '. $row['order_number'].'</h3><p>'.$date_str.' '.date("d.m.y").'</p></div></div></div></div><div class="col s6"><div class="row"><div class="col s12"><h3 >'.$row['vendor_name'].'</h3><p>'.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'</p></div></div></div>';	
+								echo '<div class="col s12 " ><div ><h3>'.$invoice_str.' : '. $row["order_number"].'</h3><p>'.$date_str.' '.date("d.m.y").'</p></div></div></div></div><div class="col s6"><div class="row"><div class="col s12"><h3 >'.$row["vendor_name"].'</h3><p>'.$tel_str.' '.$row["phone"].'<br>'.$row["address"].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row["konto"].'</p></div></div></div>';	
 								}		
 						}
 						?>
