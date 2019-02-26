@@ -127,7 +127,7 @@ class HomeController extends Controller
 	}
 	public function edit_item($item_id){
 	    $item=DB::table('items')->where('item_id','=',$item_id)->first();
-	    return view('editItem',compact('item'));
+	    return view('edit_item',compact('item'));
 	}
 	public function update($item_id, Request $request){
 	    $item=DB::table('items')
