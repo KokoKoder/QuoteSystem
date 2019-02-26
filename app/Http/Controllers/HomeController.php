@@ -3,7 +3,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Item;
 class HomeController extends Controller
 {
 
@@ -22,7 +24,6 @@ class HomeController extends Controller
 	public function verify_order_number_for_duplicate()
     {
         return view('verify_order_number_for_duplicate');
-
     }
 	public function add_item_to_order_form(){
 		return view('add_item_to_order_form');
@@ -105,11 +106,34 @@ class HomeController extends Controller
 	public function print_confirmation(){
 	    return view('print_confirmation');
 	}
-	public function save_pdf(){
-	    return view('save_pdf');
+	public function items_view(){
+	    $items = DB::table('items')->paginate(10);
+	    $custom_items = DB::table('custom_items')->paginate(10);
+	    return view('items_view',compact('items','custom_items'));
 	}
-	public function pdf_invoice(){
-	    return view('pdf_invoice');
+	public function delete($item_id){
+	    $item=DB::table('items')->where('item_id','=',$item_id);
+	    $item->delete();
+	    return redirect()->back();
+	}
+	public function deleteCustom($item_id){
+	    $item=DB::table('custom_items')->where('custom_item_id','=',$item_id);
+	    $item->delete();
+	    return redirect()->back();
+	}
+	public function editCustom($item_id){
+	    $item=DB::table('custom_items')->where('custom_item_id','=',$item_id)->first();
+	    return view(editCustom);
+	}
+	public function editItem($item_id){
+	    $item=DB::table('items')->where('item_id','=',$item_id)->first();
+	    return view('editItem',compact('item'));
+	}
+	public function update($item_id, Request $request){
+	    $item=DB::table('items')
+	       ->where('item_id','=',$item_id)
+	       ->update(['item_name'=>$request->input('item_name'),'supplier_sku'=>$request->input('supplier_sku')]);
+        return redirect()->back();
 	}
 }
 ?>

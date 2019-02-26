@@ -66,6 +66,7 @@
           <ul>
             <li><a class="white-text" href="{{route('orders_view')}}">View Orders</a></li>
             <li><a class="white-text" href="{{route('suppliers_view')}}">View Suppliers</a></li>
+            <li><a class="white-text" href="{{route('items_view')}}">View Products</a></li>
 			<li><a class="white-text" href="{{route('vendor_details')}}">Vendor details</a></li>
           </ul>
         </div>
