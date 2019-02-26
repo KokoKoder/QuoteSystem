@@ -16,7 +16,7 @@ if (!empty($_GET["lang"])){
     
 }
 $total="0";
-$order_id=94;
+$order_id="94";
 $coeff=1;
 $VAT_rate=0.2;
 $today=date("d.m.y");
@@ -172,7 +172,7 @@ function price($price,$coeff){return round($coeff*$price,2);}
 						$result=mysqli_query($conn,$sql);
 						if (mysqli_num_rows($result) > 0) {
 							while($row = mysqli_fetch_assoc($result)) {
-							    $subtotal=$row['item_quantity']*price($row['item_price'],$coeff);
+							    $subtotal=$row["item_quantity"]*price($row["item_price"],$coeff);
 							    $total+=$subtotal;
 							    $subtotal=number_format($subtotal,2);
 							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1)).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
