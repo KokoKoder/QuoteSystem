@@ -267,7 +267,6 @@
 					console.log('iframe already exists'); 
 					frames['printLinkIframe'].focus();
 				}
-				saveAs(iframe, "page.html");
 			}
 
 @endpush

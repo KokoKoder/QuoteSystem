@@ -20,7 +20,7 @@ $order_id=94;
 $coeff=1;
 $VAT_rate=0.2;
 $today=date("d.m.y");
-function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
+function price($price,$coeff){return round($coeff*$price,2);}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -174,7 +174,7 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 							    $subtotal=$row['item_quantity']*price($row['item_price'],$coeff);
 							    $total+=$subtotal;
 							    $subtotal=number_format($subtotal,2);
-								echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.price($row['item_price'],1).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
+							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1),2).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
 								}		
 						}
 						$sql2="SELECT * 
@@ -188,7 +188,7 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 							    $subtotal=$row['item_quantity']*price($row['custom_item_price'],$coeff);
 							    $total+=$subtotal;
 							    $subtotal=number_format($subtotal,2);
-							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.price($row['custom_item_price'],1).'</td><td class="price_align">'.$subtotal.'</td></tr>';
+							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2).'</td><td class="price_align">'.$subtotal.'</td></tr>';
 								};		
 						}
 						$VAT=$VAT_rate*$total;

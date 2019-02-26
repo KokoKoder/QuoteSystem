@@ -85,16 +85,16 @@ function price($price,$coeff){return round($coeff*$price,2);}
 						$vendor_result=mysqli_query($conn,$vendor_sql);
 						if (mysqli_num_rows($vendor_result) > 0) {
 							while($row = mysqli_fetch_assoc($vendor_result)) {
-								$vendor_name=$row['vendor_name'];
-								$vendor_address=$row['address'];
-								$vendor_bankaccount=$row['konto'];
-								$vendor_telephone=$row['phone'];
-								$vendor_email=$row['email'];
-								$vendor_reg_nbr=$row['rg_kood'];
-								$vendor_eu_vat_nb=$row['eu_vat_nb'];
+								$vendor_name=$row["vendor_name"];
+								$vendor_address=$row["address"];
+								$vendor_bankaccount=$row["konto"];
+								$vendor_telephone=$row["phone"];
+								$vendor_email=$row["email"];
+								$vendor_reg_nbr=$row["rg_kood"];
+								$vendor_eu_vat_nb=$row["eu_vat_nb"];
 								echo '<div class="col s12 " >
                                         <div >
-                                            <h3>'.$invoice_str.': '. $row['order_number'].'</h3>
+                                            <h3>'.$invoice_str.': '. $row["order_number"].'</h3>
                                             <p>'.$date_str.': '.date("d.m.y").'<br>
                                            '.$payment_condition_str.' '.$payment_condition.'<br>
                                             '. $paybefore_str.': '.date("d.m.y",strtotime("$today +1 week")).'</p>
@@ -105,8 +105,8 @@ function price($price,$coeff){return round($coeff*$price,2);}
                             <div class="col s6">
                                 <div class="row">
                                     <div class="col s12">
-                                        <h3 >'.$row['vendor_name'].'</h3>
-                                        <p>'.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'</p>
+                                        <h3 >'.$row["vendor_name"].'</h3>
+                                        <p>'.$tel_str.' '.$row["phone"].'<br>'.$row["address"].'<br>'.$rg_kood_str.' '.$row["rg_kood"].'<br>'.$bankaccount_str.' '.$row["konto"].'</p>
                                     </div>
                                 </div>
                             </div>';	
@@ -169,10 +169,10 @@ function price($price,$coeff){return round($coeff*$price,2);}
 						$result=mysqli_query($conn,$sql);
 						if (mysqli_num_rows($result) > 0) {
 							while($row = mysqli_fetch_assoc($result)) {
-							    $subtotal=$row['item_quantity']*price($row['item_price'],$coeff);
+							    $subtotal=$row["item_quantity"]*price($row["item_price"],$coeff);
 							    $total+=$subtotal;
 							    $subtotal=number_format($subtotal,2);
-							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1),2).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
+							    echo '<tr><td>'.$row["item_name"].'</td><td>'.$row["item_quantity"].'</td><td class="price_align">'.number_format(price($row["item_price"],1),2).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
 								}		
 						}
 						$sql2="SELECT * 
@@ -183,10 +183,10 @@ function price($price,$coeff){return round($coeff*$price,2);}
 						$result2=mysqli_query($conn,$sql2);
 						if (mysqli_num_rows($result2) > 0) {
 							while($row = mysqli_fetch_assoc($result2)) {
-							    $subtotal=$row['item_quantity']*price($row['custom_item_price'],$coeff);
+							    $subtotal=$row["item_quantity"]*price($row["custom_item_price"],$coeff);
 							    $total+=$subtotal;
 							    $subtotal=number_format($subtotal,2);
-							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2).'</td><td class="price_align">'.$subtotal.'</td></tr>';
+							    echo '<tr><td>'.$row["item_name"].'<br>'.$row["custom_item_description"].'</td><td>'.$row["item_quantity"].'</td><td class="price_align">'.number_format(price($row["custom_item_price"],1),2).'</td><td class="price_align">'.$subtotal.'</td></tr>';
 								};		
 						}
 						$VAT=$VAT_rate*$total;
