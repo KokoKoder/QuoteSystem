@@ -53,7 +53,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/delete/{item_id}','HomeController@delete')->name('delete');
 	Route::get('/deleteCustom/{item_id}','HomeController@deleteCustom')->name('deleteCustom');
 	Route::get('/editCustom?id={item_id}','HomeController@editCustom')->name('editCustom');
-	Route::get('/editItem/{item_id}','HomeController@editItem')->name('editItem');
+	Route::get('/edit_item/{item_id}','HomeController@edit_item')->name('edit_item');
 	Route::post('/update/{item_id}','HomeController@update')->name('update');
 });
 
