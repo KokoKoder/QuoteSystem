@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -7,24 +6,10 @@ use App\User;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
-        return view('index');
+        return view('home');
     }
 	public function enter_order()
     {
@@ -114,4 +99,17 @@ class HomeController extends Controller
 	public function edit_custom_order_item(){
 		return view('edit_custom_order_item');
 	}
+	public function print_invoice_2(){
+	    return view('print_invoice_2');
+	}
+	public function print_confirmation(){
+	    return view('print_confirmation');
+	}
+	public function save_pdf(){
+	    return view('save_pdf');
+	}
+	public function pdf_invoice(){
+	    return view('pdf_invoice');
+	}
 }
+?>

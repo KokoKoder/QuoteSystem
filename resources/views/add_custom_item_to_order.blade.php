@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$err_price="price is required";
 	}
 	else{
-	    $custom_item_price=number_format(mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["custom_item_price"])),2);
+	    $custom_item_price=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["custom_item_price"]));
 	}
 	if (empty($_POST["custom_item_description"])){
 		$custom_item_description="";
