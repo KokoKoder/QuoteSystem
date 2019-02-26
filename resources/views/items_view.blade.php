@@ -10,7 +10,7 @@ $result_custom_items = mysqli_query($conn, $sql_custom_items);
 <h2>Items list</h2>
 <table>
 @foreach($items as $item)
-	<tr><td><a title="delete" onclick="return confirm('Delete?');" href="{{route('delete',$item->item_id)}}"><i class="small material-icons">delete</i></a></td><td>{{$item->item_name}}</td><td>{{$item->supplier_sku}}</td><td>{{$item->item_supplier_id}}</td><td>{{$item->item_price}}</td><td>{{$item->item_description}}</td><td>{{$item->item_weight}}</td><td>{{$item->package_weight}}</td><td><a title="editItem" href="{{route('editItem',$item->item_id)}}"><i class="small material-icons">edit</i></a></td></tr>
+	<tr><td><a title="delete" onclick="return confirm('Delete?');" href="{{route('delete',$item->item_id)}}"><i class="small material-icons">delete</i></a></td><td>{{$item->item_name}}</td><td>{{$item->supplier_sku}}</td><td>{{$item->item_supplier_id}}</td><td>{{$item->item_price}}</td><td>{{$item->item_description}}</td><td>{{$item->item_weight}}</td><td>{{$item->package_weight}}</td><td><a title="editItem" href="{{route('edit_item',$item->item_id)}}"><i class="small material-icons">edit</i></a></td></tr>
 @endforeach
 </table>
 
