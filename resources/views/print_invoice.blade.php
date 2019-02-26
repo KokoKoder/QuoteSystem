@@ -175,7 +175,7 @@ function price($price,$coeff){return round($coeff*$price,2);}
 							    $subtotal=$row['item_quantity']*price($row['item_price'],$coeff);
 							    $total+=$subtotal;
 							    $subtotal=number_format($subtotal,2);
-								echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.price($row['item_price'],1).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
+							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1)).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
 								}		
 						}
 						$sql2="SELECT * 
