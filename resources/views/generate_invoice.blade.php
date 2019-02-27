@@ -19,7 +19,7 @@ $total="0";
 $order_id=94;
 $coeff=1;
 $VAT_rate=0.2;
-function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
+function price($price,$coeff){return round($coeff*$price,2);}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -34,6 +34,13 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection,print"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection,print"/>
    <style>
+   body {
+   font-size: 15px;
+    line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.87);
+}
    td{
    padding:0px;
    }
@@ -54,8 +61,8 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 	.item_list_header{border-bottom: 2px solid black;}
 	.item_list{border-bottom: 1px solid black;}
 	.container{width:1024px}
-	table.cst_details {
-		padding:1px;
+	table.cst_details 1{
+		padding:0px;
 	}
 	#footer_container{
 		  position: relative;
@@ -94,8 +101,7 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
     								$vendor_reg_nbr=$row['rg_kood'];
     								$vendor_eu_vat_nb=$row['eu_vat_nb'];
     								echo '<h4>'.$invoice_str.' : <br>'. $row['order_number'].'</h4>'.$date_str.' '.date("d.m.y").'</td>
-                    <td>
-                        <h4 >'.$row['vendor_name'].'</h4>
+                    <td><h4 >'.$row['vendor_name'].'</h4>
                         '.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'
                       </td>';	
     								}		
@@ -156,7 +162,7 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 							    $subtotal=$row['item_quantity']*price($row['item_price'],$coeff);
 							    $total+=$subtotal;
 							    $subtotal=number_format($subtotal,2);
-								echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.price($row['item_price'],1).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
+							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1),2).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
 								}		
 						}
 						$sql2="SELECT * 
@@ -170,7 +176,7 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 							    $subtotal=$row['item_quantity']*price($row['custom_item_price'],$coeff);
 							    $total+=$subtotal;
 							    $subtotal=number_format($subtotal,2);
-							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.price($row['custom_item_price'],1).'</td><td class="price_align">'.$subtotal.'</td></tr>';
+							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2).'</td><td class="price_align">'.$subtotal.'</td></tr>';
 								};		
 						}
 						$VAT=$VAT_rate*$total;
@@ -178,9 +184,9 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 						$kogumaksumus=number_format($kogumaksumus,2);
 						$VAT=number_format($VAT,2);
 						echo '<tr class="item_list"><td></td><td></td><td></td><td></td><td></td></tr>
-						<tr><td></td><td></td><td><b>Tooted kokku</b></td><td class="price_align"><b>'.$total.'</b></td></tr>
-						<tr class="item_list"><td></td><td></td><td><b>Käibemaks 20%</b></td><td class="price_align">'.$VAT.'</td></tr>
-						<tr><td></td><td></td><td><b>Kogumaksumus käibemaksuga</b></td><td class="price_align"><b>'.$kogumaksumus.'</b></td></tr>';	
+						<tr><td></td><td></td><th>Tooted kokku</th><td class="price_align"><b>'.number_format($total,2).'</b></td></tr>
+						<tr class="item_list"><td></td><td></td><th>Käibemaks 20%</th><td class="price_align">'.$VAT.'</td></tr>
+						<tr><td></td><td></td><th>Kogumaksumus käibemaksuga</th><td class="price_align"><b>'.$kogumaksumus.'</b></td></tr>';	
 						?>
 					</table>
 				</div>

@@ -46,5 +46,6 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/get_vendor_details','HomeController@get_vendor_details')->name('get_vendor_details');
 	Route::any('/edit_vendor_details','HomeController@edit_vendor_details')->name('edit_vendor_details');
 	Route::get('/print_invoice','PHPController@print_invoice')->name('print_invoice');
+	Route::get('/generate_invoice','PHPController@generate_invoice')->name('generate_invoice');
 	Route::any('/edit_custom_order_item','HomeController@edit_custom_order_item')->name('edit_custom_order_item');
 });

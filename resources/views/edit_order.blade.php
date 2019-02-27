@@ -65,7 +65,7 @@
 			<div class="input-field col s3">
 				<p><b>Order number</b><br>
 				@php 
-					echo $order_number;
+					echo htmlspecialchars($order_number);
 				@endphp
 				</p>
 			</div>
@@ -83,22 +83,22 @@
 					<tr>
 						<td>
 						@php 
-							echo $customer_name;
+							echo htmlspecialchars($customer_name);
 						@endphp
 						</td>
 						<td>
 						@php
-							echo $customer_address;
+							echo htmlspecialchars($customer_address);
 						@endphp
 						</td>
 						<td>
 						@php 
-							echo $customer_phone;
+							echo htmlspecialchars($customer_phone);
 						@endphp
 						</td>
 						<td>
 						@php 
-							echo $customer_mail;
+							echo htmlspecialchars($customer_mail);
 						@endphp</td>
 					</tr>
 				</table>
@@ -120,7 +120,7 @@
 					 else{
 						 $selected="";
 					 }
-					 echo '<option '.$selected.' value="'.$vendor_id.'">'.$vendors_name.'</option>';
+					 echo '<option '.$selected.' value="'.$vendor_id.'">'.htmlspecialchars($vendors_name).'</option>';
 				 }
 				@endphp
 					  
@@ -139,7 +139,7 @@
 					 else{
 						 $selected="";
 					 }
-					 echo '<option '.$selected.' value="'.$order_status_id.'">'.$order_status_name.'</option>';
+					 echo '<option '.$selected.' value="'.$order_status_id.'">'.htmlspecialchars($order_status_name).'</option>';
 				 }
 				@endphp
 				</select>
@@ -208,7 +208,7 @@ switch ($vendor_set_name){
 
 			function print_invoice(){
 				if(!$('#printLinkIframe')[0]) {
-					var print_url='@php echo route('print_invoice').'?order_id='.$order_id.'&lang='.$lang;@endphp';
+					var print_url='@php echo route('print_invoice').'?order_id='.htmlspecialchars($order_id).'&lang='.$lang.'&order_nb='.htmlspecialchars($order_number);@endphp';
 					console.log(print_url);
 					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
 					$('body').append(iframe);
