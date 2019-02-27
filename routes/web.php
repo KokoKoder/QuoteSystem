@@ -51,8 +51,6 @@ Route::middleware(['auth'])->group(function () {
 	Route::any('/print_confirmation','HomeController@print_confirmation')->name('print_confirmation');
 	Route::any('/items_view','HomeController@items_view')->name('items_view');
 	Route::get('/delete/{item_id}','HomeController@delete')->name('delete');
-	Route::get('/deleteCustom/{item_id}','HomeController@deleteCustom')->name('deleteCustom');
-	Route::get('/editCustom?id={item_id}','HomeController@editCustom')->name('editCustom');
 	Route::get('/edit_item/{item_id}','HomeController@edit_item')->name('edit_item');
 	Route::post('/update/{item_id}','HomeController@update')->name('update');
 });

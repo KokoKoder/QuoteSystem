@@ -77,7 +77,7 @@ if (isset($_SESSION["order_id"])){
 				$status_selection_html='<select class="browser-default" name="item_status" style="display:block">'.$option_status.'</select>';
 			    $line='<form method="POST" action="'.$edit_order_item_url.'" class="col s12"><input type="hidden" name="_token" id="csrf-token" value="'.$token.'">
 				  <div class="row" '.$alert_level.'>
-						<div class="col s1"><p><a class="incline"  href="'.$delete_url.'?id='.$row['id'].'">x</a></p></div>
+						<div class="col s1"><p><a class="incline contrast"  href="'.$delete_url.'?id='.$row['id'].'">x</a></p></div>
 						<div class="col s2"><input  type="hidden" name="id" value="'.$row['id'].'"><p>'.$row['item_name'].'</p></div>
 						<div class="col s1"><input  type="text" value="'.$row['item_quantity'].'" name="item_quantity"></div>
 						<div class="col s2"><input   type="text" class="datepicker" value="'.$row['Schedule_delivery_date'].'" name="Schedule_delivery_date"></div>
@@ -126,7 +126,7 @@ if (isset($_SESSION["order_id"])){
 				$status_selection_html='<select class="browser-default" name="item_status" style="display:block">'.$option_status.'</select>';
 			    $line='<form method="POST" action="'.$edit_custom_order_item_url.'" class="col s12"><input type="hidden" name="_token" id="csrf-token" value="'.$token.'">
 				  <div class="row" '.$alert_level.'>
-						<div class="col s1"><p><a class="incline"  href="'.$delete_custom_url.'?id='.$row['id'].'">x</a></p></div>
+						<div class="col s1"><p><a class="incline contrast"  href="'.$delete_custom_url.'?id='.$row['id'].'">x</a></p></div>
 						<div class="col s2"><input  type="hidden" name="id" value="'.$row['id'].'"><p>'.$row['item_name'].'</p></div>
 						<div class="col s1"><input  type="text" value="'.$row['item_quantity'].'" name="item_quantity"></div>
 						<div class="col s2"><input   type="text" class="datepicker" value="'.$row['Schedule_delivery_date'].'" name="Schedule_delivery_date"></div>

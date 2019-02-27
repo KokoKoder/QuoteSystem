@@ -14,16 +14,7 @@ $result_custom_items = mysqli_query($conn, $sql_custom_items);
 	<tr><td><!--  a title="delete" onclick="return confirm('Delete?');" href="{{route('delete',$item->item_id)}}"><i class="small material-icons">delete</i></a--></td><td>{{$item->item_name}}</td><td>{{$item->supplier_sku}}</td><td>{{$item->item_supplier_id}}</td><td>{{$item->item_price}}</td><td>{{$item->item_description}}</td><td><a title="editItem" href="{{route('edit_item',$item->item_id)}}"><i class="small material-icons">edit</i></a></td></tr>
 @endforeach
 </table>
-
 {{$items->links('vendor.pagination.materializecss')}}
-<h2>Custom items list</h2>
-<table>
-<tr><th></th><th>Name</th><th>Supplier</th><th>Price</th><th>Description</th><th></th></tr>
-@foreach($custom_items as $custom_item)
-<tr><td><!-- a title="delete" onclick="return confirm('Delete?');" href="{{route('deleteCustom',$custom_item->custom_item_id)}}"><i class="small material-icons">delete</i></a--></td><td>{{$custom_item->item_name}}</td><td>{{$custom_item->custom_supplier_id}}</td><td>{{$custom_item->custom_item_price}}</td><td>{{$custom_item->custom_item_description}}</td><td></td></tr>
-@endforeach
 
-</table>
-{{$custom_items->links('vendor.pagination.materializecss')}}
 
 @endsection('content') 

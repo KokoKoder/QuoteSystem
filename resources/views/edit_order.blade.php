@@ -195,8 +195,6 @@
 			var order_id=<?php echo  $_SESSION["order_id"]?>;
 			console.log(order_id);
 			jQuery.get("get_order_items", write_results_to_page);
-
-
 		});
 		
 		function write_results_to_page(data,status, xhr) {

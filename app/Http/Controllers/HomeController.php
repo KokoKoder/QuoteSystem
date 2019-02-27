@@ -116,15 +116,6 @@ class HomeController extends Controller
 	    $item->delete();
 	    return redirect()->back();
 	}
-	public function deleteCustom($item_id){
-	    $item=DB::table('custom_items')->where('custom_item_id','=',$item_id);
-	    $item->delete();
-	    return redirect()->back();
-	}
-	public function editCustom($item_id){
-	    $item=DB::table('custom_items')->where('custom_item_id','=',$item_id)->first();
-	    return view(editCustom);
-	}
 	public function edit_item($item_id){
 	    $item=DB::table('items')->where('item_id','=',$item_id)->first();
 	    return view('edit_item',compact('item'));
