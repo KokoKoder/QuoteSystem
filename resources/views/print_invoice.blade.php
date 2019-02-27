@@ -155,8 +155,8 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 							while($row = mysqli_fetch_assoc($result)) {
 							    $subtotal=$row['item_quantity']*price($row['item_price'],$coeff);
 							    $total+=$subtotal;
-							    $subtotal=number_format($subtotal,2);
-								echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.price($row['item_price'],1).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
+							    $subtotal_display=number_format($subtotal,2,',',' ');
+							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.price($row['item_price'],1).'</td><td class="price_align">'.$subtotal_display.'</td></tr>';	
 								}		
 						}
 						$sql2="SELECT * 
@@ -169,18 +169,18 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 							while($row = mysqli_fetch_assoc($result2)) {
 							    $subtotal=$row['item_quantity']*price($row['custom_item_price'],$coeff);
 							    $total+=$subtotal;
-							    $subtotal=number_format($subtotal,2);
-							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.price($row['custom_item_price'],1).'</td><td class="price_align">'.$subtotal.'</td></tr>';
+							    $subtotal_display=number_format($subtotal,2,',',' ');
+							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.price($row['custom_item_price'],1).'</td><td class="price_align">'.$subtotal_display.'</td></tr>';
 								};		
 						}
 						$VAT=$VAT_rate*$total;
 						$kogumaksumus=$VAT+$total;
-						$kogumaksumus=number_format($kogumaksumus,2);
-						$VAT=number_format($VAT,2);
+						$kogumaksumus_display=number_format($kogumaksumus,2,',',' ');
+						$VAT=number_format($VAT,2,',',' ');
 						echo '<tr class="item_list"><td></td><td></td><td></td><td></td><td></td></tr>
 						<tr><td></td><td></td><td><b>Tooted kokku</b></td><td class="price_align"><b>'.$total.'</b></td></tr>
 						<tr class="item_list"><td></td><td></td><td><b>Käibemaks 20%</b></td><td class="price_align">'.$VAT.'</td></tr>
-						<tr><td></td><td></td><td><b>Kogumaksumus käibemaksuga</b></td><td class="price_align"><b>'.$kogumaksumus.'</b></td></tr>';	
+						<tr><td></td><td></td><td><b>Kogumaksumus käibemaksuga</b></td><td class="price_align"><b>'.$kogumaksumus_display.'</b></td></tr>';	
 						?>
 					</table>
 				</div>
