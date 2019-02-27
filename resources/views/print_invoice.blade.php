@@ -51,8 +51,8 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 	.item_list_header{border-bottom: 2px solid black;}
 	.item_list{border-bottom: 1px solid black;}
 	.container{width:1024px}
-	table.cst_details *{
-		padding:0px;
+	table.cst_details {
+		padding:1px;
 	}
 	#footer_container{
 		  position: relative;
@@ -68,65 +68,69 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 <body>
 	<div class="container" >
 		<div class="section">
-			<div class="row">
-				<div class="col s6 ">
-					<div class="row">
-						<?php
-						if (!empty($_GET["order_id"])){
-						$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
-						}
-						$vendor_sql="SELECT * 
-						FROM orders_table 
-						JOIN vendor ON vendor.vendor_id=orders_table.vendor_id
-						JOIN vendor_address ON vendor.vendor_id=vendor_address.vendor_id
-						WHERE orders_table.order_id='$order_id'";
-
-						$vendor_result=mysqli_query($conn,$vendor_sql);
-						if (mysqli_num_rows($vendor_result) > 0) {
-							while($row = mysqli_fetch_assoc($vendor_result)) {
-								$vendor_name=$row['vendor_name'];
-								$vendor_address=$row['address'];
-								$vendor_bankaccount=$row['konto'];
-								$vendor_telephone=$row['phone'];
-								$vendor_email=$row['email'];
-								$vendor_reg_nbr=$row['rg_kood'];
-								$vendor_eu_vat_nb=$row['eu_vat_nb'];
-								echo '<div class="col s12 " ><div ><h3>'.$invoice_str.' : '. $row['order_number'].'</h3><p>'.$date_str.' '.date("d.m.y").'</p></div></div></div></div><div class="col s6"><div class="row"><div class="col s12"><h3 >'.$row['vendor_name'].'</h3><p>'.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'</p></div></div></div>';	
-								}		
-						}
-						?>
-			</div>
-			<div class="row">
-				<div class="col s6">
-
-					<div class="col s12 ">
-						<?php
-						if (!empty($_GET["order_id"])){
-						$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
-						}
-						$customer_sql="SELECT * 
-						FROM orders_table 
-						JOIN customers ON customers.customer_id=orders_table.customer_id
-						WHERE orders_table.order_id='$order_id'";
-						$customer_result=mysqli_query($conn,$customer_sql);
-						if (mysqli_num_rows($customer_result) > 0) {
-							while($row = mysqli_fetch_assoc($customer_result)) {
-								echo '<table class="cst_details">
-								<tr><td>'.$customer_str.'</td><td>'.$row["customer_name"].'</td></tr>
-								<tr><td>'.$address_str.'</td><td>'.$row["customer_address"].'</td></tr>
-								<tr><td>'.$tel_str.'</td><td>'.$row["customer_phone"].'</td></tr>
-								<tr><td>'.$email_str.'</td><td>'.$row["customer_mail"].'</td></tr>';
-								if($row["vat_id"]){ echo '<tr><td>'.$eu_vat_str.'</td><td>'.$row["vat_id"].'</td></tr>';};
-								echo '</table>';
-								}		
-						}
-						?>
-
-					</div>				
-				</div>
-				<div class="col s6 ">
-					<p class=""> <?php $today=date("d.m.y"); echo $paybefore_str.' '.date("d.m.y",strtotime("$today +1 week"));?></p>
-				</div>
+		<div class="row">
+			<table>
+    			<tr>
+    				<td>
+    
+    						<?php
+    						if (!empty($_GET["order_id"])){
+    						$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
+    						}
+    						$vendor_sql="SELECT * 
+    						FROM orders_table 
+    						JOIN vendor ON vendor.vendor_id=orders_table.vendor_id
+    						JOIN vendor_address ON vendor.vendor_id=vendor_address.vendor_id
+    						WHERE orders_table.order_id='$order_id'";
+    						$vendor_result=mysqli_query($conn,$vendor_sql);
+    						if (mysqli_num_rows($vendor_result) > 0) {
+    							while($row = mysqli_fetch_assoc($vendor_result)) {
+    								$vendor_name=$row['vendor_name'];
+    								$vendor_address=$row['address'];
+    								$vendor_bankaccount=$row['konto'];
+    								$vendor_telephone=$row['phone'];
+    								$vendor_email=$row['email'];
+    								$vendor_reg_nbr=$row['rg_kood'];
+    								$vendor_eu_vat_nb=$row['eu_vat_nb'];
+    								echo '       
+                         <h4>'.$invoice_str.' : '. $row['order_number'].'</h4>
+                         '.$date_str.' '.date("d.m.y").'                   
+                    </td>
+                    <td>
+                        <h4 >'.$row['vendor_name'].'</h4>
+                        '.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'
+                      </td>';	
+    								}		
+    						}
+    						?>
+    			</tr>
+			</table>
+		</div>
+		<div class="row">
+			<?php
+			if (!empty($_GET["order_id"])){
+			$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
+			}
+			$customer_sql="SELECT * 
+			FROM orders_table 
+			JOIN customers ON customers.customer_id=orders_table.customer_id
+			WHERE orders_table.order_id='$order_id'";
+			$customer_result=mysqli_query($conn,$customer_sql);
+			if (mysqli_num_rows($customer_result) > 0) {
+				while($row = mysqli_fetch_assoc($customer_result)) {
+					echo '<table class="cst_details">
+					<tr><td>'.$customer_str.'</td><td>'.$row["customer_name"].'</td></tr>
+					<tr><td>'.$address_str.'</td><td>'.$row["customer_address"].'</td></tr>
+					<tr><td>'.$tel_str.'</td><td>'.$row["customer_phone"].'</td></tr>
+					<tr><td>'.$email_str.'</td><td>'.$row["customer_mail"].'</td></tr>';
+					if($row["vat_id"]){ echo '<tr><td>'.$eu_vat_str.'</td><td>'.$row["vat_id"].'</td></tr>';};
+					echo '</table>';
+					}		
+			}
+			?>	
+			<table>
+				<tr><td><?php $today=date("d.m.y"); echo $paybefore_str.' '.date("d.m.y",strtotime("$today +1 week"));?></td></tr>
+			</table>		
 			</div>
 		</div>
 		<div class="section">
@@ -182,7 +186,6 @@ function price($price,$coeff){return number_format(round($coeff*$price,2),2);}
 				</div>
 			</div>
 		</div>
-	</div><!--END ROW -->
 	</div><!--END SECTION -->
 	<div class="section">
 		<div class="row">

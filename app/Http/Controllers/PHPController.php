@@ -5,11 +5,13 @@ use PDF;
 
 class PHPController extends Controller
 {
-    function generate_pdf() {
+    function print_invoice() {
         $data = [
             'foo' => 'bar'
         ];
+        $filename="../mpdf_invoice.pdf";
         $pdf = PDF::loadView('print_invoice', $data);
+        $pdf->save($filename);
         return $pdf->stream('document.pdf');
     }
 }
