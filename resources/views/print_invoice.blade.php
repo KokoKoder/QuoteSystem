@@ -18,9 +18,14 @@ if (!empty($_GET["lang"])){
 $total="0";
 $order_id="94";
 $coeff=1;
-$VAT_rate=0.2;
+if(isset($has_vat_id) && $lang=="fi"){
+    $VAT_rate=0;
+}else{
+    $VAT_rate=0.2;
+}
 $today=date("d.m.y");
 function price($price,$coeff){return round($coeff*$price,2);}
+function eur_format($price){return number_format($price,'2',',',' ');}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,12 +54,11 @@ function price($price,$coeff){return round($coeff*$price,2);}
 	  transform: translateY(-100%);
 	}
 	tr{border:0px;}
+	td{padding:2px;}
+	th{vertical-align:top;}
 	.item_list_header{border-bottom: 2px solid black;}
 	.item_list{border-bottom: 1px solid black;}
-	.container{width:1024px}
-	table.cst_details *{
-		padding:0px;
-	}
+	.container{width:1024px}}
 	#footer_container{
 		  position: relative;
 	min-height: 150px;
@@ -70,8 +74,7 @@ function price($price,$coeff){return round($coeff*$price,2);}
 	<div class="container" >
 		<div class="section">
 			<div class="row">
-				<div class="col s6 ">
-					<div class="row">
+				
 						<?php
 						if (!empty($_GET["order_id"])){
 						$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
@@ -95,32 +98,21 @@ function price($price,$coeff){return round($coeff*$price,2);}
 								$vendor_eu_vat_nb=$row['eu_vat_nb'];
 								if($vendor_name=="Furnest EE"){$index=(string)'-1';}
 								else{$index='';}
-								echo '<div class="col s12 " >
-                                        <div >
-                                            <h4>'.$invoice_str.': '. $row['order_number'].$index.'</h4>
-                                            <p>'.$date_str.': '.date("d.m.y").'<br>
+								echo '<table><tr><th><h4>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h4></th><th><h4>'.$row['company_name'].'</h4></th></tr><tr><td>
+                                            '.$date_str.': '.date("d.m.y").'<br>
                                             '. $paybefore_str.': '.date("d.m.y",strtotime("$today +1 week")).'<br>
-                                           '.$payment_condition_str.' '.$payment_condition.'</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col s6">
-                                <div class="row">
-                                    <div class="col s12">
-                                        <h3 >'.$row['company_name'].'</h3>
-                                        <p>'.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'</p>
-                                    </div>
-                                </div>
-                            </div>';	
+                                           '.$payment_condition_str.' '.$payment_condition.'
+                                    </td>
+                                    <td>
+                                        '.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'
+                                    </td></tr></table>';	
 								}		
 						}
 						?>
 			</div>
+		</div>
+		<div class="section">
 			<div class="row">
-				<div class="col s6">
-
-					<div class="col s12 ">
 						<?php
 						if (!empty($_GET["order_id"])){
 						$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
@@ -145,16 +137,12 @@ function price($price,$coeff){return round($coeff*$price,2);}
 						}
 						?>
 
-					</div>				
-				</div>
-				<div class="col s6 ">
-					<p class=""> </p>
-				</div>
+
 			</div>
 		</div>
+		<br><br><br>
 		<div class="section">
 			<div class="row">
-				<div class="col s12">
 					<table>
 						<tr class="item_list_header"><th>Nimetus</th><th>Kogus</th><th class="price_align">Hind €</th><th class="price_align">Kokku €</th></tr>
 						<?php
@@ -174,8 +162,8 @@ function price($price,$coeff){return round($coeff*$price,2);}
 							while($row = mysqli_fetch_assoc($result)) {
 							    $subtotal=$row["item_quantity"]*price($row["item_price"],$coeff);
 							    $total+=$subtotal;
-							    $subtotal=number_format($subtotal,2);
-							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1)).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
+							    $subtotal=number_format($subtotal,'2',',',' ');
+							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1),'2',',',' ').'</td><td class="price_align">'.$subtotal.'</td></tr>';	
 								}		
 						}
 						$sql2="SELECT * 
@@ -188,31 +176,28 @@ function price($price,$coeff){return round($coeff*$price,2);}
 							while($row = mysqli_fetch_assoc($result2)) {
 							    $subtotal=$row["item_quantity"]*price($row["custom_item_price"],$coeff);
 							    $total+=$subtotal;
-							    $subtotal=number_format($subtotal,2);
-							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2).'</td><td class="price_align">'.$subtotal.'</td></tr>';
+							    $subtotal=number_format($subtotal,'2',',',' ');
+							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),'2',',',' ').'</td><td class="price_align">'.$subtotal.'</td></tr>';
 								};		
 						}
+						$total_display=eur_format($total);
 						$VAT=$VAT_rate*$total;
 						$kogumaksumus=$VAT+$total;
-						$kogumaksumus_display=number_format($kogumaksumus,2,',',' ');
+						$kogumaksumus_display=eur_format($kogumaksumus);
 						$kogumaksumus=(float)$kogumaksumus;
-						$VAT=number_format($VAT,2);
-						
+						$VAT=number_format($VAT,'2',',',' ');
 						echo '<tr class="item_list"><td></td><td></td><td></td><td></td></tr>
-						<tr><td></td><td></td><td><b>Tooted kokku</b></td><td class="price_align"><b>'.$total.'</b></td></tr>';
-						if(!isset($has_vat_id) OR $lang=="ee"){echo '<tr class="item_list"><td></td><td></td><td><b>'.$VAT_str.'</b></td><td class="price_align">'.$VAT.'</td></tr>';}
-						else{echo '<tr class="item_list"><td></td><td></td><td><b>'.$no_vat.'</b></td><td class="price_align">'.$VAT.'</td></tr>';}
-						echo '<tr><td></td><td></td><td><b>Kogumaksumus käibemaksuga</b></td><td class="price_align"><b>'.$kogumaksumus_display.'</b></td></tr>';	
+						<tr><td></td><td></td><th>Tooted kokku</th><th class="price_align">'.$total_display.'</th></tr>';
+						if(isset($has_vat_id) && $lang=="fi"){echo '<tr class="item_list"><td></td><td></td><th>'.$no_vat.'</th><td class="price_align">'.$VAT.'</td></tr>';}
+						else{echo '<tr class="item_list"><td></td><td></td><td><b>'.$VAT_str.'</b></td><td class="price_align">'.$VAT.'</td></tr>';}
+						echo '<tr><td></td><td></td><th>Kogumaksumus käibemaksuga</th><th class="price_align">'.$kogumaksumus_display.'</th></tr>';	
 						if ($lang=="ee"){
 						    $ettemaks=$kogumaksumus/2;
-						    $ettemaks=number_format($ettemaks,2,',',' ');
-						    
-						    echo '<tr class="item_list"><td></td><td></td><td><b>'.$payment_condition.'</b></td><td class="price_align"><b>'.$ettemaks.'</b></td></tr>';
+						    $ettemaks=number_format($ettemaks,'2',',',' ');
+						    echo '<tr class="item_list"><td></td><td></td><th>'.$payment_condition.'</th><td class="price_align"><b>'.$ettemaks.'</b></td></tr>';
 						}
-						?>
-						
+						?>		
 					</table>
-				</div>
 			</div>
 		</div>
 	</div><!--END ROW -->
@@ -228,7 +213,6 @@ function price($price,$coeff){return round($coeff*$price,2);}
 	<div class="section" id="footer_container">
 	<hr>
 	<div class="row" id="footer">
-	
 	<?php	echo $vendor_name.' '. $vendor_address.' '.$bankaccount_str.': '.$vendor_bankaccount.'<br>'.$tel_str.':'.$vendor_telephone.' '.$email_str.': '.$vendor_email.'<br>'.$rg_kood_str.': '.$vendor_reg_nbr.' '.$eu_vat_str.': '.$vendor_eu_vat_nb; ?>
 	</div>
 	</div>

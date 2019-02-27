@@ -47,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::any('/edit_vendor_details','HomeController@edit_vendor_details')->name('edit_vendor_details');
 	Route::get('/print_invoice','HomeController@print_invoice')->name('print_invoice');
 	Route::get('/print_invoice_2','HomeController@print_invoice_2')->name('print_invoice_2');
+	Route::get('/generate_pdf','HomeController@generate_pdf')->name('generate_pdf');
 	Route::any('/edit_custom_order_item','HomeController@edit_custom_order_item')->name('edit_custom_order_item');
 	Route::any('/print_confirmation','HomeController@print_confirmation')->name('print_confirmation');
 	Route::any('/items_view','HomeController@items_view')->name('items_view');

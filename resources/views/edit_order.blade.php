@@ -107,22 +107,22 @@
 					<tr>
 						<td>
 						@php 
-							echo $customer_name;
+							echo htmlspecialchars($customer_name);
 						@endphp
 						</td>
 						<td>
 						@php
-							echo $customer_address;
+							echo htmlspecialchars($customer_address);
 						@endphp
 						</td>
 						<td>
 						@php 
-							echo $customer_phone;
+							echo htmlspecialchars($customer_phone);
 						@endphp
 						</td>
 						<td>
 						@php 
-							echo $customer_mail;
+							echo htmlspecialchars($customer_mail);
 						@endphp</td>
 					</tr>
 				</table>
@@ -144,12 +144,12 @@
 					 else{
 						 $selected="";
 					 }
-					 echo '<option '.$selected.' value="'.$vendor_id.'">'.$vendors_name.'</option>';
+					 echo '<option '.$selected.' value="'.$vendor_id.'">'.htmlspecialchars($vendors_name).'</option>';
 				 }
 				@endphp
 					  
 				</select>
-				<input type="hidden" name="vendor_id" id="vendor_hidden" value="@php echo($vendor_id);@endphp" />
+				<input type="hidden" name="vendor_id" id="vendor_hidden" value="@php echo(htmlspecialchars($vendor_id));@endphp" />
 			</div>
 			<div class="input-field col s4">
 				<b>Order Status</b>
@@ -163,14 +163,14 @@
 					 else{
 						 $selected="";
 					 }
-					 echo '<option '.$selected.' value="'.$order_status_id.'">'.$order_status_name.'</option>';
+					 echo '<option '.$selected.' value="'.$order_status_id.'">'.htmlspecialchars($order_status_name).'</option>';
 				 }
 				@endphp
 				</select>
 			</div>
 			<div class="input-field col s4">
 			<b>Order date</b>
-			<input id="order_date" type="text" class="datepicker"  name="order_date" value="@php echo $order_date;@endphp">
+			<input id="order_date" type="text" class="datepicker"  name="order_date" value="@php echo htmlspecialchars($order_date);@endphp">
 			</div>
 		  </div>
 		  <button class="btn" type="submit"><i class="material-icons">done</i></button>
@@ -214,7 +214,7 @@
 		};
 
 			function print_invoice(){
-				var print_url='@php echo route('print_invoice').'?order_id='.$order_id.'&lang='.$lang;@endphp';
+				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&order_number='.htmlspecialchars($order_number).'&invoice_2=FALSE&proforma=FALSE';@endphp';
 				if(!$('#printLinkIframe')[0]) {
 					console.log(print_url);
 					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
@@ -232,7 +232,7 @@
 			}
 			
 			function print_invoice_2(){
-				var print_url='@php echo route('print_invoice_2').'?order_id='.$order_id.'&lang='.$lang;@endphp';
+				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&order_number='.htmlspecialchars($order_number).'&invoice_2=TRUE&proforma=FALSE';@endphp';
 				if(!$('#printLinkIframe')[0]) {
 					console.log(print_url);
 					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
@@ -250,7 +250,7 @@
 			}
 			
 			function print_confirmation(){
-				var print_url='@php echo route('print_confirmation').'?order_id='.$order_id.'&lang='.$lang;@endphp';
+				var print_url='@php echo route('print_confirmation').'?order_id='.$order_id.'&lang='.$lang.'&order_number='.htmlspecialchars($order_number).'&invoice_2=FALSE&proforma=FALSE';@endphp';
 				if(!$('#printLinkIframe')[0]) {
 					console.log(print_url);
 					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';

@@ -18,7 +18,12 @@ if (!empty($_GET["lang"])){
 $total="0";
 $order_id=94;
 $coeff=1;
-$VAT_rate=0.2;
+if(isset($has_vat_id) && $lang=="fi"){
+    $VAT_rate=0;
+}else{
+    $VAT_rate=0.2;
+}
+
 $today=date("d.m.y");
 function price($price,$coeff){return round($coeff*$price,2);}
 ?>
@@ -48,13 +53,12 @@ function price($price,$coeff){return round($coeff*$price,2);}
 	  -ms-transform: translateY(-100%);
 	  transform: translateY(-100%);
 	}
-	tr{border:0px;}
+		tr{border:0px;}
+	td{padding:2px;}
+	th{vertical-align:top;}
 	.item_list_header{border-bottom: 2px solid black;}
 	.item_list{border-bottom: 1px solid black;}
 	.container{width:1024px}
-	table.cst_details *{
-		padding:0px;
-	}
 	#footer_container{
 		  position: relative;
 	min-height: 150px;
@@ -70,8 +74,7 @@ function price($price,$coeff){return round($coeff*$price,2);}
 	<div class="container" >
 		<div class="section">
 			<div class="row">
-				<div class="col s6 ">
-					<div class="row">
+				
 						<?php
 						if (!empty($_GET["order_id"])){
 						$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
@@ -93,32 +96,17 @@ function price($price,$coeff){return round($coeff*$price,2);}
 								$vendor_email=$row['email'];
 								$vendor_reg_nbr=$row['rg_kood'];
 								$vendor_eu_vat_nb=$row['eu_vat_nb'];
-								echo '<div class="col s12 " >
-                                        <div >
-                                            <h4>'.$invoice_str.': '. $row['order_number'].'-2</h4>
-                                            <p>'.$date_str.': '.date("d.m.y").'<br>
-                                            '. $paybefore_str.': '.date("d.m.y",strtotime("$today +1 week")).'<br>
-                                           '.$payment_condition_str.' '.$final_amount_str.'</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col s6">
-                                <div class="row">
-                                    <div class="col s12">
-                                        <h3 >'.$row['company_name'].'</h3>
-                                        <p>'.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'</p>
-                                    </div>
-                                </div>
-                            </div>';	
+								echo '<table><tr><th><h4>'.$invoice_str.': '. $row['order_number'].'-2</h4></th><th><h3 >'.$row['company_name'].'</h3></th></tr>
+                                      <tr><td>'.$date_str.': '.date("d.m.y").'<br>'. $paybefore_str.': '.date("d.m.y",strtotime("$today +1 week")).'<br>'.$payment_condition_str.' '.$final_amount_str.'</td>
+                                      <td>'.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'</td></tr></table>';	
 								}		
 						}
 						?>
 			</div>
+		</div>
+		<div class="section">
 			<div class="row">
-				<div class="col s6">
-
-					<div class="col s12 ">
+				
 						<?php
 						if (!empty($_GET["order_id"])){
 						$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
@@ -142,17 +130,10 @@ function price($price,$coeff){return round($coeff*$price,2);}
 								}		
 						}
 						?>
-
-					</div>				
-				</div>
-				<div class="col s6 ">
-					<p class=""> </p>
-				</div>
 			</div>
 		</div>
 		<div class="section">
 			<div class="row">
-				<div class="col s12">
 					<table>
 						<tr class="item_list_header"><th>Nimetus</th><th>Kogus</th><th class="price_align">Hind €</th><th class="price_align">Kokku €</th></tr>
 						<?php
@@ -197,20 +178,18 @@ function price($price,$coeff){return round($coeff*$price,2);}
 						$VAT=number_format($VAT,2);
 
 						echo '<tr class="item_list"><td></td><td></td><td></td><td></td></tr>
-						<tr><td></td><td></td><td><b>Tooted kokku</b></td><td class="price_align"><b>'.$total.'</b></td></tr>';
-						if(isset($has_vat_id) && $lang=="fi"){echo '<tr class="item_list"><td></td><td></td><td><b>'.$VAT_str.'</b></td><td class="price_align">'.$VAT.'</td></tr>';}
-						else{echo '<tr class="item_list"><td></td><td></td><td><b>'.$no_vat.'</b></td><td class="price_align">'.$VAT.'</td></tr>';}
-						echo '<tr><td></td><td></td><td><b>Kogumaksumus käibemaksuga</b></td><td class="price_align"><b>'.$kogumaksumus_display.'</b></td></tr>';	
+						<tr><td></td><td></td><th>Tooted kokku</th><td class="price_align"><b>'.$total.'</b></td></tr>';
+						if(isset($has_vat_id) && $lang=="fi"){echo '<tr class="item_list"><td></td><td></td><th>'.$no_vat.'</th><td class="price_align">'.$VAT.'</td></tr>';}
+						else{echo '<tr class="item_list"><td></td><td></td><th>'.$VAT_str.'</th><td class="price_align">'.$VAT.'</td></tr>';}
+						echo '<tr><td></td><td></td><th>Kogumaksumus käibemaksuga</th><td class="price_align"><b>'.$kogumaksumus_display.'</b></td></tr>';	
 						if ($lang=="ee"){
 						    $ettemaks=$kogumaksumus/2;
 						    $ettemaks=number_format($ettemaks,2,',',' ');
-			
-						    echo '<tr class="item_list"><td></td><td></td><td><b>'.$final_amount_str.'</b></td><td class="price_align"><b>'.$ettemaks.'</b></td></tr>';
+						    echo '<tr class="item_list"><td></td><td></td><th>'.$final_amount_str.'</th><td class="price_align"><b>'.$ettemaks.'</b></td></tr>';
 						}
 						?>
 						
 					</table>
-				</div>
 			</div>
 		</div>
 	</div><!--END ROW -->

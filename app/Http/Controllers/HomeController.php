@@ -6,6 +6,8 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Item;
+use PDF;
+
 class HomeController extends Controller
 {
 
@@ -137,6 +139,28 @@ class HomeController extends Controller
 	           'package_height'=>$request->input('package_height'),
 	           'item_per_pack'=>$request->input('item_per_pack')]);
         return redirect()->back();
+	}
+	public function generate_pdf(){
+	    $is_invoice_2=$_GET['invoice_2'];
+	    $is_proforma=$_GET['proforma'];
+	    $filename=$_GET['order_number'];
+	    $data = [
+	        'foo' => 'bar'
+	    ];
+	    if ($is_invoice_2==TRUE){
+	        $pdf = PDF::loadView('print_invoice_2', $data);
+	        $pdf->save('../resources/invoice/'.$filename.'-2.pdf');
+	    }
+	    elseif($is_proforma==TRUE){
+	        $pdf = PDF::loadView('print_confirmation', $data);
+	        $pdf->save('../resources/confirmation/'.$filename.'.pdf');
+	    }
+	    else{
+	       $pdf = PDF::loadView('print_invoice', $data);
+	       $pdf->save('../resources/invoice/'.$filename.'.pdf');
+	    }
+	    return $pdf->stream('document.pdf');
+	    
 	}
 }
 ?>
