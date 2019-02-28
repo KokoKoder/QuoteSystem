@@ -28,9 +28,7 @@ function price($price,$coeff){return round($coeff*$price,2);}
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <title>Integrated Order Management Tool </title>
-
   <!-- CSS  -->
-
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection,print"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection,print"/>
@@ -49,6 +47,8 @@ function price($price,$coeff){return round($coeff*$price,2);}
 	  transform: translateY(-100%);
 	}
 	tr{border:0px;}
+	td{padding:2px;}
+	th{vertical-align:top;}
 	.item_list_header{border-bottom: 2px solid black;}
 	.item_list{border-bottom: 1px solid black;}
 	.container{width:1024px}
@@ -59,73 +59,76 @@ function price($price,$coeff){return round($coeff*$price,2);}
 		  position: relative;
 	min-height: 150px;
 	}
-#footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
+    #footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
   </style>
 </head>
 <body>
 	<div class="container" >
 		<div class="section">
 			<div class="row">
+				<?php
+				if (!empty($_GET["order_id"])){
+				$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
+				}
+				$vendor_sql="SELECT * 
+				FROM orders_table 
+				JOIN vendor ON vendor.vendor_id=orders_table.vendor_id
+				JOIN vendor_address ON vendor.vendor_id=vendor_address.vendor_id
+				WHERE orders_table.order_id='$order_id'";
 
-						<?php
-						if (!empty($_GET["order_id"])){
-						$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
-						}
-						$vendor_sql="SELECT * 
-						FROM orders_table 
-						JOIN vendor ON vendor.vendor_id=orders_table.vendor_id
-						JOIN vendor_address ON vendor.vendor_id=vendor_address.vendor_id
-						WHERE orders_table.order_id='$order_id'";
-
-						$vendor_result=mysqli_query($conn,$vendor_sql);
-						if (mysqli_num_rows($vendor_result) > 0) {
-							while($row = mysqli_fetch_assoc($vendor_result)) {
-							    $vendor_name=$row['vendor_name'];
-								$company_name=$row['company_name'];
-								$vendor_address=$row['address'];
-								$vendor_bankaccount=$row['konto'];
-								$vendor_telephone=$row['phone'];
-								$vendor_email=$row['email'];
-								$vendor_reg_nbr=$row['rg_kood'];
-								$vendor_eu_vat_nb=$row['eu_vat_nb'];
-								echo '<table><tr><th><h3>'.$order_confirmation_str.': '. $row['order_number'].'</h3></th><th><h3 >'.$row['company_name'].'</h3></th></tr>
-                                <tr><td>'.$date_str.': '.date("d.m.y").'<br>'. $paybefore_str.': '.date("d.m.y",strtotime("$today +1 week")).'<br>
-                                 '.$payment_condition_str.' '.$confirmation_condition.'</td>
-                                    <td>'.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'</td>
-                                    </tr></table>';	
-								}		
-						}
-						?>
-			<div class="row">
-						<?php
-						if (!empty($_GET["order_id"])){
-						$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
-						}
-						$customer_sql="SELECT * 
-						FROM orders_table 
-						JOIN customers ON customers.customer_id=orders_table.customer_id
-						WHERE orders_table.order_id='$order_id'";
-						$customer_result=mysqli_query($conn,$customer_sql);
-						if (mysqli_num_rows($customer_result) > 0) {
-							while($row = mysqli_fetch_assoc($customer_result)) {
-							    if($row["vat_id"]){$has_vat_id=1;};
-							    if(isset($has_vat_id) && $lang=="fi"){$has_vat_id=1;$VAT_rate=0;};
-								echo '<table class="cst_details">
-								<tr><td>'.$customer_str.'</td><td>'.$row["customer_name"].'</td></tr>
-								<tr><td>'.$address_str.'</td><td>'.$row["customer_address"].'</td></tr>
-								<tr><td>'.$tel_str.'</td><td>'.$row["customer_phone"].'</td></tr>
-								<tr><td>'.$email_str.'</td><td>'.$row["customer_mail"].'</td></tr>';
-								if($row["vat_id"]){ echo '<tr><td>'.$eu_vat_str.'</td><td>'.$row["vat_id"].'</td></tr>';};
-								echo '</table>';
-								}		
-						}
-						?>
+				$vendor_result=mysqli_query($conn,$vendor_sql);
+				if (mysqli_num_rows($vendor_result) > 0) {
+					while($row = mysqli_fetch_assoc($vendor_result)) {
+					    $vendor_name=$row['vendor_name'];
+						$company_name=$row['company_name'];
+						$vendor_address=$row['address'];
+						$vendor_bankaccount=$row['konto'];
+						$vendor_telephone=$row['phone'];
+						$vendor_email=$row['email'];
+						$vendor_reg_nbr=$row['rg_kood'];
+						$vendor_eu_vat_nb=$row['eu_vat_nb'];
+						echo '<table><tr><th style="width:50%"><h5>'.$order_confirmation_str.': '. $row['order_number'].'</h5></th><th> </th><th><h5 >'.$row['company_name'].'</h5></th></tr>
+                        <tr><td>'.$date_str.': '.date("d.m.y").'<br>'. $paybefore_str.': '.date("d.m.y",strtotime("$today +1 week")).'<br>
+                         '.$payment_condition_str.' '.$confirmation_condition.'</td><td> </td>
+                            <td>'.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'</td>
+                            </tr></table>';	
+						}		
+				}
+				?>
 			</div>
 		</div>
+		<div class="section">
+			<div class="row">
+				<?php
+				if (!empty($_GET["order_id"])){
+				$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
+				}
+				$customer_sql="SELECT * 
+				FROM orders_table 
+				JOIN customers ON customers.customer_id=orders_table.customer_id
+				WHERE orders_table.order_id='$order_id'";
+				$customer_result=mysqli_query($conn,$customer_sql);
+				if (mysqli_num_rows($customer_result) > 0) {
+					while($row = mysqli_fetch_assoc($customer_result)) {
+					    if($row["vat_id"]){$has_vat_id=1;};
+					    if(isset($has_vat_id) && $lang=="fi"){$has_vat_id=1;$VAT_rate=0;};
+						echo '<table class="cst_details">
+						<tr><td>'.$customer_str.'</td><td>'.$row["customer_name"].'</td></tr>
+						<tr><td>'.$address_str.'</td><td>'.$row["customer_address"].'</td></tr>
+						<tr><td>'.$tel_str.'</td><td>'.$row["customer_phone"].'</td></tr>
+						<tr><td>'.$email_str.'</td><td>'.$row["customer_mail"].'</td></tr>';
+						if($row["vat_id"]){ echo '<tr><td>'.$eu_vat_str.'</td><td>'.$row["vat_id"].'</td></tr>';};
+						echo '</table>';
+						}		
+				}
+				?>
+			</div>
+		</div>
+		<br><br>
 		<div class="section">
 			<div class="row">
 					<table>
@@ -194,7 +197,6 @@ function price($price,$coeff){return round($coeff*$price,2);}
 	<div class="section" id="footer_container">
 	<hr>
 	<div class="row" id="footer">
-	
 	<?php	echo $vendor_name.' '. $vendor_address.' '.$bankaccount_str.': '.$vendor_bankaccount.'<br>'.$tel_str.':'.$vendor_telephone.' '.$email_str.': '.$vendor_email.'<br>'.$rg_kood_str.': '.$vendor_reg_nbr.' '.$eu_vat_str.': '.$vendor_eu_vat_nb; ?>
 	</div>
 	</div>

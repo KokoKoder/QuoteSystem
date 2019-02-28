@@ -232,7 +232,7 @@
 			}
 			
 			function print_invoice_2(){
-				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&order_number='.htmlspecialchars($order_number).'&invoice_2=TRUE&proforma=FALSE';@endphp';
+				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&order_number='.htmlspecialchars($order_number).'&invoice_2=is_invoice_2&proforma=FALSE';@endphp';
 				if(!$('#printLinkIframe')[0]) {
 					console.log(print_url);
 					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
@@ -250,7 +250,7 @@
 			}
 			
 			function print_confirmation(){
-				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&invoice_2=FALSE&proforma=TRUE&order_number='.htmlspecialchars($order_number);@endphp';
+				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&order_number='.htmlspecialchars($order_number).'&invoice_2=FALSE&proforma=is_proforma';@endphp';
 				if(!$('#printLinkIframe')[0]) {
 					console.log(print_url);
 					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
