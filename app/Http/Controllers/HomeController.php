@@ -105,6 +105,9 @@ class HomeController extends Controller
 	public function print_invoice_2(){
 	    return view('print_invoice_2');
 	}
+	public function print_full_invoice(){
+	    return view('print_full_invoice');
+	}
 	public function print_confirmation(){
 	    return view('print_confirmation');
 	}
@@ -143,6 +146,7 @@ class HomeController extends Controller
 	public function generate_pdf(){
 	    $is_invoice_2=$_GET['invoice_2'];
 	    $is_proforma=$_GET['proforma'];
+	    $is_full=$_GET['pay_full'];
 	    $filename=$_GET['order_number'];
 	    $data = [
 	        'foo' => 'bar'
@@ -171,6 +175,19 @@ class HomeController extends Controller
 	        }
 	        else{
 	            $pdf->save('../resources/confirmation/'.$filename.'.pdf');
+	        }
+	    }
+	    elseif($is_full="full"){
+	        $pdf = PDF::loadView('print_full_invoice', $data);
+	        if(file_exists('../resources/invoice/'.$filename.'.pdf')){
+	            $i=1;
+	            while(file_exists('../resources/invoice/'.$filename.$i.'.pdf')){
+	                $i+=1;
+	            }
+	            $pdf->save('../resources/invoice/'.$filename.$i.'.pdf');
+	        }
+	        else{
+	            $pdf->save('../resources/invoice/'.$filename.'.pdf');
 	        }
 	    }
 	    else{
