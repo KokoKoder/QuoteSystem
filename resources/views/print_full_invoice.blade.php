@@ -95,7 +95,7 @@ function eur_format($value){return number_format($value,2,',',' ');}
 						$vendor_email=$row['email'];
 						$vendor_reg_nbr=$row['rg_kood'];
 						$vendor_eu_vat_nb=$row['eu_vat_nb'];
-						if($vendor_name=="Furnest EE"){$index=(string)'-1';}
+						if($vendor_name=="Furnest EE"){$index=(string)'';}
 						else{$index='';}
 						echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th><h5>'.$row['company_name'].'</h5></th></tr><tr><td>
                                     '.$date_str.': '.date("d.m.y").'<br>
@@ -125,7 +125,7 @@ function eur_format($value){return number_format($value,2,',',' ');}
 					    if($row["vat_id"]){$has_vat_id=1;};
 					    if(isset($has_vat_id) && $lang=="fi"){$has_vat_id=1;$VAT_rate=0;};
 						echo '<table class="cst_details">
-						<tr><td>'.$customer_str.'</td><td>'.$row["customer_name"].'</td></tr>
+						<tr><td style="width:20%">'.$customer_str.'</td><td>'.$row["customer_name"].'</td></tr>
 						<tr><td>'.$address_str.'</td><td>'.$row["customer_address"].'</td></tr>
 						<tr><td>'.$tel_str.'</td><td>'.$row["customer_phone"].'</td></tr>
 						<tr><td>'.$email_str.'</td><td>'.$row["customer_mail"].'</td></tr>';
