@@ -95,7 +95,12 @@ function eur_format($value){return number_format($value,2,',',' ');}
 					    $vendor_email=htmlspecialchars($row['email']);
 					    $vendor_reg_nbr=htmlspecialchars($row['rg_kood']);
 					    $vendor_eu_vat_nb=htmlspecialchars($row['eu_vat_nb']);
-						$pay_before=date("d.m.y",strtotime (htmlspecialchars($row['pay_before'])));
+					    if(!empty($pay_before)){
+					        $pay_before=date("d.m.y",htmlspecialchars($row['pay_before']));
+					    }else{
+					        $pay_before=date("d.m.y",strtotime ("today + 1 week" ));
+					        
+					    }
 						if($vendor_name=="Furnest EE"){$index=(string)'';}
 						else{$index='';}
 						echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th><h5>'.$company_name.'</h5></th></tr><tr><td>

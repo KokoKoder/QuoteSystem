@@ -96,9 +96,14 @@ echo $lang;
 					    $vendor_email=htmlspecialchars($row['email']);
 					    $vendor_reg_nbr=htmlspecialchars($row['rg_kood']);
 					    $vendor_eu_vat_nb=htmlspecialchars($row['eu_vat_nb']);
-					    $pay_before=date("d.m.y",strtotime (htmlspecialchars($row['pay_before'])));
+					    if(!empty($pay_before)){
+					        $pay_before=date("d.m.y",htmlspecialchars($row['pay_before']));
+					    }else{
+					        $pay_before=date("d.m.y",strtotime ("today + 1 week" ));
+					        
+					    }
 					    echo '<table><tr><th><h5 style="width:50%">'.$invoice_str.': '. $row['order_number'].'-2</h5></th><th><h5 >'.$company_name.'</h5></th></tr>
-                              <tr><td>'.$date_str.': '.date("d.m.y").'<br>'. $paybefore_str.': '.date("d.m.y",strtotime("$today +1 week")).'<br>'.$payment_condition_str.' '.$final_amount_str.'</td>
+                              <tr><td>'.$date_str.': '.date("d.m.y").'<br>'. $paybefore_str.': '.$pay_before.'<br>'.$payment_condition_str.' '.$final_amount_str.'</td>
                               <td>'.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'</td></tr></table>';	
 						}		
 				}

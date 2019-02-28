@@ -177,7 +177,7 @@ class HomeController extends Controller
 	            $pdf->save('../resources/confirmation/'.$filename.'.pdf');
 	        }
 	    }
-	    elseif($is_full="full"){
+	    elseif($is_full=="full"){
 	        $pdf = PDF::loadView('print_full_invoice', $data);
 	        if(file_exists('../resources/invoice/'.$filename.'.pdf')){
 	            $i=1;

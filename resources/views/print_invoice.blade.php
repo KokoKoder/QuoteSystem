@@ -77,7 +77,6 @@ function eur_format($value){return number_format($value,2,',',' ');}
 	<div class="container" >
 		<div class="section">
 			<div class="row">
-			if ($lang=="ee"){echo "test string detect EE" ;}
 				<?php
 				if (!empty($_GET["order_id"])){
 				$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
@@ -99,7 +98,12 @@ function eur_format($value){return number_format($value,2,',',' ');}
 					    $vendor_email=htmlspecialchars($row['email']);
 					    $vendor_reg_nbr=htmlspecialchars($row['rg_kood']);
 					    $vendor_eu_vat_nb=htmlspecialchars($row['eu_vat_nb']);
-					    $pay_before=date("d.m.y",strtotime (htmlspecialchars($row['pay_before'])));
+					    if(!empty($pay_before)){
+					        $pay_before=date("d.m.y",htmlspecialchars($row['pay_before']));
+					    }else{
+					        $pay_before=date("d.m.y",strtotime ("today + 1 week" ));
+					      
+					    }
 						if($vendor_name=="Furnest EE"){$index=(string)'-1';}
 						else{$index='';}
 						echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th><h5>'.$company_name.'</h5></th></tr><tr><td>
@@ -192,12 +196,11 @@ function eur_format($value){return number_format($value,2,',',' ');}
 						if(isset($has_vat_id) && $lang=="fi"){echo '<tr class="item_list"><td></td><td></td><th>'.$no_vat.'</th><td class="price_align">'.$VAT.'</td></tr>';}
 						else{echo '<tr class="item_list"><td></td><td></td><td><b>'.$VAT_str.'</b></td><td class="price_align">'.$VAT.'</td></tr>';}
 						echo '<tr><td></td><td></td><th>Kogumaksumus käibemaksuga</th><th class="price_align">'.$kogumaksumus_display.'</th></tr>';	
-						if ($vendor_name=="Furnest EE"){
+						if ($lang=="ee"){
 						    $ettemaks=$kogumaksumus/2;
 						    $ettemaks=number_format($ettemaks,2,',',' ');
 						    echo '<tr class="item_list"><td></td><td></td><th>'.$payment_condition.'</th><td class="price_align"><b>'.$ettemaks.'</b></td></tr>';
 						}
-						if ($lang=="ee"){echo "test string detect EE" ;}
 						?>		
 					</table>
 			</div>

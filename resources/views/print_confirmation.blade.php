@@ -91,11 +91,16 @@ function price($price,$coeff){return round($coeff*$price,2);}
 						$vendor_email=htmlspecialchars($row['email']);
 						$vendor_reg_nbr=htmlspecialchars($row['rg_kood']);
 						$vendor_eu_vat_nb=htmlspecialchars($row['eu_vat_nb']);
-						$pay_before=date("d.m.y",strtotime (htmlspecialchars($row['pay_before'])));
-						$order_date=date("d.m.y",strtotime (htmlspecialchars($row['order_date'])));
-						echo '<table><tr><th style="width:50%"><h5>'.$order_confirmation_str.': '. $row['order_number'].'</h5></th><th> </th><th><h5 >'.$company_name.'</h5></th></tr>
+						if(!empty($pay_before)){
+						    $pay_before=date("d.m.y",htmlspecialchars($row['pay_before']));
+						}else{
+						    $pay_before=date("d.m.y",strtotime ("today + 1 week" ));
+						    
+						}
+						$order_date=date("d.m.y");
+						echo '<table><tr><th style="width:50%"><h5>'.$order_confirmation_str.': <br>'. $row['order_number'].'</h5></th><th><h5 >'.$company_name.'</h5></th></tr>
                         <tr><td>'.$date_str.': '.$order_date.'<br>'. $paybefore_str.': '.$pay_before.'<br>
-                         '.$payment_condition_str.' '.$confirmation_condition.'</td><td> </td>
+                         '/*.$payment_condition_str*/.' './*$confirmation_condition.*/'</td>
                             <td>'.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'</td>
                             </tr></table>';	
 						}		
