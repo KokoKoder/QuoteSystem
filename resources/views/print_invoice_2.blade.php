@@ -153,8 +153,8 @@ function price($price,$coeff){return round($coeff*$price,2);}
 							while($row = mysqli_fetch_assoc($result)) {
 							    $subtotal=$row['item_quantity']*price($row['item_price'],$coeff);
 							    $total+=$subtotal;
-							    $subtotal=number_format($subtotal,2);
-							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1),2).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
+							    $subtotal=number_format($subtotal,2,',',' ');
+							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1),2,',',' ').'</td><td class="price_align">'.$subtotal.'</td></tr>';	
 								}		
 						}
 						$sql2="SELECT * 
@@ -167,18 +167,19 @@ function price($price,$coeff){return round($coeff*$price,2);}
 							while($row = mysqli_fetch_assoc($result2)) {
 							    $subtotal=$row['item_quantity']*price($row['custom_item_price'],$coeff);
 							    $total+=$subtotal;
-							    $subtotal=number_format($subtotal,2);
-							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2).'</td><td class="price_align">'.$subtotal.'</td></tr>';
+							    $subtotal=number_format($subtotal,2,',',' ');
+							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2,',',' ').'</td><td class="price_align">'.$subtotal.'</td></tr>';
 								};		
 						}
+						$total_display=number_format($total,2,',',' ');
 						$VAT=$VAT_rate*$total;
 						$kogumaksumus=$VAT+$total;
 						$kogumaksumus_display=number_format($kogumaksumus,2,',',' ');
 						$kogumaksumus=(float)$kogumaksumus;
-						$VAT=number_format($VAT,2);
+						$VAT=number_format($VAT,2,',',' ');
 
 						echo '<tr class="item_list"><td></td><td></td><td></td><td></td></tr>
-						<tr><td></td><td></td><th>Tooted kokku</th><td class="price_align"><b>'.$total.'</b></td></tr>';
+						<tr><td></td><td></td><th>Tooted kokku</th><td class="price_align"><b>'.$total_display.'</b></td></tr>';
 						if(isset($has_vat_id) && $lang=="fi"){echo '<tr class="item_list"><td></td><td></td><th>'.$no_vat.'</th><td class="price_align">'.$VAT.'</td></tr>';}
 						else{echo '<tr class="item_list"><td></td><td></td><th>'.$VAT_str.'</th><td class="price_align">'.$VAT.'</td></tr>';}
 						echo '<tr><td></td><td></td><th>Kogumaksumus käibemaksuga</th><td class="price_align"><b>'.$kogumaksumus_display.'</b></td></tr>';	

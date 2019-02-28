@@ -25,7 +25,7 @@ if(isset($has_vat_id) && $lang=="fi"){
 }
 $today=date("d.m.y");
 function price($price,$coeff){return round($coeff*$price,2);}
-function eur_format($price){return number_format($price,'2',',',' ');}
+function eur_format($value){return number_format($value,2,',',' ');}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -162,8 +162,8 @@ function eur_format($price){return number_format($price,'2',',',' ');}
 							while($row = mysqli_fetch_assoc($result)) {
 							    $subtotal=$row["item_quantity"]*price($row["item_price"],$coeff);
 							    $total+=$subtotal;
-							    $subtotal=number_format($subtotal,'2',',',' ');
-							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1),'2',',',' ').'</td><td class="price_align">'.$subtotal.'</td></tr>';	
+							    $subtotal_display=number_format($subtotal,2,',',' ');
+							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1),2,',',' ').'</td><td class="price_align">'.$subtotal_display.'</td></tr>';	
 								}		
 						}
 						$sql2="SELECT * 
@@ -176,8 +176,8 @@ function eur_format($price){return number_format($price,'2',',',' ');}
 							while($row = mysqli_fetch_assoc($result2)) {
 							    $subtotal=$row["item_quantity"]*price($row["custom_item_price"],$coeff);
 							    $total+=$subtotal;
-							    $subtotal=number_format($subtotal,'2',',',' ');
-							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),'2',',',' ').'</td><td class="price_align">'.$subtotal.'</td></tr>';
+							    $subtotal_display=number_format($subtotal,2,',',' ');
+							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2,',',' ').'</td><td class="price_align">'.$subtotal_display.'</td></tr>';
 								};		
 						}
 						$total_display=eur_format($total);
@@ -185,7 +185,7 @@ function eur_format($price){return number_format($price,'2',',',' ');}
 						$kogumaksumus=$VAT+$total;
 						$kogumaksumus_display=eur_format($kogumaksumus);
 						$kogumaksumus=(float)$kogumaksumus;
-						$VAT=number_format($VAT,'2',',',' ');
+						$VAT=number_format($VAT,2,',',' ');
 						echo '<tr class="item_list"><td></td><td></td><td></td><td></td></tr>
 						<tr><td></td><td></td><th>Tooted kokku</th><th class="price_align">'.$total_display.'</th></tr>';
 						if(isset($has_vat_id) && $lang=="fi"){echo '<tr class="item_list"><td></td><td></td><th>'.$no_vat.'</th><td class="price_align">'.$VAT.'</td></tr>';}
@@ -193,7 +193,7 @@ function eur_format($price){return number_format($price,'2',',',' ');}
 						echo '<tr><td></td><td></td><th>Kogumaksumus käibemaksuga</th><th class="price_align">'.$kogumaksumus_display.'</th></tr>';	
 						if ($lang=="ee"){
 						    $ettemaks=$kogumaksumus/2;
-						    $ettemaks=number_format($ettemaks,'2',',',' ');
+						    $ettemaks=number_format($ettemaks,2,',',' ');
 						    echo '<tr class="item_list"><td></td><td></td><th>'.$payment_condition.'</th><td class="price_align"><b>'.$ettemaks.'</b></td></tr>';
 						}
 						?>		

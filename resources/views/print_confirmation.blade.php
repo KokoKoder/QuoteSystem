@@ -70,8 +70,7 @@ function price($price,$coeff){return round($coeff*$price,2);}
 	<div class="container" >
 		<div class="section">
 			<div class="row">
-				<div class="col s6 ">
-					<div class="row">
+
 						<?php
 						if (!empty($_GET["order_id"])){
 						$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
@@ -93,33 +92,15 @@ function price($price,$coeff){return round($coeff*$price,2);}
 								$vendor_email=$row['email'];
 								$vendor_reg_nbr=$row['rg_kood'];
 								$vendor_eu_vat_nb=$row['eu_vat_nb'];
-								echo '<div class="col s12 " >
-                                        <div >
-                                            
-                                            <h3>'.$order_confirmation_str.': '. $row['order_number'].'</h3>
-                                            <p>'.$date_str.': '.date("d.m.y").'<br>
-                                            '. $paybefore_str.': '.date("d.m.y",strtotime("$today +1 week")).'<br>
-                                           '.$payment_condition_str.' '.$confirmation_condition.'</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col s6">
-                                <div class="row">
-                                    <div class="col s12">
-                                        <h3 >'.$row['company_name'].'</h3>
-                                        <p>'.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'</p>
-                                    </div>
-                                </div>
-                            </div>';	
+								echo '<table><tr><th><h3>'.$order_confirmation_str.': '. $row['order_number'].'</h3></th><th><h3 >'.$row['company_name'].'</h3></th></tr>
+                                <tr><td>'.$date_str.': '.date("d.m.y").'<br>'. $paybefore_str.': '.date("d.m.y",strtotime("$today +1 week")).'<br>
+                                 '.$payment_condition_str.' '.$confirmation_condition.'</td>
+                                    <td>'.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'</td>
+                                    </tr></table>';	
 								}		
 						}
 						?>
-			</div>
 			<div class="row">
-				<div class="col s6">
-
-					<div class="col s12 ">
 						<?php
 						if (!empty($_GET["order_id"])){
 						$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
@@ -143,17 +124,10 @@ function price($price,$coeff){return round($coeff*$price,2);}
 								}		
 						}
 						?>
-
-					</div>				
-				</div>
-				<div class="col s6 ">
-					<p class=""> </p>
-				</div>
 			</div>
 		</div>
 		<div class="section">
 			<div class="row">
-				<div class="col s12">
 					<table>
 						<tr class="item_list_header"><th>Nimetus</th><th>Kogus</th><th class="price_align">Hind €</th><th class="price_align">Kokku €</th></tr>
 						<?php
@@ -173,8 +147,8 @@ function price($price,$coeff){return round($coeff*$price,2);}
 							while($row = mysqli_fetch_assoc($result)) {
 							    $subtotal=$row['item_quantity']*price($row['item_price'],$coeff);
 							    $total+=$subtotal;
-							    $subtotal=number_format($subtotal,2);
-							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1),2).'</td><td class="price_align">'.$subtotal.'</td></tr>';	
+							    $subtotal=number_format($subtotal,2,',',' ');
+							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1),2,',',' ').'</td><td class="price_align">'.$subtotal.'</td></tr>';	
 								}		
 						}
 						$sql2="SELECT * 
@@ -187,25 +161,24 @@ function price($price,$coeff){return round($coeff*$price,2);}
 							while($row = mysqli_fetch_assoc($result2)) {
 							    $subtotal=$row['item_quantity']*price($row['custom_item_price'],$coeff);
 							    $total+=$subtotal;
-							    $subtotal=number_format($subtotal,2);
-							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2).'</td><td class="price_align">'.$subtotal.'</td></tr>';
+							    $subtotal=number_format($subtotal,2,',',' ');
+							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2,',',' ').'</td><td class="price_align">'.$subtotal.'</td></tr>';
 								};		
 						}
+						$total_display=number_format($total,2,',',' ');
 						$VAT=$VAT_rate*$total;
 						$kogumaksumus=$VAT+$total;
 						$kogumaksumus_display=number_format($kogumaksumus,2,',',' ');
 						$kogumaksumus=(float)$kogumaksumus;
-						$VAT=number_format($VAT,2);
-			
+						$VAT=number_format($VAT,2,',',' ');
 						echo '<tr class="item_list"><td></td><td></td><td></td><td></td></tr>
-						<tr><td></td><td></td><td><b>Tooted kokku</b></td><td class="price_align"><b>'.$total.'</b></td></tr>';
+						<tr><td></td><td></td><td><b>Tooted kokku</b></td><td class="price_align"><b>'.$total_display.'</b></td></tr>';
 						if(!isset($has_vat_id) OR $lang=="ee"){echo '<tr class="item_list"><td></td><td></td><td><b>'.$VAT_str.'</b></td><td class="price_align">'.$VAT.'</td></tr>';}
 						else{echo '<tr class="item_list"><td></td><td></td><td><b>'.$no_vat.'</b></td><td class="price_align">'.$VAT.'</td></tr>';}
 						echo '<tr><td></td><td></td><td><b>Kogumaksumus käibemaksuga</b></td><td class="price_align"><b>'.$kogumaksumus_display.'</b></td></tr>';	
 						?>
 						
 					</table>
-				</div>
 			</div>
 		</div>
 	</div><!--END ROW -->
