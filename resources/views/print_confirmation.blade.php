@@ -119,7 +119,7 @@ function price($price,$coeff){return round($coeff*$price,2);}
 					    if($row["vat_id"]){$has_vat_id=1;};
 					    if(isset($has_vat_id) && $lang=="fi"){$has_vat_id=1;$VAT_rate=0;};
 						echo '<table class="cst_details">
-						<tr><td>'.$customer_str.'</td><td>'.$row["customer_name"].'</td></tr>
+						<tr><td style="width:20%">'.$customer_str.'</td><td>'.$row["customer_name"].'</td></tr>
 						<tr><td>'.$address_str.'</td><td>'.$row["customer_address"].'</td></tr>
 						<tr><td>'.$tel_str.'</td><td>'.$row["customer_phone"].'</td></tr>
 						<tr><td>'.$email_str.'</td><td>'.$row["customer_mail"].'</td></tr>';

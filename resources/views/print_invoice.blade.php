@@ -9,7 +9,7 @@ if (!empty($_GET["lang"])){
             break;
         case "fi":
             include(app_path().'/localization/fi_FI.php');
-            if (include(app_path().'/localization/fi_FI.php')){break;}
+            break;
         default:
             include(app_path().'/localization/en_EN.php');
     }
@@ -77,6 +77,7 @@ function eur_format($value){return number_format($value,2,',',' ');}
 	<div class="container" >
 		<div class="section">
 			<div class="row">
+			if ($lang=="ee"){echo "test string detect EE" ;}
 				<?php
 				if (!empty($_GET["order_id"])){
 				$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
@@ -130,7 +131,7 @@ function eur_format($value){return number_format($value,2,',',' ');}
 					    if($row["vat_id"]){$has_vat_id=1;};
 					    if(isset($has_vat_id) && $lang=="fi"){$has_vat_id=1;$VAT_rate=0;};
 						echo '<table class="cst_details">
-						<tr><td>'.$customer_str.'</td><td>'.$row["customer_name"].'</td></tr>
+						<tr><td style="width:20%">'.$customer_str.'</td><td>'.$row["customer_name"].'</td></tr>
 						<tr><td>'.$address_str.'</td><td>'.$row["customer_address"].'</td></tr>
 						<tr><td>'.$tel_str.'</td><td>'.$row["customer_phone"].'</td></tr>
 						<tr><td>'.$email_str.'</td><td>'.$row["customer_mail"].'</td></tr>';
@@ -191,11 +192,12 @@ function eur_format($value){return number_format($value,2,',',' ');}
 						if(isset($has_vat_id) && $lang=="fi"){echo '<tr class="item_list"><td></td><td></td><th>'.$no_vat.'</th><td class="price_align">'.$VAT.'</td></tr>';}
 						else{echo '<tr class="item_list"><td></td><td></td><td><b>'.$VAT_str.'</b></td><td class="price_align">'.$VAT.'</td></tr>';}
 						echo '<tr><td></td><td></td><th>Kogumaksumus käibemaksuga</th><th class="price_align">'.$kogumaksumus_display.'</th></tr>';	
-						if ($lang=="ee"){
+						if ($vendor_name=="Furnest EE"){
 						    $ettemaks=$kogumaksumus/2;
 						    $ettemaks=number_format($ettemaks,2,',',' ');
 						    echo '<tr class="item_list"><td></td><td></td><th>'.$payment_condition.'</th><td class="price_align"><b>'.$ettemaks.'</b></td></tr>';
 						}
+						if ($lang=="ee"){echo "test string detect EE" ;}
 						?>		
 					</table>
 			</div>
