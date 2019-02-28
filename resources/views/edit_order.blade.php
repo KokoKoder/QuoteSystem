@@ -58,8 +58,22 @@
 		else{
 			$customer_details="No order entered";
 		}	
-		?>
 
+        switch ($vendor_set_name){
+        	case "Sisustusmööbel":
+        		$lang="ee";
+        		break;
+        	case ("Sisustuskaluste"):
+        		$lang="fi";
+        		break;
+        	case ("Furnest FI"):
+        			$lang="fi";
+        		break;
+        	case ("Furnest EE"):
+        			$lang="ee";
+        		break;
+        }
+?>
 		 <div class="row">
 		  <input type="hidden" value="'.$row["order_id"].'" name="order_id">
 			<div class="input-field col s3">
@@ -70,7 +84,18 @@
 				</p>
 			</div>
 			<div class="input-field col s3">
-				<p ><a onclick="print_invoice()">Print invoice</a><br></p>
+				<p ><a onclick="print_confirmation()">Print order confirmation</a><br></p>
+				@php
+				if ($vendor_set_name=="Furnest FI"){
+				echo '<p ><a onclick="print_invoice()">Print invoice</a><br></p>';
+				}
+				else{
+				echo '<p ><a onclick="print_invoice()">Print invoice 1</a><br></p>
+						<p ><a onclick="print_invoice_2()">Print invoice 2</a><br></p>
+						<p ><a onclick="print_full_invoice()">Print full invoice </a><br></p>';
+				}
+
+				 @endphp
 			</div>
 			<div class="input-field col s6">
 				<table>
@@ -125,7 +150,7 @@
 				@endphp
 					  
 				</select>
-				<input type="hidden" name="vendor_id" id="vendor_hidden" value="@php echo($vendor_id);@endphp" />
+				<input type="hidden" name="vendor_id" id="vendor_hidden" value="@php echo(htmlspecialchars($vendor_id));@endphp" />
 			</div>
 			<div class="input-field col s4">
 				<b>Order Status</b>
@@ -146,7 +171,7 @@
 			</div>
 			<div class="input-field col s4">
 			<b>Order date</b>
-			<input id="order_date" type="text" class="datepicker"  name="order_date" value="@php echo $order_date;@endphp">
+			<input id="order_date" type="text" class="datepicker"  name="order_date" value="@php echo htmlspecialchars($order_date);@endphp">
 			</div>
 		  </div>
 		  <button class="btn" type="submit"><i class="material-icons">done</i></button>
@@ -162,22 +187,7 @@
 	<p><a  href="{{route('add_item_to_order_form')}}">add item</a></p>
 	</div>
 </div>
-<?php
-switch ($vendor_set_name){
-	case "Sisustusmööbel":
-		$lang="ee";
-		break;
-	case ("Sisustuskaluste"):
-		$lang="fi";
-		break;
-	case ("Furnest FI"):
-			$lang="fi";
-		break;
-	case ("Furnest EE"):
-			$lang="ee";
-		break;
-}
-?>
+<script src="js/FileSaver.js"></script>
 @endsection('content') 
 @push('scripts')
 
@@ -186,8 +196,6 @@ switch ($vendor_set_name){
 			var order_id=<?php echo  $_SESSION["order_id"]?>;
 			console.log(order_id);
 			jQuery.get("get_order_items", write_results_to_page);
-
-
 		});
 		
 		function write_results_to_page(data,status, xhr) {
@@ -207,8 +215,8 @@ switch ($vendor_set_name){
 		};
 
 			function print_invoice(){
+				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&order_number='.htmlspecialchars($order_number).'&invoice_2=FALSE&proforma=FALSE&pay_full=false';@endphp';
 				if(!$('#printLinkIframe')[0]) {
-					var print_url='@php echo route('print_invoice').'?order_id='.htmlspecialchars($order_id).'&lang='.$lang.'&order_nb='.htmlspecialchars($order_number);@endphp';
 					console.log(print_url);
 					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
 					$('body').append(iframe);
@@ -218,9 +226,61 @@ switch ($vendor_set_name){
 					});
 				}else{
 					console.log('iframe already exists'); 
+					console.log(print_url);
+					$('#printLinkIframe').attr('src', print_url);
+					frames['printLinkIframe'].focus();
+				}
+			}
+			
+			function print_invoice_2(){
+				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&order_number='.htmlspecialchars($order_number).'&invoice_2=is_invoice_2&proforma=FALSE&pay_full=false';@endphp';
+				if(!$('#printLinkIframe')[0]) {
+					console.log(print_url);
+					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
+					$('body').append(iframe);
+					$('#printLinkIframe').on('load',function() {  
+					frames['printLinkIframe'].focus();
+					frames['printLinkIframe'].print();
+					});
+				}else{
+					console.log(print_url);
+					console.log('iframe already exists');
+					$('#printLinkIframe').attr('src', print_url); ;
+					frames['printLinkIframe'].focus();
+				}
+			}
+			function print_full_invoice(){
+				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&order_number='.htmlspecialchars($order_number).'&invoice_2=FALSE&proforma=FALSE&pay_full=full';@endphp';
+				if(!$('#printLinkIframe')[0]) {
+					console.log(print_url);
+					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
+					$('body').append(iframe);
+					$('#printLinkIframe').on('load',function() {  
 						frames['printLinkIframe'].focus();
 						frames['printLinkIframe'].print();
-
+					});
+				}else{
+					console.log('iframe already exists'); 
+					console.log(print_url);
+					$('#printLinkIframe').attr('src', print_url);
+					frames['printLinkIframe'].focus();
+				}
+			}
+			function print_confirmation(){
+				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&order_number='.htmlspecialchars($order_number).'&invoice_2=FALSE&proforma=is_proforma&pay_full=false';@endphp';
+				if(!$('#printLinkIframe')[0]) {
+					console.log(print_url);
+					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
+					$('body').append(iframe);
+					$('#printLinkIframe').on('load',function() {  
+					frames['printLinkIframe'].focus();
+					frames['printLinkIframe'].print();
+					});
+				}else{
+				console.log(print_url);
+					$('#printLinkIframe').attr('src', print_url);
+					console.log('iframe already exists'); 
+					frames['printLinkIframe'].focus();
 				}
 			}
 

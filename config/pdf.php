@@ -6,7 +6,8 @@ return [
 	'author'                => '',
 	'subject'               => '',
 	'keywords'              => '',
-	'creator'               => 'Laravel Pdf',
+	'creator'               => 'Furnest Furniture OÜ',
 	'display_mode'          => 'fullpage',
-	'tempDir'               => base_path('../temp/')
+	'tempDir'               => base_path('../temp/'),
+    'keep_table_proportions'=>'TRUE',
 ];

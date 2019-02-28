@@ -1,30 +1,19 @@
-<?php
-
+<?php 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Item;
+use PDF;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
-        return view('index');
+        return view('home');
     }
 	public function enter_order()
     {
@@ -37,7 +26,6 @@ class HomeController extends Controller
 	public function verify_order_number_for_duplicate()
     {
         return view('verify_order_number_for_duplicate');
-
     }
 	public function add_item_to_order_form(){
 		return view('add_item_to_order_form');
@@ -114,4 +102,109 @@ class HomeController extends Controller
 	public function edit_custom_order_item(){
 		return view('edit_custom_order_item');
 	}
+	public function print_invoice_2(){
+	    return view('print_invoice_2');
+	}
+	public function print_full_invoice(){
+	    return view('print_full_invoice');
+	}
+	public function print_confirmation(){
+	    return view('print_confirmation');
+	}
+	public function items_view(){
+	    $items = DB::table('items')->paginate(10);
+	    $custom_items = DB::table('custom_items')->paginate(10);
+	    return view('items_view',compact('items','custom_items'));
+	}
+	public function delete($item_id){
+	    $item=DB::table('items')->where('item_id','=',$item_id);
+	    $item->delete();
+	    return redirect()->back();
+	}
+	public function edit_item($item_id){
+	    $item=DB::table('items')->where('item_id','=',$item_id)->first();
+	    return view('edit_item',compact('item'));
+	}
+	public function update($item_id, Request $request){
+	    $item=DB::table('items')
+	       ->where('item_id','=',$item_id)
+	       ->update(['item_name'=>$request->input('item_name'),
+	           'supplier_sku'=>$request->input('supplier_sku'),
+	           'item_supplier_id'=>$request->input('supplier_id'),
+	           'item_price'=>$request->input('item_price'),
+	           'item_weight'=>$request->input('item_weight'),
+	           'item_length'=>$request->input('item_length'),
+	           'item_width'=>$request->input('item_width'),
+	           'item_height'=>$request->input('item_height'),
+	           'package_weight'=>$request->input('package_weight'),
+	           'package_length'=>$request->input('package_length'),
+	           'package_width'=>$request->input('package_width'),
+	           'package_height'=>$request->input('package_height'),
+	           'item_per_pack'=>$request->input('item_per_pack')]);
+        return redirect()->back();
+	}
+	public function generate_pdf(){
+	    $is_invoice_2=$_GET['invoice_2'];
+	    $is_proforma=$_GET['proforma'];
+	    $is_full=$_GET['pay_full'];
+	    $filename=$_GET['order_number'];
+	    $data = [
+	        'foo' => 'bar'
+	    ];
+	    if ($is_invoice_2=='is_invoice_2'){
+	        $pdf = PDF::loadView('print_invoice_2', $data);
+	        if(file_exists('../resources/invoice/'.$filename.'-2.pdf')){
+	            $i=1;
+	            while(file_exists('../resources/invoice/'.$filename.'-2'.$i.'.pdf')){
+	                $i+=1;
+	            }
+	            $pdf->save('../resources/invoice/'.$filename.'-2'.$i.'.pdf');
+	        }
+	        else{
+	            $pdf->save('../resources/invoice/'.$filename.'-2.pdf');
+	        }
+	    }
+	    elseif($is_proforma=='is_proforma'){
+	        $pdf = PDF::loadView('print_confirmation', $data);
+	        if(file_exists('../resources/confirmation/'.$filename.'.pdf')){
+	            $i=1;
+	            while(file_exists('../resources/confirmation/'.$filename.$i.'.pdf')){
+	                $i+=1;
+	            }
+	            $pdf->save('../resources/confirmation/'.$filename.$i.'.pdf');
+	        }
+	        else{
+	            $pdf->save('../resources/confirmation/'.$filename.'.pdf');
+	        }
+	    }
+	    elseif($is_full="full"){
+	        $pdf = PDF::loadView('print_full_invoice', $data);
+	        if(file_exists('../resources/invoice/'.$filename.'.pdf')){
+	            $i=1;
+	            while(file_exists('../resources/invoice/'.$filename.$i.'.pdf')){
+	                $i+=1;
+	            }
+	            $pdf->save('../resources/invoice/'.$filename.$i.'.pdf');
+	        }
+	        else{
+	            $pdf->save('../resources/invoice/'.$filename.'.pdf');
+	        }
+	    }
+	    else{
+	        $pdf = PDF::loadView('print_invoice', $data);
+	        if(file_exists('../resources/invoice/'.$filename.'.pdf')){
+	            $i=1;
+	            while(file_exists('../resources/invoice/'.$filename.$i.'.pdf')){
+	                $i+=1;
+	            }
+	            $pdf->save('../resources/invoice/'.$filename.$i.'.pdf');
+	        }
+	        else{
+	            $pdf->save('../resources/invoice/'.$filename.'.pdf');
+	        }
+	    }
+	    return $pdf->stream('document.pdf');
+	    
+	}
 }
+?>

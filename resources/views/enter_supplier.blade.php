@@ -60,18 +60,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 	else
 	{
-		$sql = "INSERT INTO suppliers (supplier_name,supplier_url, supplier_mail, supplier_phone1, pickup_address, commercial_contract,standard_delivery_time	)
-		VALUES ('$supplier_name', '$supplier_url', '$supplier_mail','$supplier_phone','$pickup_address','$commercial_contract',$standard_delivery_time)";
-		if ($conn->query($sql) === TRUE) {
-			$success= "New record addess successfully in suppliers tab";
-		} else {
-			$err_name="Error: " . $sql . "<br>" . $conn->error;
-		}
-		$conn->close();
-		$url=route('enter_supplier');
-		header("Location: ".$url);
+	    $duplicate_check_sql = "SELECT supplier_name FROM suppliers WHERE supplier_name = '$supplier_name'";
+	    $check_results = mysqli_query($conn, $duplicate_check_sql);
+	    if (mysqli_num_rows($check_results) > 0) {
+	        $err_duplicate_item="Item already exists - change name";
+	    }
+	    else{
+    		$sql = "INSERT INTO suppliers (supplier_name,supplier_url, supplier_mail, supplier_phone1, pickup_address, commercial_contract,standard_delivery_time	)
+    		VALUES ('$supplier_name', '$supplier_url', '$supplier_mail','$supplier_phone','$pickup_address','$commercial_contract',$standard_delivery_time)";
+    		if ($conn->query($sql) === TRUE) {
+    			$success= "New record addess successfully in suppliers tab";
+    		} else {
+    			$err_name="Error: " . $sql . "<br>" . $conn->error;
+    		}
+    		$conn->close();
+    		$url=route('enter_supplier');
+    		header("Location: ".$url);
+	    }
 	}
-
 }
 ?>
   <div class="section no-pad-bot" id="index-banner">
@@ -85,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	<div class="section">
 		<div class="row">
 			<div class="col s12">
-			@php if (!empty($err_name)){echo $err_name;}elseif(isset($success)){echo $success;} @endphp
+			@php if (!empty($err_name)){echo $err_name;}elseif(!empty($err_duplicate_item)){echo $err_duplicate_item;}elseif(isset($success)){echo $success;} @endphp
 			</div>
 			<div class="col s12">
 			<p><a href="{{route('suppliers_view')}}">Back to suppliers view</a></p>

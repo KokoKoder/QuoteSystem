@@ -11,6 +11,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <style>.contrast{color:black}</style>
 </head>
 <body>
   <nav class="light-blue lighten-1" role="navigation">
@@ -66,6 +67,7 @@
           <ul>
             <li><a class="white-text" href="{{route('orders_view')}}">View Orders</a></li>
             <li><a class="white-text" href="{{route('suppliers_view')}}">View Suppliers</a></li>
+            <li><a class="white-text" href="{{route('items_view')}}">View Products</a></li>
 			<li><a class="white-text" href="{{route('vendor_details')}}">Vendor details</a></li>
           </ul>
         </div>
