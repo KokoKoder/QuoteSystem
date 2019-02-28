@@ -90,23 +90,24 @@ function eur_format($value){return number_format($value,2,',',' ');}
 				$vendor_result=mysqli_query($conn,$vendor_sql);
 				if (mysqli_num_rows($vendor_result) > 0) {
 					while($row = mysqli_fetch_assoc($vendor_result)) {
-					    $vendor_name=$row['vendor_name'];
-						$company_name=$row['company_name'];
-						$vendor_address=$row['address'];
-						$vendor_bankaccount=$row['konto'];
-						$vendor_telephone=$row['phone'];
-						$vendor_email=$row['email'];
-						$vendor_reg_nbr=$row['rg_kood'];
-						$vendor_eu_vat_nb=$row['eu_vat_nb'];
+					    $vendor_name=htmlspecialchars($row['vendor_name']);
+					    $company_name=htmlspecialchars($row['company_name']);
+					    $vendor_address=htmlspecialchars($row['address']);
+					    $vendor_bankaccount=htmlspecialchars($row['konto']);
+					    $vendor_telephone=htmlspecialchars($row['phone']);
+					    $vendor_email=htmlspecialchars($row['email']);
+					    $vendor_reg_nbr=htmlspecialchars($row['rg_kood']);
+					    $vendor_eu_vat_nb=htmlspecialchars($row['eu_vat_nb']);
+					    $pay_before=date("d.m.y",strtotime (htmlspecialchars($row['pay_before'])));
 						if($vendor_name=="Furnest EE"){$index=(string)'-1';}
 						else{$index='';}
-						echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th><h5>'.$row['company_name'].'</h5></th></tr><tr><td>
+						echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th><h5>'.$company_name.'</h5></th></tr><tr><td>
                                     '.$date_str.': '.date("d.m.y").'<br>
-                                    '. $paybefore_str.': '.date("d.m.y",strtotime("$today +1 week")).'<br>
+                                    '. $paybefore_str.': '.$pay_before.'<br>
                                    '.$payment_condition_str.' '.$payment_condition.'
                             </td>
                             <td>
-                                '.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'
+                                '.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'
                             </td></tr></table>';	
 						}		
 				}

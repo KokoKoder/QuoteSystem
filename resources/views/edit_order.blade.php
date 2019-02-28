@@ -10,10 +10,7 @@
     <div class="container">
       <br><br>
       <h1 class="header center orange-text">Edit Order</h1>
-      <div class="row center">
-        <h5 class="header col s12 light">Edit an existing order </h5>
-      </div>
-      <br><br>
+      <br>
     </div>
   </div>
 <div class="section">
@@ -30,7 +27,7 @@
 		$_SESSION["order_id"]=$order_id;
 		$_SESSION["order_edit"]=TRUE;
 
-		$sql="SELECT orders_table.order_id, order_number, customer_name, customer_address,customer_phone,customer_mail, order_date,orders_table.customer_id, orders_table.vendor_id, vendor.vendor_name,order_status_list.order_status_name 
+		$sql="SELECT orders_table.order_id, order_number, customer_name, customer_address,customer_phone,customer_mail, order_date,pay_before,orders_table.customer_id, orders_table.vendor_id, vendor.vendor_name,order_status_list.order_status_name 
 		FROM orders_table 
 		JOIN customers ON orders_table.customer_id=customers.customer_id
 		JOIN vendor  ON orders_table.vendor_id=vendor.vendor_id 
@@ -53,6 +50,7 @@
 				$vendor_set_name=$row["vendor_name"];
 				$vendor_set_id=$row["vendor_id"];
 				$order_status_set_name=$row["order_status_name"];
+				$pay_before=$row["pay_before"];
 				};
 		}
 		else{
@@ -77,13 +75,62 @@
 		 <div class="row">
 		  <input type="hidden" value="'.$row["order_id"].'" name="order_id">
 			<div class="input-field col s3">
-				<p><b>Order number</b><br>
-				@php 
-					echo htmlspecialchars($order_number);
-				@endphp
-				</p>
+				<div class="row">
+					<div class="col s12">
+        				<p><b>Order number</b><br>
+        				@php 
+        					echo htmlspecialchars($order_number);
+        				@endphp
+        				</p>
+    				</div>
+    				<div name="vendor" id="vendor" class="input-field col s12">
+        				<b>Vendor:</b>
+        				<select id="vendor_select">
+        				<option value="" disabled selected>Change vendor</option>
+        				@php
+        				 foreach ($vendors_list as $vendor){
+        					 list($vendor_id,$vendors_name)=preg_split("[,]",$vendor);
+        					 if ($vendor_set_name==$vendors_name){
+        						 $selected="selected";
+        					 }
+        					 else{
+        						 $selected="";
+        					 }
+        					 echo '<option '.$selected.' value="'.$vendor_id.'">'.htmlspecialchars($vendors_name).'</option>';
+        				 }
+        				@endphp
+        					  
+        				</select>
+        				<input type="hidden" name="vendor_id" id="vendor_hidden" value="@php echo(htmlspecialchars($vendor_id));@endphp" />
+    				</div>
+            		<div class="input-field col s12">
+        				<b>Order Status:</b>
+        				<select id="order_status_select" name="order_status_id">
+        				@php
+        				 foreach ($order_status_list as $order_status_elem){
+        					 list($order_status_id,$order_status_name)=preg_split("[,]",$order_status_elem);
+        					 if ($order_status_set_name==$order_status_name){
+        						 $selected="selected";
+        					 }
+        					 else{
+        						 $selected="";
+        					 }
+        					 echo '<option '.$selected.' value="'.$order_status_id.'">'.htmlspecialchars($order_status_name).'</option>';
+        				 }
+        				@endphp
+        				</select>
+        			</div>
+					<div class="input-field col s4">
+        			<b>Order date:</b>
+        			<input id="order_date" type="text" class="datepicker"  name="order_date" value="@php echo htmlspecialchars($order_date);@endphp">
+        			</div>
+				</div>
+	
 			</div>
 			<div class="input-field col s3">
+        		<b>Pay before:</b>
+        		<input id="pay_before" type="text" class="datepicker"  name="pay_before" value="@php echo htmlspecialchars($pay_before);@endphp">
+        		
 				<p ><a onclick="print_confirmation()">Print order confirmation</a><br></p>
 				@php
 				if ($vendor_set_name=="Furnest FI"){
@@ -98,80 +145,43 @@
 				 @endphp
 			</div>
 			<div class="input-field col s6">
+				<h5>Customer details</h5>
+				@php $url=route('edit_customer');@endphp
+				<a href="@php echo $url.'?customer_id='.$customer_id;@endphp"><i class="material-icons">edit</i></a>
 				<table>
 					<tr>
 					<th>Customer Name</th>
-					<th>address</th>
-					<th>phone</th>
-					<th>mail</th>
-					</tr>
-					<tr>
 						<td>
 						@php 
 							echo htmlspecialchars($customer_name);
 						@endphp
 						</td>
-						<td>
-						@php
-							echo htmlspecialchars($customer_address);
+					</tr>
+					<tr>
+					<th>address</th>
+					<td>
+						@php 
+							echo htmlspecialchars($customer_address);;
 						@endphp
-						</td>
-						<td>
+					</td>
+					</tr>
+					<tr>
+					<th>phone</th>
+					<td>
 						@php 
 							echo htmlspecialchars($customer_phone);
 						@endphp
-						</td>
-						<td>
+					</td>
+					</tr>
+					<tr>
+					<th>mail</th>
+					<td>
 						@php 
 							echo htmlspecialchars($customer_mail);
-						@endphp</td>
+						@endphp
+					</td>
 					</tr>
 				</table>
-				@php $url=route('edit_customer');@endphp
-				<a href="@php echo $url.'?customer_id='.$customer_id;@endphp"><i class="material-icons">edit</i></a>
-			</div>
-		  </div>
-		  <div class="row">
-			<div name="vendor" id="vendor" class="input-field col s4">
-				<b>Vendor</b>
-				<select id="vendor_select">
-				<option value="" disabled selected>Change vendor</option>
-				@php
-				 foreach ($vendors_list as $vendor){
-					 list($vendor_id,$vendors_name)=preg_split("[,]",$vendor);
-					 if ($vendor_set_name==$vendors_name){
-						 $selected="selected";
-					 }
-					 else{
-						 $selected="";
-					 }
-					 echo '<option '.$selected.' value="'.$vendor_id.'">'.htmlspecialchars($vendors_name).'</option>';
-				 }
-				@endphp
-					  
-				</select>
-				<input type="hidden" name="vendor_id" id="vendor_hidden" value="@php echo(htmlspecialchars($vendor_id));@endphp" />
-			</div>
-			<div class="input-field col s4">
-				<b>Order Status</b>
-				<select id="order_status_select" name="order_status_id">
-				@php
-				 foreach ($order_status_list as $order_status_elem){
-					 list($order_status_id,$order_status_name)=preg_split("[,]",$order_status_elem);
-					 if ($order_status_set_name==$order_status_name){
-						 $selected="selected";
-					 }
-					 else{
-						 $selected="";
-					 }
-					 echo '<option '.$selected.' value="'.$order_status_id.'">'.htmlspecialchars($order_status_name).'</option>';
-				 }
-				@endphp
-				</select>
-			</div>
-			<div class="input-field col s4">
-			<b>Order date</b>
-			<input id="order_date" type="text" class="datepicker"  name="order_date" value="@php echo htmlspecialchars($order_date);@endphp">
 			</div>
 		  </div>
 		  <button class="btn" type="submit"><i class="material-icons">done</i></button>

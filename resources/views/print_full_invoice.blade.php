@@ -87,22 +87,23 @@ function eur_format($value){return number_format($value,2,',',' ');}
 				$vendor_result=mysqli_query($conn,$vendor_sql);
 				if (mysqli_num_rows($vendor_result) > 0) {
 					while($row = mysqli_fetch_assoc($vendor_result)) {
-					    $vendor_name=$row['vendor_name'];
-						$company_name=$row['company_name'];
-						$vendor_address=$row['address'];
-						$vendor_bankaccount=$row['konto'];
-						$vendor_telephone=$row['phone'];
-						$vendor_email=$row['email'];
-						$vendor_reg_nbr=$row['rg_kood'];
-						$vendor_eu_vat_nb=$row['eu_vat_nb'];
+					    $vendor_name=htmlspecialchars($row['vendor_name']);
+					    $company_name=htmlspecialchars($row['company_name']);
+					    $vendor_address=htmlspecialchars($row['address']);
+					    $vendor_bankaccount=htmlspecialchars($row['konto']);
+					    $vendor_telephone=htmlspecialchars($row['phone']);
+					    $vendor_email=htmlspecialchars($row['email']);
+					    $vendor_reg_nbr=htmlspecialchars($row['rg_kood']);
+					    $vendor_eu_vat_nb=htmlspecialchars($row['eu_vat_nb']);
+						$pay_before=date("d.m.y",strtotime (htmlspecialchars($row['pay_before'])));
 						if($vendor_name=="Furnest EE"){$index=(string)'';}
 						else{$index='';}
-						echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th><h5>'.$row['company_name'].'</h5></th></tr><tr><td>
+						echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th><h5>'.$company_name.'</h5></th></tr><tr><td>
                                     '.$date_str.': '.date("d.m.y").'<br>
-                                    '. $paybefore_str.': '.date("d.m.y",strtotime("$today")).'<br>
+                                    '. $paybefore_str.': '.$pay_before.'<br>
                             </td>
                             <td>
-                                '.$tel_str.' '.$row['phone'].'<br>'.$row['address'].'<br>'.$rg_kood_str.' '.$row['rg_kood'].'<br>'.$bankaccount_str.' '.$row['konto'].'
+                                '.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'
                             </td></tr></table>';	
 						}		
 				}
@@ -126,10 +127,10 @@ function eur_format($value){return number_format($value,2,',',' ');}
 					    if(isset($has_vat_id) && $lang=="fi"){$has_vat_id=1;$VAT_rate=0;};
 						echo '<table class="cst_details">
 						<tr><td style="width:20%">'.$customer_str.'</td><td>'.$row["customer_name"].'</td></tr>
-						<tr><td>'.$address_str.'</td><td>'.$row["customer_address"].'</td></tr>
-						<tr><td>'.$tel_str.'</td><td>'.$row["customer_phone"].'</td></tr>
-						<tr><td>'.$email_str.'</td><td>'.$row["customer_mail"].'</td></tr>';
-						if($row["vat_id"]){ echo '<tr><td>'.$eu_vat_str.'</td><td>'.$row["vat_id"].'</td></tr>';};
+						<tr><td>'.$address_str.'</td><td>'.htmlspecialchars($row["customer_address"]).'</td></tr>
+						<tr><td>'.$tel_str.'</td><td>'.htmlspecialchars($row["customer_phone"]).'</td></tr>
+						<tr><td>'.$email_str.'</td><td>'.htmlspecialchars($row["customer_mail"]).'</td></tr>';
+						if($row["vat_id"]){ echo '<tr><td>'.$eu_vat_str.'</td><td>'.htmlspecialchars($row["vat_id"]).'</td></tr>';};
 						echo '</table>';
 						}		
 				}
@@ -169,10 +170,10 @@ function eur_format($value){return number_format($value,2,',',' ');}
 						$result2=mysqli_query($conn,$sql2);
 						if (mysqli_num_rows($result2) > 0) {
 							while($row = mysqli_fetch_assoc($result2)) {
-							    $subtotal=$row["item_quantity"]*price($row["custom_item_price"],$coeff);
+							    $subtotal=$row["item_quantity"]*price(htmlspecialchars($row["custom_item_price"]),$coeff);
 							    $total+=$subtotal;
 							    $subtotal_display=number_format($subtotal,2,',',' ');
-							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2,',',' ').'</td><td class="price_align">'.$subtotal_display.'</td></tr>';
+							    echo '<tr><td>'.htmlspecialchars($row['item_name']).'<br>'.htmlspecialchars($row["custom_item_description"]).'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2,',',' ').'</td><td class="price_align">'.$subtotal_display.'</td></tr>';
 								};		
 						}
 						$total_display=eur_format($total);
