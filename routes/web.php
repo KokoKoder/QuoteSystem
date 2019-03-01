@@ -18,7 +18,6 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
 	Route::get('/', function () {return view('index');});
 	Route::get('/index', 'HomeController@index')->name('index');
-	Route::get('/home', 'HomeController@home');
 	Route::any('/enter_order', 'HomeController@enter_order')->name('enter_order');
 	Route::post('/enter_order_script', 'HomeController@enter_order_script')->name('enter_order_script');
 	Route::any('/enter_item', 'HomeController@enter_item')->name('enter_item');
@@ -55,4 +54,3 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/edit_item/{item_id}','HomeController@edit_item')->name('edit_item');
 	Route::post('/update/{item_id}','HomeController@update')->name('update');
 });
-    Route::get('/home', 'HomeController@index')->name('home');
