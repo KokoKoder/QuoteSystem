@@ -1,5 +1,8 @@
 @extends('layouts.master')
 @section('content')   
+@php
+echo Auth::user()->is_admin;
+@endphp
    <div class="section">
 <div class="section no-pad-bot" id="index-banner">
     <div class="container">

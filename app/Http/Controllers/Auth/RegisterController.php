@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -22,7 +23,12 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
-
+    /*public function auth_access(){
+        if(Auth::user()->is_admin==FALSE){
+            return redirect()->route('enter_order');
+            exit;
+        }
+    }*/
     /**
      * Where to redirect users after registration.
      *
