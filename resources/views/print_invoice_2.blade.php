@@ -102,9 +102,19 @@ echo $lang;
 					        $pay_before=date("d.m.y",strtotime ("today + 1 week" ));
 					        
 					    }
-					    echo '<table><tr><th><h5 style="width:50%">'.$invoice_str.': '. $row['order_number'].'-2</h5></th><th><h5 >'.$company_name.'</h5></th></tr>
+					    switch ($vendor_name){
+					        case "Sisustusmööbel":
+					            $logo="";
+					            break;
+					        case "Sisustuskaluste":
+					            $logo="";
+					            break;
+					        default:
+					            $logo='<img src="./pictures/furnest-logo-md.jpg" alt="">';
+					    }
+					    echo '<table><tr><th><h5 style="width:50%">'.$invoice_str.': '. $row['order_number'].'-2</h5></th><th>'.$logo.'</th></tr>
                               <tr><td>'.$date_str.': '.date("d.m.y").'<br>'. $paybefore_str.': '.$pay_before.'<br>'.$payment_condition_str.' '.$final_amount_str.'</td>
-                              <td>'.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'</td></tr></table>';	
+                              <td>'.$company_name.'<br>'.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'</td></tr></table>';	
 						}		
 				}
 				?>

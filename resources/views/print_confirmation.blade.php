@@ -9,7 +9,7 @@ if (!empty($_GET["lang"])){
             break;
         case "fi":
             include(app_path().'/localization/fi_FI.php');
-            if (include(app_path().'/localization/fi_FI.php')){break;}
+            break;
         default:
             include(app_path().'/localization/en_EN.php');
     }
@@ -98,10 +98,20 @@ function price($price,$coeff){return round($coeff*$price,2);}
 						    
 						}
 						$order_date=date("d.m.y");
-						echo '<table><tr><th style="width:50%"><h5>'.$order_confirmation_str.': <br>'. $row['order_number'].'</h5></th><th><h5 >'.$company_name.'</h5></th></tr>
+					    switch ($vendor_name){
+					        case "Sisustusmööbel":
+					            $logo="";
+					            break;
+					        case "Sisustuskaluste":
+					            $logo="";
+					            break;
+					        default:
+					            $logo='<img src="./pictures/furnest-logo-md.jpg" alt="">';
+					    }
+					    echo '<table><tr><th style="width:50%"><h5>'.$order_confirmation_str.': <br>'. $row['order_number'].'</h5></th><th>'.$logo.'</th></tr>
                         <tr><td>'.$date_str.': '.$order_date.'<br>'. $paybefore_str.': '.$pay_before.'<br>
                          '/*.$payment_condition_str*/.' './*$confirmation_condition.*/'</td>
-                            <td>'.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'</td>
+                            <td>'.$company_name.'<br>'.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'</td>
                             </tr></table>';	
 						}		
 				}

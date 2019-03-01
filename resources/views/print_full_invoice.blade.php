@@ -101,13 +101,23 @@ function eur_format($value){return number_format($value,2,',',' ');}
 					        $pay_before=date("d.m.y",strtotime ("today + 1 week" ));
 					        
 					    }
+					    switch ($vendor_name){
+					        case "Sisustusmööbel":
+					            $logo="";
+					            break;
+					        case "Sisustuskaluste":
+					            $logo="";
+					            break;
+					        default:
+					            $logo='<img src="./pictures/furnest-logo-md.jpg" alt="">';
+					    }
 						if($vendor_name=="Furnest EE"){$index=(string)'';}
 						else{$index='';}
-						echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th><h5>'.$company_name.'</h5></th></tr><tr><td>
+						echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th>'.$logo.'</th></tr><tr><td>
                                     '.$date_str.': '.date("d.m.y").'<br>
                                     '. $paybefore_str.': '.$pay_before.'<br>
                             </td>
-                            <td>
+                            <td>'.$company_name.'<br>
                                 '.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'
                             </td></tr></table>';	
 						}		
