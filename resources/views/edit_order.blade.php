@@ -98,8 +98,7 @@
         					 }
         					 echo '<option '.$selected.' value="'.$vendor_id.'">'.htmlspecialchars($vendors_name).'</option>';
         				 }
-        				@endphp
-        					  
+        				@endphp	  
         				</select>
         				<input type="hidden" name="vendor_id" id="vendor_hidden" value="@php echo(htmlspecialchars($vendor_id));@endphp" />
     				</div>
@@ -141,7 +140,18 @@
 						<p ><a onclick="print_invoice_2()">Print invoice 2</a><br></p>
 						<p ><a onclick="print_full_invoice()">Print full invoice </a><br></p>';
 				}
-
+				if(file_exists('../resources/invoice/'.$order_number.'.pdf')){echo 'Invoice :<a href="../resources/invoice/'.$order_number.'.pdf">'.$order_number.'</a><br>';}
+				$i=1;
+				if(file_exists('../resources/invoice/'.$order_number.$i.'.pdf')){echo 'A Invoice '.$i.': <a href="../resources/invoice/'.$order_number.$i.'.pdf">'.$order_number.$i.'</a><br>';}
+				while (file_exists('../resources/invoice/'.$order_number.$i.'.pdf')){echo 'B Invoice '.$i.': <a href="../resources/invoice/'.$order_number.$i.'.pdf">'.$order_number.$i.'</a><br>';$i+=1;}
+				if(file_exists('../resources/invoice/'.$order_number.'-2.pdf')){echo 'C  Invoice 2: <a href="../resources/invoice/'.$order_number.'-2.pdf">'.$order_number.'-2</a><br>';}
+				if(file_exists('../resources/invoice/'.$order_number.'-21.pdf')){echo 'C1  Invoice 2: <a href="../resources/invoice/'.$order_number.'-21.pdf">'.$order_number.'-21</a><br>';}
+				$i=1;
+				echo '../resources/invoice/'.$order_number.'-2'.$i.'.pdf<br>';
+				var_dump(file_exists('../resources/invoice/'.$order_number.'-2'.$i.'.pdf'));
+				$i=1;
+				while (file_exists('../resources/invoice/'.$order_number.'-2'.$i.'.pdf')){echo 'D Invoice 2: <a href="../resources/invoice/'.$order_number.'-2'.$i.'.pdf">'.$order_number.'-2'.$i.'</a><br>';$i+=1;}
+				if(file_exists('../resources/confirmation/'.$order_number.'.pdf')){echo 'E Order confirmation: <a href="../resources/invoice/'.$order_number.'.pdf">'.$order_number.'</a>';}
 				 @endphp
 			</div>
 			<div class="input-field col s6">
