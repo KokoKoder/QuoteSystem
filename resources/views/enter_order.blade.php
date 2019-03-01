@@ -19,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	else{
 		$order_number=mysqli_real_escape_string($conn,$_POST["order_number"]);
 		$order_number=trim($order_number," ");
+		$order_number=preg_replace ( "[ ]","_",$order_number);
 		$_SESSION["order_number"]=$order_number;
 		include(app_path().'/includes/verify_order_number_for_duplicate.php');
 	}
