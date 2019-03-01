@@ -140,19 +140,33 @@
 						<p ><a onclick="print_invoice_2()">Print invoice 2</a><br></p>
 						<p ><a onclick="print_full_invoice()">Print full invoice </a><br></p>';
 				}
-				if(file_exists('../resources/invoice/'.$order_number.'.pdf')){echo 'Invoice :<a href="../resources/invoice/'.$order_number.'.pdf">'.$order_number.'</a><br>';}
-				$i=1;
-				if(file_exists('../resources/invoice/'.$order_number.$i.'.pdf')){echo 'A Invoice '.$i.': <a href="../resources/invoice/'.$order_number.$i.'.pdf">'.$order_number.$i.'</a><br>';}
-				while (file_exists('../resources/invoice/'.$order_number.$i.'.pdf')){echo 'B Invoice '.$i.': <a href="../resources/invoice/'.$order_number.$i.'.pdf">'.$order_number.$i.'</a><br>';$i+=1;}
-				if(file_exists('../resources/invoice/'.$order_number.'-2.pdf')){echo 'C  Invoice 2: <a href="../resources/invoice/'.$order_number.'-2.pdf">'.$order_number.'-2</a><br>';}
-				if(file_exists('../resources/invoice/'.$order_number.'-21.pdf')){echo 'C1  Invoice 2: <a href="../resources/invoice/'.$order_number.'-21.pdf">'.$order_number.'-21</a><br>';}
-				$i=1;
-				echo '../resources/invoice/'.$order_number.'-2'.$i.'.pdf<br>';
-				var_dump(file_exists('../resources/invoice/'.$order_number.'-2'.$i.'.pdf'));
-				$i=1;
-				while (file_exists('../resources/invoice/'.$order_number.'-2'.$i.'.pdf')){echo 'D Invoice 2: <a href="../resources/invoice/'.$order_number.'-2'.$i.'.pdf">'.$order_number.'-2'.$i.'</a><br>';$i+=1;}
-				if(file_exists('../resources/confirmation/'.$order_number.'.pdf')){echo 'E Order confirmation: <a href="../resources/invoice/'.$order_number.'.pdf">'.$order_number.'</a>';}
 				 @endphp
+				  <!-- Modal Trigger -->
+                      <a class="waves-effect waves-orange btn modal-trigger" href="#modal1">Available PDF</a>
+                    
+                      <!-- Modal Structure -->
+                      <div id="modal1" class="modal">
+                        <div class="modal-content">
+                          <div style="display:inline-block"><h4>Available invoices</h4></div><div style="display:inline-block"><a href="#!" class="modal-close waves-effect waves-white btn-flat">Close</a></div>
+                          <div>
+                          @php
+                          	if(file_exists('../resources/invoice/'.$order_number.'.pdf')){echo 'Invoice :<br><a href="../resources/invoice/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a><br>';}
+                			$i=1;
+                			while (file_exists('../resources/invoice/'.$order_number.$i.'.pdf')){echo 'Invoice '.$i.': <a href="../resources/invoice/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a><br>';$i+=1;}
+                			if(file_exists('../resources/invoice/'.$order_number.'-2.pdf')){echo 'Invoice 2:<br><a href="../resources/invoice/'.$order_number.'-2.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2</a><br>';}
+                			$i=1;
+                			while (file_exists('../resources/invoice/'.$order_number.'-2'.$i.'.pdf')){echo '<a href="../resources/invoice/'.$order_number.'-2'.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2'.$i.'</a><br>';$i+=1;}
+                			if(file_exists('../resources/confirmation/'.$order_number.'.pdf')){echo 'Order confirmation: <br><a href="../resources/invoice/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a>';}
+							$i=1;
+							while(file_exists('../resources/confirmation/'.$order_number.$i.'.pdf')){echo '<a href="../resources/invoice/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a>';$i+=1;}
+				
+                          @endphp
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          
+                        </div>
+                      </div>
 			</div>
 			<div class="input-field col s6">
 				<h5>Customer details</h5>
@@ -210,8 +224,12 @@
 <script src="js/FileSaver.js"></script>
 @endsection('content') 
 @push('scripts')
-
-//Get order items
+    //initialize modal
+    $(document).ready(function(){
+        $('.modal').modal();
+    });
+     
+    //Get order items
 		$(document).ready(function(){
 			var order_id=<?php echo  $_SESSION["order_id"]?>;
 			console.log(order_id);
