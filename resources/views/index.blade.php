@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('content')   
-   <div class="section">
+<div class="section">
 <div class="section no-pad-bot" id="index-banner">
     <div class="container">
       <br><br>

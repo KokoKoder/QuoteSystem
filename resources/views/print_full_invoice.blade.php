@@ -165,7 +165,6 @@ function eur_format($value){return number_format($value,2,',',' ');}
 						$sql="SELECT * 
 						FROM orders_table 
 						JOIN order_items ON orders_table.order_id=order_items.order_id
-						JOIN items ON items.item_id=order_items.item_id
 						WHERE orders_table.order_id='$order_id'";
 
 						$result=mysqli_query($conn,$sql);

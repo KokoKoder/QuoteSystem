@@ -36,11 +36,12 @@ $order_id=mysqli_real_escape_string($conn,$_SESSION["order_id"]);
 $status_id="2";
 
 #get item id
-$sql2 = "SELECT item_id FROM items WHERE item_name='$product_name'";
+$sql2 = "SELECT item_id,item_price FROM items WHERE item_name='$product_name'";
 $result = mysqli_query($conn, $sql2);
 if (mysqli_num_rows($result) > 0) {
 	while($row = mysqli_fetch_assoc($result)) {
 		$item_id=$row['item_id'];
+		$item_price=$row['item_price'];
 		};
 }
 else{
@@ -71,8 +72,8 @@ if ($Schedule_delivery_date==""){
 	echo "Schedule delivery date : ".$Schedule_delivery_date."latest order date: ".$latest_order_date;
 }
 
-$sql = "INSERT INTO order_items (item_id,item_quantity,Schedule_delivery_date, order_id,status_id)
-VALUES ('$item_id','$product_quantity','$Schedule_delivery_date','$order_id','$status_id')";
+$sql = "INSERT INTO order_items (item_id,item_name,item_price,item_quantity,Schedule_delivery_date, order_id,status_id)
+VALUES ('$item_id','$product_name','$item_price','$product_quantity','$Schedule_delivery_date','$order_id','$status_id')";
 
 if ($conn->query($sql) === TRUE) {
 	if (isset($_SESSION["order_edit"])){

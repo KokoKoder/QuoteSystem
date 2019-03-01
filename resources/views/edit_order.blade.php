@@ -150,13 +150,13 @@
                           <div style="display:inline-block"><h4>Available invoices</h4></div><div style="display:inline-block"><a href="#!" class="modal-close waves-effect waves-white btn-flat">Close</a></div>
                           <div>
                           @php
-                          	if(file_exists('../resources/invoice/'.$order_number.'.pdf')){echo 'Invoice :<br><a href="../resources/invoice/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a><br>';}
+                          	if(file_exists('../resources/invoice/'.$order_number.'.pdf')){echo '<br><b>Invoice :</b><br><a href="../resources/invoice/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a><br>';}
                 			$i=1;
-                			while (file_exists('../resources/invoice/'.$order_number.$i.'.pdf')){echo 'Invoice '.$i.': <a href="../resources/invoice/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a><br>';$i+=1;}
-                			if(file_exists('../resources/invoice/'.$order_number.'-2.pdf')){echo 'Invoice 2:<br><a href="../resources/invoice/'.$order_number.'-2.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2</a><br>';}
+                			while (file_exists('../resources/invoice/'.$order_number.$i.'.pdf')){echo '<a href="../resources/invoice/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a><br>';$i+=1;}
+                			if(file_exists('../resources/invoice/'.$order_number.'-2.pdf')){echo '<br><b>Invoice 2 :</b><br><a href="../resources/invoice/'.$order_number.'-2.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2</a><br>';}
                 			$i=1;
                 			while (file_exists('../resources/invoice/'.$order_number.'-2'.$i.'.pdf')){echo '<a href="../resources/invoice/'.$order_number.'-2'.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2'.$i.'</a><br>';$i+=1;}
-                			if(file_exists('../resources/confirmation/'.$order_number.'.pdf')){echo 'Order confirmation: <br><a href="../resources/invoice/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a>';}
+                			if(file_exists('../resources/confirmation/'.$order_number.'.pdf')){echo '<br><b>Order confirmation :</b><br><a href="../resources/invoice/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a>';}
 							$i=1;
 							while(file_exists('../resources/confirmation/'.$order_number.$i.'.pdf')){echo '<a href="../resources/invoice/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a>';$i+=1;}
 				
@@ -268,6 +268,7 @@
 					$('#printLinkIframe').attr('src', print_url);
 					frames['printLinkIframe'].focus();
 				}
+				reload();
 			}
 			
 			function print_invoice_2(){
@@ -286,6 +287,7 @@
 					$('#printLinkIframe').attr('src', print_url); ;
 					frames['printLinkIframe'].focus();
 				}
+				reload();
 			}
 			function print_full_invoice(){
 				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&invoice_2=FALSE&proforma=FALSE&pay_full=full'.'&order_number='.htmlspecialchars($order_number);@endphp';
@@ -303,6 +305,7 @@
 					$('#printLinkIframe').attr('src', print_url);
 					frames['printLinkIframe'].focus();
 				}
+				reload();
 			}
 			function print_confirmation(){
 				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&invoice_2=FALSE&proforma=is_proforma&pay_full=FALSE'.'&order_number='.htmlspecialchars($order_number);@endphp';
@@ -320,6 +323,7 @@
 					console.log('iframe already exists'); 
 					frames['printLinkIframe'].focus();
 				}
+				reload();
 			}
 
 @endpush
