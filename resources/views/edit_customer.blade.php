@@ -4,27 +4,41 @@ include(app_path().'/includes/connect.php');
 include(app_path().'/includes/parse.php');
 include(app_path().'/includes/get_vendors_list.php');
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $err_duplicate_custome="";
 	$customer_id=$_SESSION["customer_id"];
+	$customer_name=mysqli_real_escape_string($conn,$_POST["customer_name"]);
 	$customer_address=mysqli_real_escape_string($conn,$_POST["customer_address"]);
 	$customer_mail=mysqli_real_escape_string($conn,$_POST["customer_mail"]);
 	$customer_phone=mysqli_real_escape_string($conn,$_POST["customer_phone"]);
 	$vat_id=mysqli_real_escape_string($conn,$_POST["vat_id"]);
-	$sql_update="UPDATE customers SET customer_address='$customer_address', customer_mail='$customer_mail',customer_phone='$customer_phone',vat_id='$vat_id' WHERE customer_id='$customer_id'";
-	echo "POST to customer ID : ".$customer_id."address".$customer_address."mail".$customer_mail."phone".$customer_phone;
-	if ($conn->query($sql_update) === TRUE) {
-    echo "Record updated successfully";
-	} else {
-		echo "Error updating record: " . $conn->error;
-	}
-	if (isset($_SESSION["order_edit"])){
-		$url=route('edit_order');
-		header ("Location: ".$url."?order_id=".$_SESSION["order_id"]);
-		exit;
-	}
 	
+	$sql_duplicate_name = "SELECT customer_name,customer_id FROM customers WHERE customer_name='$customer_name'";
+	$result_duplicate_name = mysqli_query($conn, $sql_duplicate_name);
+	if (mysqli_num_rows($result) > 0) {
+	    while($row = mysqli_fetch_assoc($result_duplicate_name)) {
+	        if($row['customer_id']!=$customer_id){
+	            $err_duplicate_customer="Customer already exists";
+	        };
+	    }
+	        
+	    }
+	if (empty($err_duplicate_customer)){
+    	$sql_update="UPDATE customers SET customer_name='$customer_name', customer_address='$customer_address', customer_mail='$customer_mail',customer_phone='$customer_phone',vat_id='$vat_id' WHERE customer_id='$customer_id'";
+    	echo "POST to customer ID : ".$customer_id."address".$customer_address."mail".$customer_mail."phone".$customer_phone;
+    	if ($conn->query($sql_update) === TRUE) {
+        echo "Record updated successfully";
+    	} else {
+    		echo "Error updating record: " . $conn->error;
+    	}
+    	if (isset($_SESSION["order_edit"])){
+    		$url=route('edit_order');
+    		header ("Location: ".$url."?order_id=".$_SESSION["order_id"]);
+    		exit;
+    	}
+	}
 }
 
-if (mysqli_real_escape_string($conn,$_GET["customer_id"])!=""){
+if (isset($_GET["customer_id"])){
 	$_SESSION["customer_id"]=mysqli_real_escape_string($conn,$_GET["customer_id"]);
 	$customer_id=$_SESSION["customer_id"];
 	$sql="SELECT customer_name,customer_address,customer_mail,customer_phone,vat_id FROM customers WHERE customer_id='$customer_id'";
@@ -78,9 +92,10 @@ if (mysqli_real_escape_string($conn,$_GET["customer_id"])!=""){
 	<div class="row">
 
 		
-		  <div class="input-field col s6">
-		  
-			<i class="material-icons prefix">account_circle</i><p style="    margin-left: 3rem;"><?php if (isset($customer_id)){echo $customer_details[0];} ?></p>
+		  <div class="input-field col s6">	
+			<i class="material-icons prefix">account_circle</i><input name="customer_name" id="customer_name" value="<?php if (isset($customer_id)){echo $customer_details[0];} ?>" >
+		  <span class="helper-text">Enter customer name</span>
+		  <span style="color:red"><?php if (!empty($err_duplicate_customer)){echo $err_duplicate_customer;}?></span>
 		  </div>
 		  <div class="input-field col s6">
 		  <i class="material-icons prefix">home</i>

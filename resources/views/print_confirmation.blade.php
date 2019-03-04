@@ -91,8 +91,9 @@ function price($price,$coeff){return round($coeff*$price,2);}
 						$vendor_email=htmlspecialchars($row['email']);
 						$vendor_reg_nbr=htmlspecialchars($row['rg_kood']);
 						$vendor_eu_vat_nb=htmlspecialchars($row['eu_vat_nb']);
-						if(!empty($pay_before)){
-						    $pay_before=date("d.m.y",htmlspecialchars($row['pay_before']));
+						$pay_before=date("d.m.y",strtotime ($row['pay_before']));
+						if($pay_before!="01.01.70"){
+						    $pay_before=date("d.m.y",strtotime($row['pay_before']));
 						}else{
 						    $pay_before=date("d.m.y",strtotime ("today + 1 week" ));
 						    

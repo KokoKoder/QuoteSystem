@@ -1,5 +1,8 @@
 <?php
-include(app_path().'/includes/connect.php');
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+    include(app_path().'/includes/connect.php');
+}
 $customer_name=$_GET["customer_name"];
 $sql = "SELECT customer_name customer_id FROM customers WHERE customer_name LIKE '$customer_name'";
 $result = mysqli_query($conn, $sql);

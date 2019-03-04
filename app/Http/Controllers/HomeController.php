@@ -153,58 +153,59 @@ class HomeController extends Controller
 	    ];
 	    if ($is_invoice_2=='is_invoice_2'){
 	        $pdf = PDF::loadView('print_invoice_2', $data);
-	        if(file_exists('../resources/invoice/'.$filename.'-2.pdf')){
+	        if(file_exists('../app/files/invoice/'.$filename.'-2.pdf')){
 	            $i=1;
-	            while(file_exists('../resources/invoice/'.$filename.'-2'.$i.'.pdf')){
+	            while(file_exists('../app/files/invoice/'.$filename.'-2'.$i.'.pdf')){
 	                $i+=1;
 	            }
-	            $pdf->save('../resources/invoice/'.$filename.'-2'.$i.'.pdf');
+	            $pdf->save('../app/files/invoice/'.$filename.'-2'.$i.'.pdf');
 	        }
 	        else{
-	            $pdf->save('../resources/invoice/'.$filename.'-2.pdf');
+	            $pdf->save('../app/files/invoice/'.$filename.'-2.pdf');
 	        }
 	    }
 	    elseif($is_proforma=='is_proforma'){
 	        $pdf = PDF::loadView('print_confirmation', $data);
-	        if(file_exists('../resources/confirmation/'.$filename.'.pdf')){
+	        if(file_exists('../app/files/confirmation/'.$filename.'.pdf')){
 	            $i=1;
-	            while(file_exists('../resources/confirmation/'.$filename.$i.'.pdf')){
+	            while(file_exists('../app/files/confirmation/'.$filename.$i.'.pdf')){
 	                $i+=1;
 	            }
-	            $pdf->save('../resources/confirmation/'.$filename.$i.'.pdf');
+	            $pdf->save('../app/files/confirmation/'.$filename.$i.'.pdf');
 	        }
 	        else{
-	            $pdf->save('../resources/confirmation/'.$filename.'.pdf');
+	            $pdf->save('../app/files/confirmation/'.$filename.'.pdf');
 	        }
 	    }
 	    elseif($is_full=="full"){
 	        $pdf = PDF::loadView('print_full_invoice', $data);
-	        if(file_exists('../resources/invoice/'.$filename.'.pdf')){
+	        if(file_exists('../app/files/invoice/'.$filename.'.pdf')){
 	            $i=1;
-	            while(file_exists('../resources/invoice/'.$filename.$i.'.pdf')){
+	            while(file_exists('../app/files/invoice/'.$filename.$i.'.pdf')){
 	                $i+=1;
 	            }
-	            $pdf->save('../resources/invoice/'.$filename.$i.'.pdf');
+	            $pdf->save('../app/files/invoice/'.$filename.$i.'.pdf');
 	        }
 	        else{
-	            $pdf->save('../resources/invoice/'.$filename.'.pdf');
+	            $pdf->save('../app/files/invoice/'.$filename.'.pdf');
 	        }
 	    }
 	    else{
 	        $pdf = PDF::loadView('print_invoice', $data);
-	        if(file_exists('../resources/invoice/'.$filename.'.pdf')){
+	        if(file_exists('../app/files/invoice/'.$filename.'.pdf')){
 	            $i=1;
-	            while(file_exists('../resources/invoice/'.$filename.$i.'.pdf')){
+	            while(file_exists('../app/files/invoice/'.$filename.$i.'.pdf')){
 	                $i+=1;
 	            }
-	            $pdf->save('../resources/invoice/'.$filename.$i.'.pdf');
+	            $pdf->save('../app/files/invoice/'.$filename.$i.'.pdf');
 	        }
 	        else{
-	            $pdf->save('../resources/invoice/'.$filename.'.pdf');
+	            $pdf->save('../app/files/invoice/'.$filename.'.pdf');
 	        }
 	    }
 	    return $pdf->stream('document.pdf');
 	    
 	}
+	
 }
 ?>
