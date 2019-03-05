@@ -21,10 +21,10 @@
 	}
 	
 	if (!empty($supplier_id) AND empty($status_id)){
-		$sql="SELECT DISTINCT orders_table.order_id, orders_table.order_number, supplier_name, item_name, item_quantity, status_name, Schedule_delivery_date
+		$sql="SELECT DISTINCT orders_table.order_id, orders_table.order_number, supplier_name, order_items.item_name, order_items,item_id, item_quantity, status_name, Schedule_delivery_date
 			FROM suppliers 
 			JOIN items ON suppliers.supplier_id=items.item_supplier_id
-			JOIN order_items ON items.item_id=order_items.item_id
+			
 			JOIN orders_table ON orders_table.order_id=order_items.order_id
 			JOIN status ON status.status_id=order_items.status_id
 			JOIN orders_status ON orders_table.order_id=orders_status.order_id
@@ -88,7 +88,7 @@
 	}
 	elseif (!empty($supplier_id) AND !empty($status_id)){
 		$status_sql="
-		SELECT DISTINCT orders_table.order_id, orders_table.order_number, supplier_name, item_name, item_quantity, status_name, Schedule_delivery_date
+		SELECT DISTINCT orders_table.order_id, orders_table.order_number, supplier_name, order_items.item_name, item_quantity, status_name, Schedule_delivery_date
 		FROM suppliers 
 		JOIN items ON suppliers.supplier_id=items.item_supplier_id
 		JOIN order_items ON items.item_id=order_items.item_id
@@ -222,7 +222,7 @@
 	}
 	else{
 		echo ('All order selected');
-		$status_sql="SELECT DISTINCT orders_table.order_id, orders_table.order_number, supplier_name, item_name, item_quantity, status_name, Schedule_delivery_date
+		$status_sql="SELECT DISTINCT orders_table.order_id, orders_table.order_number, supplier_name, order_items.item_name, item_quantity, status_name, Schedule_delivery_date
 			FROM suppliers 
 			JOIN items ON suppliers.supplier_id=items.item_supplier_id
 			JOIN order_items ON items.item_id=order_items.item_id

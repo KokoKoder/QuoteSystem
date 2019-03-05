@@ -15,9 +15,9 @@ if (isset($_SESSION["order_id"])){
 		$order_id=$_SESSION["order_id"];
 		#get standard items
 		$sql="
-		SELECT order_items.item_quantity, order_items.Schedule_delivery_date,items.item_name, suppliers.supplier_name, order_items.id, order_items.status_id, order_items.timestamp, status.status_name, items.item_supplier_id
+		SELECT order_items.item_quantity, order_items.Schedule_delivery_date,order_items.item_id,order_items.item_name, suppliers.supplier_name, order_items.id, order_items.status_id, order_items.timestamp, status.status_name, items.item_supplier_id
 		FROM order_items 
-		JOIN items ON items.item_id=order_items.item_id
+        JOIN items ON items.item_id=order_items.item_id
 		JOIN suppliers  ON suppliers.supplier_id=items.item_supplier_id
 		JOIN status ON order_items.status_id=status.status_id
 		WHERE order_items.order_id='$order_id' 

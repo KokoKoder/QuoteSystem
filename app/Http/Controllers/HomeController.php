@@ -6,6 +6,8 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Item;
+use PDF;
+
 class HomeController extends Controller
 {
 
@@ -103,6 +105,9 @@ class HomeController extends Controller
 	public function print_invoice_2(){
 	    return view('print_invoice_2');
 	}
+	public function print_full_invoice(){
+	    return view('print_full_invoice');
+	}
 	public function print_confirmation(){
 	    return view('print_confirmation');
 	}
@@ -138,5 +143,69 @@ class HomeController extends Controller
 	           'item_per_pack'=>$request->input('item_per_pack')]);
         return redirect()->back();
 	}
+	public function generate_pdf(){
+	    $is_invoice_2=$_GET['invoice_2'];
+	    $is_proforma=$_GET['proforma'];
+	    $is_full=$_GET['pay_full'];
+	    $filename=$_GET['order_number'];
+	    $data = [
+	        'foo' => 'bar'
+	    ];
+	    if ($is_invoice_2=='is_invoice_2'){
+	        $pdf = PDF::loadView('print_invoice_2', $data);
+	        if(file_exists('../app/files/invoice/'.$filename.'-2.pdf')){
+	            $i=1;
+	            while(file_exists('../app/files/invoice/'.$filename.'-2'.$i.'.pdf')){
+	                $i+=1;
+	            }
+	            $pdf->save('../app/files/invoice/'.$filename.'-2'.$i.'.pdf');
+	        }
+	        else{
+	            $pdf->save('../app/files/invoice/'.$filename.'-2.pdf');
+	        }
+	    }
+	    elseif($is_proforma=='is_proforma'){
+	        $pdf = PDF::loadView('print_confirmation', $data);
+	        if(file_exists('../app/files/confirmation/'.$filename.'.pdf')){
+	            $i=1;
+	            while(file_exists('../app/files/confirmation/'.$filename.$i.'.pdf')){
+	                $i+=1;
+	            }
+	            $pdf->save('../app/files/confirmation/'.$filename.$i.'.pdf');
+	        }
+	        else{
+	            $pdf->save('../app/files/confirmation/'.$filename.'.pdf');
+	        }
+	    }
+	    elseif($is_full=="full"){
+	        $pdf = PDF::loadView('print_full_invoice', $data);
+	        if(file_exists('../app/files/invoice/'.$filename.'.pdf')){
+	            $i=1;
+	            while(file_exists('../app/files/invoice/'.$filename.$i.'.pdf')){
+	                $i+=1;
+	            }
+	            $pdf->save('../app/files/invoice/'.$filename.$i.'.pdf');
+	        }
+	        else{
+	            $pdf->save('../app/files/invoice/'.$filename.'.pdf');
+	        }
+	    }
+	    else{
+	        $pdf = PDF::loadView('print_invoice', $data);
+	        if(file_exists('../app/files/invoice/'.$filename.'.pdf')){
+	            $i=1;
+	            while(file_exists('../app/files/invoice/'.$filename.$i.'.pdf')){
+	                $i+=1;
+	            }
+	            $pdf->save('../app/files/invoice/'.$filename.$i.'.pdf');
+	        }
+	        else{
+	            $pdf->save('../app/files/invoice/'.$filename.'.pdf');
+	        }
+	    }
+	    return $pdf->stream('document.pdf');
+	    
+	}
+	
 }
 ?>

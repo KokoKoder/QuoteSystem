@@ -48,11 +48,17 @@ Route::middleware(['auth'])->group(function () {
 	Route::any('/edit_vendor_details','HomeController@edit_vendor_details')->name('edit_vendor_details');
 	Route::get('/print_invoice','HomeController@print_invoice')->name('print_invoice');
 	Route::get('/print_invoice_2','HomeController@print_invoice_2')->name('print_invoice_2');
+	Route::get('/print_full_invoice','HomeController@print_full_invoice')->name('print_full_invoice');
+	Route::get('/generate_pdf','HomeController@generate_pdf')->name('generate_pdf');
 	Route::any('/edit_custom_order_item','HomeController@edit_custom_order_item')->name('edit_custom_order_item');
 	Route::any('/print_confirmation','HomeController@print_confirmation')->name('print_confirmation');
 	Route::any('/items_view','HomeController@items_view')->name('items_view');
 	Route::get('/delete/{item_id}','HomeController@delete')->name('delete');
 	Route::get('/edit_item/{item_id}','HomeController@edit_item')->name('edit_item');
 	Route::post('/update/{item_id}','HomeController@update')->name('update');
+	#Route::any('/getDownload/','InvoiceController@getDownload')->name('getDownload');
+	Route::get('/getDownload/{filename}', function ($filename) {
+	    return response()->download(('../storage/invoice/'.$filename));
+	});
 });
     Route::get('/home', 'HomeController@index')->name('home');
