@@ -90,6 +90,9 @@ class HomeController extends Controller
 	public function print_invoice(){
 		return view('print_invoice');
 	}
+	public function print_creditinvoice(){
+	    return view('print_creditinvoice');
+	}
 	public function delete_order_custom_item(){
 		return view('delete_order_custom_item');
 	}
@@ -148,6 +151,7 @@ class HomeController extends Controller
 	    $is_proforma=$_GET['proforma'];
 	    $is_full=$_GET['pay_full'];
 	    $filename=$_GET['order_number'];
+	    $is_credit=$_GET['is_credit'];
 	    $data = [
 	        'foo' => 'bar'
 	    ];
@@ -179,6 +183,20 @@ class HomeController extends Controller
 	    }
 	    elseif($is_full=="full"){
 	        $pdf = PDF::loadView('print_full_invoice', $data);
+	        if(file_exists('../app/files/invoice/'.$filename.'.pdf')){
+	            $i=1;
+	            while(file_exists('../app/files/invoice/'.$filename.$i.'.pdf')){
+	                $i+=1;
+	            }
+	            $pdf->save('../app/files/invoice/'.$filename.$i.'.pdf');
+	        }
+	        else{
+	            $pdf->save('../app/files/invoice/'.$filename.'.pdf');
+	        }
+	    }
+	    elseif($is_credit=="is_credit"){
+	        $pdf = PDF::loadView('print_creditinvoice', $data);
+	        $filename='credit_'.$filename;
 	        if(file_exists('../app/files/invoice/'.$filename.'.pdf')){
 	            $i=1;
 	            while(file_exists('../app/files/invoice/'.$filename.$i.'.pdf')){

@@ -1,5 +1,6 @@
 <?php
 $invoice_str='Arve nr';
+$creditinvoice_str='Kreeditarve';
 $date_str='Kuupäev';
 $tel_str='Tel';
 $rg_kood_str='Reg. kood';

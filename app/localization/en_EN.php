@@ -1,5 +1,6 @@
 <?php
 $invoice_str='Invoice nr';
+$creditinvoice_str='Credit invoice';
 $date_str='Date';
 $tel_str='Tel';
 $rg_kood_str='Registration code';

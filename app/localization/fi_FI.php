@@ -1,5 +1,6 @@
 <?php
 $invoice_str='Tilausnumero';
+$creditinvoice_str='Hyvityslasku';
 $date_str='Tilauspäivä';
 $tel_str='Puhelin';
 $rg_kood_str='Rekisterinumero';
