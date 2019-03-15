@@ -26,7 +26,6 @@
 		$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
 		$_SESSION["order_id"]=$order_id;
 		$_SESSION["order_edit"]=TRUE;
-
 		$sql="SELECT orders_table.order_id, order_number, customer_name, customer_address,customer_phone,customer_mail, order_date,pay_before,orders_table.customer_id, orders_table.vendor_id, vendor.vendor_name,order_status_list.order_status_name 
 		FROM orders_table 
 		JOIN customers ON orders_table.customer_id=customers.customer_id
@@ -56,7 +55,6 @@
 		else{
 			$customer_details="No order entered";
 		}	
-
         switch ($vendor_set_name){
         	case "Sisustusmööbel":
         		$lang="ee";
@@ -71,7 +69,7 @@
         			$lang="ee";
         		break;
         }
-?>
+        ?>
 		 <div class="row">
 		  <input type="hidden" value="'.$row["order_id"].'" name="order_id">
 			<div class="input-field col s3">
@@ -128,11 +126,9 @@
 			</div>
 			<div class="input-field col s3">
         		<b>Pay before:</b>
-        		<input id="pay_before" type="text" class="datepicker"  name="pay_before" value="@php echo htmlspecialchars($pay_before);@endphp">
-        		
-				
+        		<input id="pay_before" type="text" class="datepicker"  name="pay_before" value="@php echo htmlspecialchars($pay_before);@endphp">	
 				@php
-				if ($order_status_name=="Canceled"){
+				if ($order_status_set_name=="Canceled"){
 					echo '<p><a onclick="print_creditinvoice()">Print credit invoice</a><br></p>';
 				}
 				else{
@@ -163,9 +159,12 @@
                 			if(file_exists('../app/fil/invoice/'.$order_number.'-2.pdf')){echo '<br><b>Invoice 2 :</b><br><a href="/getDownload/invoice/'.$order_number.'-2.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2</a><br>';}
                 			$i=1;
                 			while (file_exists('../app/files/invoice/'.$order_number.'-2'.$i.'.pdf')){echo '<a href="/getDownload/invoice/'.$order_number.'-2'.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2'.$i.'</a><br>';$i+=1;}
+                			$i=1;
+							while(file_exists('../app/files/invoice/credit_'.$order_number.$i.'.pdf')){echo '<a href="/getDownload/confirmation/credit_'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>credit_'.$order_number.$i.'</a><br>';$i+=1;}
                 			if(file_exists('../app/files/confirmation/'.$order_number.'.pdf')){echo '<br><b>Order confirmation :</b><br><a href="/getDownload/confirmation/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a><br>';}
 							$i=1;
 							while(file_exists('../app/files/confirmation/'.$order_number.$i.'.pdf')){echo '<a href="/getDownload/confirmation/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a><br>';$i+=1;}
+
                           @endphp
                           </div>
                         </div>

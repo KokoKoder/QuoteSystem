@@ -115,9 +115,8 @@ function eur_format($value){return number_format($value,2,',',' ');}
 					        default:
 					            $logo='<img src="./pictures/furnest-logo-md.jpg" alt="">';
 					    }
-						if($vendor_name=="Furnest EE"){$index=(string)'-1';}
-						else{$index='';}
-						echo '<table><tr><th style="width:50%"><h5>'.$creditinvoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th>'.$logo.'</th></tr><tr><td>
+
+						echo '<table><tr><th style="width:50%"><h5>'.$creditinvoice_str.': <br>'. $row['order_number'].'</h5></th><th>'.$logo.'</th></tr><tr><td>
                                     '.$date_str.': '.date("d.m.y").'<br>
                                     '. $paybefore_str.': '.$pay_before.'<br>
                                    '.$payment_condition_str.' '.$payment_condition.'
