@@ -7,11 +7,12 @@ include(app_path().'/includes/connect.php');
 		$supplier_id=mysqli_real_escape_string($conn,$_POST["supplier_id"]);
 		$supplier_url=mysqli_real_escape_string($conn,$_POST["supplier_url"]);
 		$supplier_mail=mysqli_real_escape_string($conn,$_POST["supplier_mail"]);
+		$supplier_phone1=mysqli_real_escape_string($conn,$_POST["supplier_phone1"]);
 		$pickup_address=mysqli_real_escape_string($conn,$_POST["pickup_address"]);
 		$commercial_contract=mysqli_real_escape_string($conn,$_POST["commercial_contract"]);
 		$standard_delivery_time=mysqli_real_escape_string($conn,$_POST["standard_delivery_time"]);
 
-		$sql_update = "UPDATE suppliers SET supplier_url='$supplier_url', supplier_mail='$supplier_mail',standard_delivery_time='$standard_delivery_time', pickup_address='$pickup_address',commercial_contract='$commercial_contract' WHERE supplier_id='$supplier_id'";
+		$sql_update = "UPDATE suppliers SET supplier_url='$supplier_url', supplier_mail='$supplier_mail',supplier_phone1='$supplier_phone1', standard_delivery_time='$standard_delivery_time', pickup_address='$pickup_address',commercial_contract='$commercial_contract' WHERE supplier_id='$supplier_id'";
 		if ($conn->query($sql_update) === TRUE) {
 			echo "Supplier details successfully edited ";
 		} else {
@@ -24,28 +25,32 @@ include(app_path().'/includes/connect.php');
 			$form_fields='
 			<div class="input-field col s6">
 				<p>Name</p>
-				<input id="supplier_id" type="hidden" name="supplier_id" value="'.$supplier_id.'">
-				<input id="supplier_name" name="supplier_name"  value="'.$row["supplier_name"].'">
+				<input id="supplier_id" type="hidden" name="supplier_id" value="'.htmlspecialchars($supplier_id).'">
+				<input id="supplier_name" name="supplier_name"  value="'.htmlspecialchars($row["supplier_name"]).'">
 			</div>
 			<div class="input-field col s6">
 				<p>URL</p>
-				<input id="supplier_url" name="supplier_url" value="'.$row["supplier_url"].'">
+				<input id="supplier_url" name="supplier_url" value="'.htmlspecialchars($row["supplier_url"]).'">
 			</div>
-			<div class="input-field col s6">
+			<div class="input-field col s3">
+				<p>Phone</p>
+				<input id="supplier_mail" name="supplier_mail" value="'.htmlspecialchars($row["supplier_mail"]).'">
+			</div>
+			<div class="input-field col s3">
 				<p>Mail</p>
-				<input id="supplier_mail" name="supplier_mail" value="'.$row["supplier_mail"].'">
+				<input id="supplier_phone" name="supplier_phone1" value="'.htmlspecialchars($row["supplier_phone1"]).'">
 			</div>
 			<div class="input-field col s6">
 				<p>Address</p>
-				<input name="pickup_address" value="'.$row["pickup_address"].'" class="materialize-textarea">
+				<input name="pickup_address" value="'.htmlspecialchars($row["pickup_address"]).'" class="materialize-textarea">
 			</div>
 			<div class="input-field col s6">
 				<p>Commercial contract</p>
-				<input name="commercial_contract" value="'.$row["commercial_contract"].'" >
+				<input name="commercial_contract" value="'.htmlspecialchars($row["commercial_contract"]).'" >
 			</div>
 			<div class="input-field col s6">
 				<p>standard delivery time in weeks</p>
-				<input id="standard_delivery_time" name="standard_delivery_time" value="'.$row["standard_delivery_time"].'" >
+				<input id="standard_delivery_time" name="standard_delivery_time" value="'.htmlspecialchars($row["standard_delivery_time"]).'" >
 			</div>
 			<br><br>';
 			}
@@ -69,8 +74,13 @@ include(app_path().'/includes/connect.php');
 				<p>URL</p>
 				<input id="supplier_url" name="supplier_url" value="'.$row["supplier_url"].'">
 			</div>
-			<div class="input-field col s6">
-				<p>email</p><input id="supplier_mail" name="supplier_mail" value="'.$row["supplier_mail"].'">
+			<div class="input-field col s3">
+				<p>Mail</p>
+				<input id="supplier_mail" name="supplier_mail" value="'.$row["supplier_mail"].'">
+			</div>
+			<div class="input-field col s3">
+				<p>Phone</p>
+				<input id="supplier_phone" name="supplier_phone1" value="'.$row["supplier_phone1"].'">
 			</div>
 			<div class="input-field col s6">
 				<p>Address</p><input name="pickup_address" value="'.$row["pickup_address"].'" class="materialize-textarea">
