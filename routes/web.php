@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/edit_item/{item_id}','HomeController@edit_item')->name('edit_item');
 	Route::post('/update/{item_id}','HomeController@update')->name('update');
 	Route::get('/getDownload/{filename}', function ($filename) {
-	    return response()->download(('../storage/invoice/'.$filename));
+	    return response()->download(('/quotesystem/public/storage/invoice/'.$filename));
 	});
 });
 

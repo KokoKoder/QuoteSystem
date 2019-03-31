@@ -9,8 +9,8 @@
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <style>.contrast{color:black}</style>
 </head>
 <body>
@@ -43,7 +43,7 @@
 </div>
 </div>
 
-  <div class="container">
+ <div class="container">
  @yield('content')
  </div>
   <footer class="page-footer orange">

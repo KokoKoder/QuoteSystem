@@ -13,7 +13,7 @@ include(app_path().'/includes/get_suppliers_list.php');
 			</div>
 			<div class="input-field col s6">
 			  <input id="item_price" value="{{$item->item_price}}" name="item_price" type="text" class="validate">
-			  <label for="item_price">Item price* in € - Bulk price without taxes. Ex: 25.68</label>
+			  <label for="item_price">Item price* in € - without taxes. Ex: 25.68</label>
 			</div>
 		</div>
 		<div class="row">
@@ -26,7 +26,7 @@ include(app_path().'/includes/get_suppliers_list.php');
 						list($option_supplier_id,$option_supplier_name)=preg_split("[,]",$supplier);
 						$status="";
 						if ($option_supplier_id==$item->item_supplier_id){$status="selected";}
-						$item_supplier_filter.='<option'.$status.' value="'.$option_supplier_id.'">'.$option_supplier_name.'</option>';
+						$item_supplier_filter.='<option '.$status.' value="'.$option_supplier_id.'">'.$option_supplier_name.'</option>';
 					}
 					echo '<option disabled value="">supplier filter*</option>'.$item_supplier_filter;
 				?>
