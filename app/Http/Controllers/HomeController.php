@@ -228,7 +228,7 @@ class HomeController extends Controller
 	    return response()->download("../app/files/invoice/".$filename);
 	}
 	public function getConfirmation($filename){
-	    return response()->download("../app/files/invoice/".$filename);
+	    return response()->download("../app/files/confirmation/".$filename);
 	}
 }
 ?>
