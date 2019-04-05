@@ -153,17 +153,17 @@
                           <div style="display:inline-block"><h4>Available invoices</h4></div><div style="display:inline-block"><a href="#!" class="modal-close waves-effect waves-white btn-flat">Close</a></div>
                           <div>
                           @php
-							if(file_exists('../app/files/invoice/'.$order_number.'.pdf')){echo '<br><b>Invoice :</b><br><a href="/getDownload/invoice/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a><br>';}
+							if(file_exists('../app/files/invoice/'.$order_number.'.pdf')){echo '<br><b>Invoice :</b><br><a href="http://localhost/quotesystem/public/getDownload/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a><br>';}
                 			$i=1;
-                			while (file_exists('../app/files/invoice/'.$order_number.$i.'.pdf')){echo '<a href="/getDownload/invoice/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a><br>';$i+=1;}
-                			if(file_exists('../app/fil/invoice/'.$order_number.'-2.pdf')){echo '<br><b>Invoice 2 :</b><br><a href="/getDownload/invoice/'.$order_number.'-2.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2</a><br>';}
+                			while (file_exists('../app/files/invoice/'.$order_number.$i.'.pdf')){echo '<a href="http://localhost/quotesystem/public/getDownload/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a><br>';$i+=1;}
+                			if(file_exists('../app/fil/invoice/'.$order_number.'-2.pdf')){echo '<br><b>Invoice 2 :</b><br><a href="/getDownload/'.$order_number.'-2.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2</a><br>';}
                 			$i=1;
-                			while (file_exists('../app/files/invoice/'.$order_number.'-2'.$i.'.pdf')){echo '<a href="/getDownload/invoice/'.$order_number.'-2'.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2'.$i.'</a><br>';$i+=1;}
+                			while (file_exists('../app/files/invoice/'.$order_number.'-2'.$i.'.pdf')){echo '<a href="http://localhost/quotesystem/public/getDownload/'.$order_number.'-2'.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2'.$i.'</a><br>';$i+=1;}
                 			$i=1;
-							while(file_exists('../app/files/invoice/credit_'.$order_number.$i.'.pdf')){echo '<a href="/getDownload/confirmation/credit_'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>credit_'.$order_number.$i.'</a><br>';$i+=1;}
-                			if(file_exists('../app/files/confirmation/'.$order_number.'.pdf')){echo '<br><b>Order confirmation :</b><br><a href="/getDownload/confirmation/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a><br>';}
+							while(file_exists('../app/files/invoice/credit_'.$order_number.$i.'.pdf')){echo '<a href="http://localhost/quotesystem/public/getDownload/credit_'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>credit_'.$order_number.$i.'</a><br>';$i+=1;}
+                			if(file_exists('../app/files/confirmation/'.$order_number.'.pdf')){echo '<br><b>Order confirmation :</b><br><a href="http://localhost/quotesystem/public/getDownload/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a><br>';}
 							$i=1;
-							while(file_exists('../app/files/confirmation/'.$order_number.$i.'.pdf')){echo '<a href="/getDownload/confirmation/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a><br>';$i+=1;}
+							while(file_exists('../app/files/confirmation/'.$order_number.$i.'.pdf')){echo '<a href="http://localhost/quotesystem/public/getConfirmation/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a><br>';$i+=1;}
 
                           @endphp
                           </div>

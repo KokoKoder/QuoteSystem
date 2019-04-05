@@ -224,6 +224,11 @@ class HomeController extends Controller
 	    return $pdf->stream('document.pdf');
 	    
 	}
-	
+	public function getDownload($filename){
+	    return response()->download("../app/files/invoice/".$filename);
+	}
+	public function getConfirmation($filename){
+	    return response()->download("../app/files/invoice/".$filename);
+	}
 }
 ?>
