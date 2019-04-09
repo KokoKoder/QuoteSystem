@@ -219,7 +219,7 @@ function eur_format($value){return number_format($value,2,',',' ');}
 	<div class="section">
 		<div class="row">
 			<div class="col s12">
-			<?php echo $legal_text;?>
+			<p><?php echo $legal_text;?></p>
 			</div>
 		</div>
 	</div>
