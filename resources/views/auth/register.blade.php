@@ -60,7 +60,16 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
-
+                        
+                        <div class="form-group row">
+							<label for="is_admin" class="col-md-4 col-form-label text-md-right">Register as admin</label>
+                            <div class="col-md-6">
+								<div class="form-check">
+								  <input name='is_admin' class="form-check-input" type="checkbox"  id="defaultCheck1">
+								</div>
+                            </div>
+                        </div>
+                        
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
