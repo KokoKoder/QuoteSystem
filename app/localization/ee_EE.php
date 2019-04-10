@@ -19,7 +19,8 @@ $VAT_str='Käibemaks 20%';
 $no_vat='Käibemaks 0%';
 $totalvat_str='Kogumaksumus käibemaksuga';
 $transport_not_included_str='';
-$legal_text='<b>Märkused:</b><br>
+$legal_text='<span style="font-weight:bold">Arvelduskonto:</span> EE761010220085984018 <br><span style="font-weight:bold">SWIFT: </span>EEUHEE2X <br><span style="font-weight:bold">SEB Pank aadress:</span> Tornimäe 2, Tallinn Estonia <br><span style="font-weight:bold">VAT nr:</span> EE10126110<br><br>
+<span style="font-weight:bold">Märkused:</span><br>
 Käesolev arve on ühtlasi ühekordne ostu-müügileping Müüja ja Ostja vahel, mille alusel
 on kauba müüjal õigus nõuda viivist iga maksetähtaja ületanud päeva eest ülaltoodud
 tingimuste alusel (viivise suurus jaarvutamise kord on ära toodud viivise lahtris). Kõigis

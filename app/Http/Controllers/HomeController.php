@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Item;
 use PDF;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -40,13 +41,28 @@ class HomeController extends Controller
 		return view('get_customer_details');
 	}
 	public function enter_item(){
-		return view('enter_item');
+	    if(Auth::user()->is_admin){
+		  return view('enter_item');
+	    }
+	    else{
+	        return view('home');
+	    }
 	}
 	public function enter_supplier(){
-		return view('enter_supplier');
+	    if(Auth::user()->is_admin){
+	        return view('enter_supplier');
+	    }
+	    else{
+	        return view('home');
+	    }
 	}
 	public function orders_suppliers_view(){
-		return view('orders_suppliers_view');
+	    if(Auth::user()->is_admin){
+	        return view('orders_suppliers_view');
+	    }
+	    else{
+	        return view('home');
+	    }
 	}
 	public function orders_view(){
 		return view('orders_view');
@@ -72,20 +88,41 @@ class HomeController extends Controller
 	public function filter_by_suppliers(){
 		return view('filter_by_suppliers');
 	}
-	public function suppliers_view(){
-		return view('suppliers_view');
+	public function suppliers_view()
+	{	    
+        if(Auth::user()->is_admin){
+            return view('suppliers_view');
+    	}
+    	else{
+    	    return view('home');
+    	}
 	}
 	public function edit_supplier(){
-		return view('edit_supplier');
+	    if(Auth::user()->is_admin){
+	        return view('edit_supplier');
+	    }
+	    else{
+	        return view('home');
+	    }
 	}
 	public function add_custom_item_to_order(){
-		return view('add_custom_item_to_order');
+	    if(Auth::user()->is_admin){
+	        return view('add_custom_item_to_order');
+	    }
+	    else{
+	        return view('home');
+	    }
 	}
 	public function enter_order_status(){
 		return view('enter_order_status');
 	}
 	public function vendor_details(){
-		return view('vendor_details');
+	    if(Auth::user()->is_admin){
+	        return view('vendor_details');
+	    }
+	    else{
+	        return view('home');
+	    }
 	}
 	public function print_invoice(){
 		return view('print_invoice');

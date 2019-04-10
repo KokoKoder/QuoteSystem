@@ -28,5 +28,5 @@ $payment_condition_str='';
 $payment_condition='';
 $confirmation_condition='';
 $final_amount_str='';
-$order_confirmation_str='';
+$order_confirmation_str='Tilausvahvistus';
 ?>
