@@ -9,9 +9,9 @@ $result_custom_items = mysqli_query($conn, $sql_custom_items);
 ?>
 <h2>Items list</h2>
 <table>
-<tr><th></th><th>Name</th><th>SKU</th><th>Supplier</th><th>Price</th><th>Description</th><th></th></tr>
+<tr><th></th><th>Name</th><th>SKU</th>@if (Auth::user()->is_admin)<th>Supplier</th>@endif<th>Price</th><th>Description</th>@if (Auth::user()->is_admin)<th></th>@endif</tr>
 @foreach($items as $item)
-	<tr><td><!--  a title="delete" onclick="return confirm('Delete?');" href="{{route('delete',$item->item_id)}}"><i class="small material-icons">delete</i></a--></td><td>{{$item->item_name}}</td><td>{{$item->supplier_sku}}</td><td>{{$item->item_supplier_id}}</td><td>{{$item->item_price}}</td><td>{{$item->item_description}}</td><td><a title="editItem" href="{{route('edit_item',$item->item_id)}}"><i class="small material-icons">edit</i></a></td></tr>
+	<tr><td><!--  a title="delete" onclick="return confirm('Delete?');" href="{{route('delete',$item->item_id)}}"><i class="small material-icons">delete</i></a--></td><td>{{$item->item_name}}</td><td>{{$item->supplier_sku}}</td>@if (Auth::user()->is_admin)<td>{{$item->item_supplier_id}}</td>@endif<td>{{$item->item_price}}</td><td>{{$item->item_description}}</td>@if (Auth::user()->is_admin)<td><a title="editItem" href="{{route('edit_item',$item->item_id)}}"><i class="small material-icons">edit</i></a></td>@endif</tr>
 @endforeach
 </table>
 {{$items->links('vendor.pagination.materializecss')}}

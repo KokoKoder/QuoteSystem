@@ -18,18 +18,24 @@
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">OMS</a>
       <ul class="right hide-on-med-and-down">
         <li><a href="{{route('enter_order')}}">Enter Order</a></li>
+        <li><a href="{{route('orders_view')}}">View Orders</a></li>
+        <li><a href="{{route('items_view')}}">View Products</a></li>
+        @isAdmin
 		<li><a href="{{route('enter_supplier')}}">Enter Supplier</a></li>
 		<li><a href="{{route('enter_item')}}">Enter Item</a></li>
-		<li><a href="{{route('orders_view')}}">View Orders</a></li>
 		<li><a href="{{route('orders_suppliers_view')}}">View Orders by suppliers</a></li>
+		@endisAdmin
       </ul>
 
       <ul id="nav-mobile" class="sidenav">
         <li><a href="{{route('enter_order')}}">Enter Order</a></li>
+        <li><a href="{{route('orders_view')}}">View Orders</a></li>
+        <li><a href="{{route('items_view')}}">View Products</a></li
+        @isAdmin
 		<li><a href="{{route('enter_supplier')}}">Enter Supplier</a></li>
 		<li><a href="{{route('enter_item')}}">Enter Item</a></li>
-		<li><a href="{{route('orders_view')}}">View Orders</a></li>
 		<li><a href="{{route('orders_suppliers_view')}}">View Orders by suppliers</a></li>
+		@endisAdmin
       </ul>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
@@ -57,18 +63,23 @@
           <h5 class="white-text">Enter</h5>
           <ul>
             <li><a class="white-text" href="{{route('enter_order')}}">Enter Order</a></li>
+            @isAdmin
             <li><a class="white-text" href="{{route('enter_supplier')}}">Enter Supplier</a></li>
             <li><a class="white-text" href="{{route('enter_item')}}">Enter Item</a></li>
 			<li><a class="white-text" href="{{route('enter_order_status')}}">Enter order status</a></li>
+			@endisAdmin
           </ul>
         </div>
         <div class="col l3 s12">
           <h5 class="white-text">View</h5>
           <ul>
             <li><a class="white-text" href="{{route('orders_view')}}">View Orders</a></li>
-            <li><a class="white-text" href="{{route('suppliers_view')}}">View Suppliers</a></li>
             <li><a class="white-text" href="{{route('items_view')}}">View Products</a></li>
+            @isAdmin
+            <li><a class="white-text" href="{{route('suppliers_view')}}">View Suppliers</a></li>           
 			<li><a class="white-text" href="{{route('vendor_details')}}">Vendor details</a></li>
+			<li><a class="white-text" href="{{route('register')}}">Register</a></li>
+			@endisAdmin
           </ul>
         </div>
       </div>

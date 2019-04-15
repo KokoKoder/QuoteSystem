@@ -7,62 +7,132 @@
 	include(app_path().'/includes/get_status_list.php');
 	include(app_path().'/includes/get_suppliers_list.php');
 	include(app_path().'/includes/get_order_status_list.php');
-
+	$user_id=auth()->user()->id;
+echo "something";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$status_id="";
 	$order_status_id="";
-	#get the form value
-	if (!empty($_POST["status_id"]) AND empty($_POST["order_status_id"])){
-		$status_id=mysqli_real_escape_string($conn,$_POST["status_id"]);
-		$sql="SELECT DISTINCT orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, status.status_name, Schedule_delivery_date, order_status_name  FROM orders_table 
-			JOIN customers ON orders_table.customer_id= customers.customer_id
-			JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
-			JOIN orders_status ON orders_status.order_id=orders_table.order_id
-			JOIN order_status_list ON order_status_list.order_status_id=orders_status.order_status_id
-			JOIN order_items ON order_items.order_id=orders_table.order_id
-			JOIN status  ON status.status_id=order_items.status_id
-			WHERE order_items.status_id='$status_id'";  
-	}
-	elseif (!empty($_POST["order_status_id"]) AND empty($_POST["status_id"])){
-		$order_status_id=mysqli_real_escape_string($conn,$_POST["order_status_id"]);
-		$sql="SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
-		FROM orders_table 
-		JOIN customers ON orders_table.customer_id= customers.customer_id
-		JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
-		JOIN orders_status ON orders_status.order_status_id='$order_status_id'
-		JOIN order_status_list ON order_status_list.order_status_id=orders_status.order_status_id
-		WHERE orders_status.order_id=orders_table.order_id";  
-	}
-	elseif(!empty($_POST["status_id"]) AND !empty($_POST["order_status_id"])){
-		$status_id=mysqli_real_escape_string($conn,$_POST["status_id"]);
-		$order_status_id=mysqli_real_escape_string($conn,$_POST["order_status_id"]);
-		$sql="SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
-		FROM orders_table 
-		JOIN order_items ON order_items.status_id='$status_id'
-		JOIN customers ON orders_table.customer_id= customers.customer_id
-		JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
-		JOIN orders_status ON orders_status.order_status_id='$order_status_id'
-		JOIN order_status_list ON order_status_list.order_status_id=orders_status.order_status_id
-		WHERE orders_status.order_id=orders_table.order_id ";  		
+	if (Auth::user()->is_admin){
+	    echo "is admin" ;
+    	#get the form value
+    	if (!empty($_POST["status_id"]) AND empty($_POST["order_status_id"])){
+    		$status_id=mysqli_real_escape_string($conn,$_POST["status_id"]);
+    		$sql="SELECT DISTINCT orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, status.status_name, Schedule_delivery_date, order_status_name  FROM orders_table 
+    			JOIN customers ON orders_table.customer_id= customers.customer_id
+    			JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
+    			JOIN orders_status ON orders_status.order_id=orders_table.order_id
+    			JOIN order_status_list ON order_status_list.order_status_id=orders_status.order_status_id
+    			JOIN order_items ON order_items.order_id=orders_table.order_id
+    			JOIN status  ON status.status_id=order_items.status_id
+    			WHERE order_items.status_id='$status_id'";  
+    	}
+    	elseif (!empty($_POST["order_status_id"]) AND empty($_POST["status_id"])){
+    		$order_status_id=mysqli_real_escape_string($conn,$_POST["order_status_id"]);
+    		$sql="SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
+    		FROM orders_table 
+    		JOIN customers ON orders_table.customer_id= customers.customer_id
+    		JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
+    		JOIN orders_status ON orders_status.order_status_id='$order_status_id'
+    		JOIN order_status_list ON order_status_list.order_status_id=orders_status.order_status_id
+    		WHERE orders_status.order_id=orders_table.order_id";  
+    	}
+    	elseif(!empty($_POST["status_id"]) AND !empty($_POST["order_status_id"])){
+    		$status_id=mysqli_real_escape_string($conn,$_POST["status_id"]);
+    		$order_status_id=mysqli_real_escape_string($conn,$_POST["order_status_id"]);
+    		$sql="SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
+    		FROM orders_table 
+    		JOIN order_items ON order_items.status_id='$status_id'
+    		JOIN customers ON orders_table.customer_id= customers.customer_id
+    		JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
+    		JOIN orders_status ON orders_status.order_status_id='$order_status_id'
+    		JOIN order_status_list ON order_status_list.order_status_id=orders_status.order_status_id
+    		WHERE orders_status.order_id=orders_table.order_id ";  		
+    	}
+    	else{
+    		$sql="SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
+    		FROM orders_table 
+    		JOIN customers ON orders_table.customer_id= customers.customer_id 
+    		JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
+    		JOIN orders_status ON orders_status.order_id=orders_table.order_id AND orders_status.order_status_id<>'5' AND orders_status.order_status_id<>'6'
+    		JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id";
+    
+    	}
 	}
 	else{
-		$sql="SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
-		FROM orders_table 
-		JOIN customers ON orders_table.customer_id= customers.customer_id 
-		JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
-		JOIN orders_status ON orders_status.order_id=orders_table.order_id AND orders_status.order_status_id<>'5' AND orders_status.order_status_id<>'6'
-		JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id";
-
+	    echo "Not admin - 1 - ";
+	    if (!empty($_POST["status_id"]) AND empty($_POST["order_status_id"])){
+	        echo "Not Admin status selected";
+	        $status_id=mysqli_real_escape_string($conn,$_POST["status_id"]);
+	        $sql="SELECT DISTINCT salesteam_orders.order_id, salesteam_orders.user_id, orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, status.status_name, Schedule_delivery_date, order_status_name  
+                FROM orders_table
+    			JOIN customers ON orders_table.customer_id= customers.customer_id
+    			JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
+    			JOIN orders_status ON orders_status.order_id=orders_table.order_id
+    			JOIN order_status_list ON order_status_list.order_status_id=orders_status.order_status_id
+    			JOIN order_items ON order_items.order_id=orders_table.order_id
+    			JOIN status  ON status.status_id=order_items.status_id
+                JOIN salesteam_orders ON salesteam_orders.user_id='$user_id'
+    			WHERE order_items.status_id='$status_id' AND orders_table.order_id=salesteam_orders.order_id";
+	    }
+	    elseif (!empty($_POST["order_status_id"]) AND empty($_POST["status_id"])){
+	        echo "Not Admin orders status selected";
+	        $order_status_id=mysqli_real_escape_string($conn,$_POST["order_status_id"]);
+	        $sql="SELECT DISTINCT  salesteam_orders.order_id, salesteam_orders.user_id, orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
+    		FROM orders_table
+    		JOIN customers ON orders_table.customer_id= customers.customer_id
+    		JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
+    		JOIN orders_status ON orders_status.order_status_id='$order_status_id'
+    		JOIN order_status_list ON order_status_list.order_status_id=orders_status.order_status_id
+            JOIN salesteam_orders ON salesteam_orders.user_id='$user_id'
+    		WHERE orders_status.order_id=orders_table.order_id AND orders_table.order_id=salesteam_orders.order_id";
+	    }
+	    elseif(!empty($_POST["status_id"]) AND !empty($_POST["order_status_id"])){
+	        echo "Not Admin both filters selected";
+	        $status_id=mysqli_real_escape_string($conn,$_POST["status_id"]);
+	        $order_status_id=mysqli_real_escape_string($conn,$_POST["order_status_id"]);
+	        $sql="SELECT DISTINCT  salesteam_orders.order_id, salesteam_orders.user_id, orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
+    		FROM orders_table
+    		JOIN order_items ON order_items.status_id='$status_id'
+    		JOIN customers ON orders_table.customer_id= customers.customer_id
+    		JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
+    		JOIN orders_status ON orders_status.order_status_id='$order_status_id'
+    		JOIN order_status_list ON order_status_list.order_status_id=orders_status.order_status_id
+            JOIN salesteam_orders ON salesteam_orders.user_id='$user_id'
+    		WHERE orders_status.order_id=orders_table.order_id AND orders_table.order_id=salesteam_orders.order_id";
+	    }
+	    else{
+	        echo "Not Admin no filter selected";
+	        $sql="SELECT DISTINCT  salesteam_orders.order_id, salesteam_orders.user_id, orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
+    		FROM orders_table
+    		JOIN customers ON orders_table.customer_id= customers.customer_id
+    		JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
+    		JOIN orders_status ON orders_status.order_id=orders_table.order_id AND orders_status.order_status_id<>'5' AND orders_status.order_status_id<>'6'
+    		JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id
+	        JOIN salesteam_orders ON salesteam_orders.user_id='$user_id'
+	        WHERE orders_table.order_id=salesteam_orders.order_id";
+	    }
 	}
 }
 
 else{
-	$sql="SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
-	FROM orders_table 
-	JOIN customers ON orders_table.customer_id= customers.customer_id 
-	JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
-	JOIN orders_status ON orders_status.order_id=orders_table.order_id AND orders_status.order_status_id<>'5' AND orders_status.order_status_id<>'6' 
-	JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id ";
+    if (Auth::user()->is_admin){
+    	$sql="SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
+    	FROM orders_table 
+    	JOIN customers ON orders_table.customer_id= customers.customer_id 
+    	JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
+    	JOIN orders_status ON orders_status.order_id=orders_table.order_id AND orders_status.order_status_id<>'5' AND orders_status.order_status_id<>'6' 
+    	JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id ";
+    }
+    else{
+        $sql="SELECT DISTINCT  salesteam_orders.user_id, orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
+    	FROM orders_table
+    	JOIN customers ON orders_table.customer_id= customers.customer_id
+    	JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
+    	JOIN orders_status ON orders_status.order_id=orders_table.order_id AND orders_status.order_status_id<>'5' AND orders_status.order_status_id<>'6'
+    	JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id 
+        JOIN salesteam_orders ON salesteam_orders.user_id='$user_id'
+        WHERE orders_table.order_id=salesteam_orders.order_id";
+    }
 }
 
 ?>
@@ -113,7 +183,7 @@ else{
 			<?php
 				$result = mysqli_query($conn, $sql);
 				$container = array('content'=>''); 
-				$single_tpl = file_get_contents( 'tpls/single_order.tpl');  	
+				$single_tpl = file_get_contents( 'tpls/single_order.tpl');  
 				if (mysqli_num_rows($result) > 0) {
 					while($row = mysqli_fetch_assoc($result)) {
 						$container['content'] .= parse($single_tpl, $row );

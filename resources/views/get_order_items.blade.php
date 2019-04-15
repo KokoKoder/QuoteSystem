@@ -75,17 +75,32 @@ if (isset($_SESSION["order_id"])){
 				} 
 				
 				$status_selection_html='<select class="browser-default" name="item_status" style="display:block">'.$option_status.'</select>';
-			    $line='<form method="POST" action="'.$edit_order_item_url.'" class="col s12"><input type="hidden" name="_token" id="csrf-token" value="'.$token.'">
-				  <div class="row" '.$alert_level.'>
-						<div class="col s1"><p><a class="incline contrast"  href="'.$delete_url.'?id='.$row['id'].'">x</a></p></div>
-						<div class="col s2"><input  type="hidden" name="id" value="'.$row['id'].'"><p>'.$row['item_name'].'</p></div>
-						<div class="col s1"><input  type="text" value="'.$row['item_quantity'].'" name="item_quantity"></div>
-						<div class="col s2"><input   type="text" class="datepicker" value="'.$row['Schedule_delivery_date'].'" name="Schedule_delivery_date"></div>
-						<div class="col s1"><p>'.$row['supplier_name'].'</p></div>
-						<div class="col s2">'.$status_selection_html.'</div>
-						<div class="col s1"><button class="btn inline" type="submit" value="submit"><i class="material-icons">done</i></button></div>
-					</div>
-				</form>';
+				if (Auth::user()->is_admin){
+    			    $line='<form method="POST" action="'.$edit_order_item_url.'" class="col s12"><input type="hidden" name="_token" id="csrf-token" value="'.$token.'">
+    				  <div class="row" '.$alert_level.'>
+    						<div class="col s1"><p><a class="incline contrast"  href="'.$delete_url.'?id='.$row['id'].'">x</a></p></div>
+    						<div class="col s2"><input  type="hidden" name="id" value="'.$row['id'].'"><p>'.$row['item_name'].'</p></div>
+    						<div class="col s1"><input  type="text" value="'.$row['item_quantity'].'" name="item_quantity"></div>
+    						<div class="col s2"><input   type="text" class="datepicker" value="'.$row['Schedule_delivery_date'].'" name="Schedule_delivery_date"></div>
+    						<div class="col s1"><p>'.$row['supplier_name'].'</p></div>
+    						<div class="col s2">'.$status_selection_html.'</div>
+    						<div class="col s1"><button class="btn inline" type="submit" value="submit"><i class="material-icons">done</i></button></div>
+    					</div>
+    				</form>';
+			     }
+			     else{
+			         $line='<form method="POST" action="'.$edit_order_item_url.'" class="col s12"><input type="hidden" name="_token" id="csrf-token" value="'.$token.'">
+    				  <div class="row" '.$alert_level.'>
+    						<div class="col s1"><p><a class="incline contrast"  href="'.$delete_url.'?id='.$row['id'].'">x</a></p></div>
+    						<div class="col s2"><input  type="hidden" name="id" value="'.$row['id'].'"><p>'.$row['item_name'].'</p></div>
+    						<div class="col s1"><input  type="text" value="'.$row['item_quantity'].'" name="item_quantity"></div>
+    						<div class="col s2"><input   type="text" class="datepicker" value="'.$row['Schedule_delivery_date'].'" name="Schedule_delivery_date"></div>
+    						<div class="col s1"><p></p></div>
+    						<div class="col s2">'.$status_selection_html.'</div>
+    						<div class="col s1"><button class="btn inline" type="submit" value="submit"><i class="material-icons">done</i></button></div>
+    					</div>
+    				</form>';
+			     }
 				$lines .= $line;
 			}
 		}
@@ -139,24 +154,44 @@ if (isset($_SESSION["order_id"])){
 			}
 		}
 
-	
-#Print the all results to the page
-print   '<style>
-  input[type=text]:not(.browser-default){
-  border:none;
-  }
-  </style> 
-  <div class="row">
-		<div class="col s1"><p></p></div>
-		<div class="col s2"><p><b>Product name</b></p></div>
-		<div class="col s1"><p><b>Quantity</b></p></div>
-		<div class="col s2"><p><b>Schedule delivery date</b></p></div>
-		<div class="col s1"><p><b>Supplier name</b></p></div>
-		<div class="col s2"><p><b>Status</b></p></div>
-		<div class="col s1"></div>
-  
-  </div>
-  <div class="row">'.$lines.$lines2.'</div>';
+        	
+        #Print the all results to the page
+		if (Auth::user()->is_admin){
+        print   '<style>
+          input[type=text]:not(.browser-default){
+          border:none;
+          }
+          </style> 
+          <div class="row">
+        		<div class="col s1"><p></p></div>
+        		<div class="col s2"><p><b>Product name</b></p></div>
+        		<div class="col s1"><p><b>Quantity</b></p></div>
+        		<div class="col s2"><p><b>Schedule delivery date</b></p></div>
+        		<div class="col s1"><p><b>Supplier name</b></p></div>
+        		<div class="col s2"><p><b>Status</b></p></div>
+        		<div class="col s1"></div>
+          
+          </div>
+          <div class="row">'.$lines.$lines2.'</div>';
+		}
+		else{
+		    print   '<style>
+          input[type=text]:not(.browser-default){
+          border:none;
+          }
+          </style>
+          <div class="row">
+        		<div class="col s1"><p></p></div>
+        		<div class="col s2"><p><b>Product name</b></p></div>
+        		<div class="col s1"><p><b>Quantity</b></p></div>
+        		<div class="col s2"><p><b>Schedule delivery date</b></p></div>
+        		<div class="col s1"><p></p></div>
+        		<div class="col s2"><p><b>Status</b></p></div>
+        		<div class="col s1"></div>
+		        
+          </div>
+          <div class="row">'.$lines.$lines2.'</div>';
+		}
 	}
 else{
 	echo "Order id is not set";

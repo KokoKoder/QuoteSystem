@@ -9,7 +9,9 @@
 	  <br><br>
 	  <h1 class="header center orange-text">Add item to order</h1>
 	  <br><br>
+	  @isAdmin
 	  <a href="{{route('add_custom_item_to_order')}}">Add custom item</a>
+	  @endisAdmin
 	</div>
 	</div>
     <div class="section">

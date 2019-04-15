@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	else{
 		$order_status_id="";
 	}
-	echo "Date that will be entered : ". $order_date;
+	$user_id=auth()->user()->id;
 
 	//Check that no required fields were left empty	
 	if (isset($order_number_err) OR isset($vendor_err) OR isset($name_err)) {
@@ -138,6 +138,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		} else {
 			echo "Error: " . $sql2 . "<br>" . $conn->error;
 		}
+		$sql4="INSERT INTO salesteam_orders (user_id, order_id) VALUES ('$user_id','$order_id')";
+		if ($conn->query($sql4) === TRUE) {
+		    echo "New record created successfully in salesteam_orders table";
+		} else {
+		    echo "Error: " . $sql4 . "<br>" . $conn->error;
+		}
 		$conn->close();
 		$header_location_url=route('add_item_to_order_form');
 		header("Location: ".$header_location_url);
@@ -166,7 +172,7 @@ if (isset($is_duplicate) AND isset($check_for_duplicate)){echo $check_for_duplic
       </div>
       <div class="row">
 		<div name="vendor" id="vendor" class="input-field col s6">
-
+			@if (Auth::user()->is_admin)
 			<select id="vendor_select" name="vendor_id" class="browser-default">
 				<option value="" disabled selected>Vendor</option>
 				<?php 
@@ -176,6 +182,10 @@ if (isset($is_duplicate) AND isset($check_for_duplicate)){echo $check_for_duplic
 					}
 				?>
 			</select>
+			@else
+			<?php echo $user_id=auth()->user()->id;?>
+			<input hidden id="vendor_select" name="vendor_id" type="text"  value="14">
+			@endif
 		 </div>
 		 <div  class="input-field col s6">
 			<select id="order_status_select" name="order_status_id" class="browser-default">
