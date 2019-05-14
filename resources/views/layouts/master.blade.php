@@ -30,7 +30,7 @@
       <ul id="nav-mobile" class="sidenav">
         <li><a href="{{route('enter_order')}}">Enter Order</a></li>
         <li><a href="{{route('orders_view')}}">View Orders</a></li>
-        <li><a href="{{route('items_view')}}">View Products</a></li
+        <li><a href="{{route('items_view')}}">View Products</a></li>
         @isAdmin
 		<li><a href="{{route('enter_supplier')}}">Enter Supplier</a></li>
 		<li><a href="{{route('enter_item')}}">Enter Item</a></li>
@@ -113,12 +113,6 @@
 	$('select').formSelect();
 	});
   
-	// Post Materialize select 
-	$('#vendor_select').on('change', function() {
-		var vendor_select=document.getElementById("vendor_select").value;
-		document.getElementById("vendor_hidden").value=vendor_select;
-	});   
-	
 	
 	// Add csrf token to js query
 	$.ajaxSetup({

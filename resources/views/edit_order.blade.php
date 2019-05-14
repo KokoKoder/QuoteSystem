@@ -81,10 +81,10 @@
         				@endphp
         				</p>
     				</div>
-    				<div id="vendor" class="input-field col s12">
+    				<div class="input-field col s12">
         				<b>Vendor:</b>
-        				<select id="vendor_select">
-        				<option name="vendor_id"  disabled selected>Change vendor</option>
+        				<select name="vendor_id" id="vendor_select">
+        				<option   disabled selected>Change vendor</option>
         				@php
         				 foreach ($vendors_list as $vendor){
         					 list($vendor_id,$vendors_name)=preg_split("[,]",$vendor);
@@ -98,7 +98,6 @@
         				 }
         				@endphp	  
         				</select>
-        				<--!input type="hidden" name="vendor_id" id="vendor_hidden" value="@php echo(htmlspecialchars($vendor_id));@endphp" /-->
     				</div>
             		<div class="input-field col s12">
         				<b>Order Status:</b>
