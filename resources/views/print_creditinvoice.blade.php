@@ -214,7 +214,7 @@ function eur_format($value){return number_format($value,2,',',' ');}
 	<div class="section">
 		<div class="row">
 			<div class="col s12">
-			<?php echo $legal_text;?>
+			<?php #echo $legal_text;?>
 			</div>
 		</div>
 	</div>

@@ -29,7 +29,7 @@ if (mysqli_num_rows($result) > 0) {
 }
 else{
 	unset($is_jquery);
-	unset($_SESSION["duplicate_id"],$_SESSION["order_number"]);
-	echo (string) "order not found";
+	unset($_SESSION["duplicate_id"]);
+	$is_duplicate=FALSE;
 }
 ?>

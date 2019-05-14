@@ -1,14 +1,31 @@
 @extends('layouts.master')
 @section('content')
 <?php
+session_start();
 include(app_path().'/includes/get_vendors_list.php');
 include(app_path().'/includes/get_order_status_list.php');
+include(app_path().'/includes/connect.php');
+$user_id=auth()->user()->id;
+$sql = "SELECT * FROM orders_table ORDER BY order_id DESC LIMIT 1";
+$result = mysqli_query($conn, $sql);
+if (mysqli_num_rows($result) > 0) {
+    while($row = mysqli_fetch_assoc($result)) {
+        $i=(int) $row['order_id'];
+    }
+}
+$_SESSION["order_number"]=  date("y").'-'.$user_id.$i;
+include(app_path().'/includes/verify_order_number_for_duplicate.php');
+while($is_duplicate){
+    $i+=1;
+    $_SESSION["order_number"]= date("y").'-'.$user_id.$i;
+    include(app_path().'/includes/verify_order_number_for_duplicate.php');
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	#make sure there is session variable that can interact with the process of creating a new order
 	if (isset($_SESSION["order_edit"])){unset($_SESSION["order_edit"]);}
 	$is_furnest=FALSE;
-	session_start();
+	
 	#connect to the database
 	include(app_path().'/includes/connect.php');
 
@@ -81,13 +98,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	else{
 		$order_status_id="";
 	}
-	$user_id=auth()->user()->id;
+	
 
 	//Check that no required fields were left empty	
 	if (isset($order_number_err) OR isset($vendor_err) OR isset($name_err)) {
         $missing_required_fields="Check that <b>order number</b>, <b>order date</b>, <b>supplier</b> and <b>customer name</b> are filled properly before submitting the form.";
 	}
-	elseif (isset($is_duplicate)){
+	elseif ($is_duplicate){
 		$edit_order = route('edit_order');
 		$check_for_duplicate='Order number already exists<br> change or <a href="'.$edit_order.'?order_id='.$_SESSION["duplicate_id"].'">edit order</a> instead? ';
 	}
@@ -106,6 +123,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				echo "New record created successfully in customers tab". $customer_id;
 			} else {
 				echo "Error: " . $sql1 . "<br>" . $conn->error;
+			}
+			$sql5 ="INSERT INTO salesteam_customers (user_id,customer_id) VALUES ('$user_id',$customer_id)";
+			if ($conn->query($sql5) === TRUE) {
+			    echo "New record created successfully in salesteam_customers table";
+			} else {
+			    echo "Error: " . $sql5 . "<br>" . $conn->error;
 			}
 		}
 		$sql = "INSERT INTO orders_table (order_number, order_date, customer_id, vendor_id)
@@ -161,7 +184,7 @@ if (isset($is_duplicate) AND isset($check_for_duplicate)){echo $check_for_duplic
 	@csrf
       <div class="row">
         <div class="input-field col s6">
-          <input  id="order_number" name="order_number" type="text" class="validate">
+          <input  id="order_number" name="order_number" type="text" value="<?php echo $_SESSION["order_number"]; ?>">
           <label id="order_number_label" for="order_number">Order Number</label>
 		  <span id="order_number_alert"></span>
         </div>
@@ -183,7 +206,6 @@ if (isset($is_duplicate) AND isset($check_for_duplicate)){echo $check_for_duplic
 				?>
 			</select>
 			@else
-			<?php echo $user_id=auth()->user()->id;?>
 			<input hidden id="vendor_select" name="vendor_id" type="text"  value="14">
 			@endif
 		 </div>

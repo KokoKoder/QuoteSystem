@@ -131,7 +131,12 @@ class HomeController extends Controller
 	    return view('print_creditinvoice');
 	}
 	public function delete_order_custom_item(){
-		return view('delete_order_custom_item');
+	    if(Auth::user()->is_admin){
+		  return view('delete_order_custom_item');
+	    }
+	    else{
+	        return view('home');
+	    }
 	}
 	public function get_vendor_details(){
 		return view('get_vendor_details');
@@ -157,13 +162,23 @@ class HomeController extends Controller
 	    return view('items_view',compact('items','custom_items'));
 	}
 	public function delete($item_id){
-	    $item=DB::table('items')->where('item_id','=',$item_id);
-	    $item->delete();
-	    return redirect()->back();
+	    if(Auth::user()->is_admin){
+    	    $item=DB::table('items')->where('item_id','=',$item_id);
+    	    $item->delete();
+    	    return redirect()->back();
+	    }
+	    else{
+	        return view('home');
+	    }
 	}
 	public function edit_item($item_id){
-	    $item=DB::table('items')->where('item_id','=',$item_id)->first();
-	    return view('edit_item',compact('item'));
+	    if(Auth::user()->is_admin){
+	       $item=DB::table('items')->where('item_id','=',$item_id)->first();
+	       return view('edit_item',compact('item'));
+	    }
+	    else{
+	       return view('home');
+	    }
 	}
 	public function update($item_id, Request $request){
 	    $item=DB::table('items')

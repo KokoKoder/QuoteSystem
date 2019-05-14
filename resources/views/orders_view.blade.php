@@ -59,7 +59,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     	}
 	}
 	else{
-	    echo "Not admin - 1 - ";
 	    if (!empty($_POST["status_id"]) AND empty($_POST["order_status_id"])){
 	        echo "Not Admin status selected";
 	        $status_id=mysqli_real_escape_string($conn,$_POST["status_id"]);
