@@ -102,12 +102,6 @@
 	$('select').formSelect();
 	});
   
-	// Post Materialize select 
-	$('#vendor_select').on('change', function() {
-		var vendor_select=document.getElementById("vendor_select").value;
-		document.getElementById("vendor_hidden").value=vendor_select;
-	});   
-	
 	
 	// Add csrf token to js query
 	$.ajaxSetup({

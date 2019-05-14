@@ -81,9 +81,9 @@
         				@endphp
         				</p>
     				</div>
-    				<div name="vendor" id="vendor" class="input-field col s12">
+    				<div class="input-field col s12">
         				<b>Vendor:</b>
-        				<select id="vendor_select">
+        				<select name="vendor_id" id="vendor_select">
         				<option value="" disabled selected>Change vendor</option>
         				@php
         				 foreach ($vendors_list as $vendor){
@@ -98,7 +98,6 @@
         				 }
         				@endphp	  
         				</select>
-        				<input type="hidden" name="vendor_id" id="vendor_hidden" value="@php echo(htmlspecialchars($vendor_id));@endphp" />
     				</div>
             		<div class="input-field col s12">
         				<b>Order Status:</b>
