@@ -17,6 +17,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        // Blade custom directives for isAdmin
+        
+        Blade::directive('isAdmin', function() {
+            return "<?php if(Auth::user()->isAdmin()): ?>";
+        });
+            
+            Blade::directive('endisAdmin', function() {
+                return "<?php endif; ?>";
+            });
     }
 
     /**
