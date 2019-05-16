@@ -114,14 +114,24 @@ function eur_format($value){return number_format($value,2,',',' ');}
 					    }
 						if($vendor_name=="Furnest EE"){$index=(string)'';}
 						else{$index='';}
-						echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th>'.$logo.'</th></tr><tr><td>
+						if($vendor_name=="Furnest EE" or $vendor_name=="Furnest FI"){
+						  echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th>'.$logo.'</th></tr><tr><td>
                                     '.$date_str.': '.date("d.m.y").'<br>
                                     '. $paybefore_str.': '.$pay_before.'<br>
                             </td>
                             <td>'.$company_name.'<br>
                                 '.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'
-                            </td></tr></table>';	
-						}		
+                            </td></tr></table>';
+						}
+						else{
+						    echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th>'.$logo.'</th></tr><tr><td>
+                                    '.$date_str.': '.date("d.m.y").'<br>
+                            </td>
+                            <td>'.$company_name.'<br>
+                                '.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'
+                            </td></tr></table>';
+						}
+					}		
 				}
 				?>
 			</div>
@@ -206,12 +216,10 @@ function eur_format($value){return number_format($value,2,',',' ');}
 					</table>
 			</div>
 		</div>
-	</div><!--END ROW -->
-	</div><!--END SECTION -->
 	<div class="section">
 		<div class="row">
 			<div class="col s12">
-			<?php echo $legal_text;?>
+			<?php if($vendor_name=="Furnest EE" or $vendor_name=="Furnest FI"){echo $legal_text;}?>
 			</div>
 		</div>
 	</div>
