@@ -261,8 +261,9 @@ if (isset($is_duplicate) AND isset($check_for_duplicate)){echo $check_for_duplic
 		<div class="input-field col s6">
 		<i class="material-icons prefix">V</i>
 		<input id="vat_id" type="text" name="vat_id">
-		'<span class="helper-text">Enter customer VAT ID</span>
+		<span class="helper-text">Enter customer VAT ID</span>
 		</div>
+		<div class="col 6"><p><a href="http://ec.europa.eu/taxation_customs/vies/" target="_blank">Check VAT ID</a></p></div>
 	</div>
 	  <button id="submit_form" class="waves-effect waves-light btn" type="submit" value="Submit">Enter order</button>
     </form>
@@ -319,8 +320,7 @@ if (isset($is_duplicate) AND isset($check_for_duplicate)){echo $check_for_duplic
 	jQuery.get("get_customer_details", { customer_name:search_query }, fill_customer_details);
 	}*/	
 	function fill_customer_details(data,status, xhr){
-		console.log(data);
-		var customer_details=data.split(',');
+		var customer_details=data.split(';');
 		$("#address").val(customer_details[1]);
 		$("#phone").val(customer_details[2]);
 		$("#email").val(customer_details[4]);
