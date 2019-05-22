@@ -12,7 +12,7 @@ $sql="SELECT customer_name, customer_id, customer_phone, customer_address, custo
 $result = mysqli_query($conn, $sql);	
 if (mysqli_num_rows($result) > 0) {
 	while($row = mysqli_fetch_assoc($result)) {
-		 $customer_details=$row['customer_name'].','.$row['customer_address'].','.$row['customer_phone'].','.$row['customer_id'].','.$row['customer_mail'];
+		 $customer_details=$row['customer_name'].';'.$row['customer_address'].';'.$row['customer_phone'].';'.$row['customer_id'].';'.$row['customer_mail'];
 		};
 }
 else{

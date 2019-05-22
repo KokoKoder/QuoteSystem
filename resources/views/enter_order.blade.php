@@ -319,6 +319,7 @@ if (isset($is_duplicate) AND isset($check_for_duplicate)){echo $check_for_duplic
 	jQuery.get("get_customer_details", { customer_name:search_query }, fill_customer_details);
 	}*/	
 	function fill_customer_details(data,status, xhr){
+		console.log(data);
 		var customer_details=data.split(',');
 		$("#address").val(customer_details[1]);
 		$("#phone").val(customer_details[2]);
