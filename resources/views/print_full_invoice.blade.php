@@ -114,23 +114,14 @@ function eur_format($value){return number_format($value,2,',',' ');}
 					    }
 						if($vendor_name=="Furnest EE"){$index=(string)'';}
 						else{$index='';}
-						if($vendor_name=="Furnest EE" or $vendor_name=="Furnest FI"){
-						  echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th>'.$logo.'</th></tr><tr><td>
-                                    '.$date_str.': '.date("d.m.y").'<br>
-                                    '. $paybefore_str.': '.$pay_before.'<br>
-                            </td>
-                            <td>'.$company_name.'<br>
-                                '.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'
-                            </td></tr></table>';
-						}
-						else{
-						    echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th>'.$logo.'</th></tr><tr><td>
-                                    '.$date_str.': '.date("d.m.y").'<br>
-                            </td>
-                            <td>'.$company_name.'<br>
-                                '.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'
-                            </td></tr></table>';
-						}
+					    echo '<table><tr><th style="width:50%"><h5>'.$invoice_str.': <br>'. $row['order_number'].$index.'</h5></th><th>'.$logo.'</th></tr><tr><td>
+                                '.$date_str.': '.date("d.m.y").'<br>
+                                '. $paybefore_str.': '.$pay_before.'<br>
+                        </td>
+                        <td>'.$company_name.'<br>
+                            '.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'
+                        </td></tr></table>';
+
 					}		
 				}
 				?>
@@ -166,7 +157,7 @@ function eur_format($value){return number_format($value,2,',',' ');}
 		<div class="section">
 			<div class="row">
 					<table>
-						<tr class="item_list_header"><th>Nimetus</th><th>Kogus</th><th class="price_align">Hind €</th><th class="price_align">Kokku €</th></tr>
+						<tr class="item_list_header"><th>@php echo $itemname_str; @endphp</th><th>@php echo $quantity_str; @endphp</th><th class="price_align">@php echo $price_str; @endphp</th><th class="price_align">@php echo $sum_str; @endphp</th></tr>
 						<?php
 						
 						if (!empty($_GET["order_id"])){
@@ -208,10 +199,10 @@ function eur_format($value){return number_format($value,2,',',' ');}
 						$kogumaksumus=(float)$kogumaksumus;
 						$VAT=number_format($VAT,2,',',' ');
 						echo '<tr class="item_list"><td></td><td></td><td></td><td></td></tr>
-						<tr><td></td><td></td><th>Tooted kokku</th><th class="price_align">'.$total_display.'</th></tr>';
+						<tr><td></td><td></td><th>'.$total_str.'</th><th class="price_align">'.$total_display.'</th></tr>';
 						if(isset($has_vat_id) && $lang=="fi"){echo '<tr class="item_list"><td></td><td></td><th>'.$no_vat.'</th><td class="price_align">'.$VAT.'</td></tr>';}
 						else{echo '<tr class="item_list"><td></td><td></td><td><b>'.$VAT_str.'</b></td><td class="price_align">'.$VAT.'</td></tr>';}
-						echo '<tr><td></td><td></td><th>Kogumaksumus käibemaksuga</th><th class="price_align">'.$kogumaksumus_display.'</th></tr>';	
+						echo '<tr><td></td><td></td><th>'.$totalvat_str.'</th><th class="price_align">'.$kogumaksumus_display.'</th></tr>';	
 						?>		
 					</table>
 			</div>

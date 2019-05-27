@@ -72,7 +72,7 @@
         ?>
 		 <div class="row">
 		  <input type="hidden" value="'.$row["order_id"].'" name="order_id">
-			<div class="input-field col s3">
+			<div class="input-field col s12 m3">
 				<div class="row">
 					<div class="col s12">
         				<p><b>Order number</b><br>
@@ -123,7 +123,7 @@
 				</div>
 	
 			</div>
-			<div class="input-field col s3">
+			<div class="input-field col s12 m3">
         		<b>Pay before:</b>
         		<input id="pay_before" type="text" class="datepicker"  name="pay_before" value="@php echo htmlspecialchars($pay_before);@endphp">	
 				@php
@@ -171,7 +171,7 @@
                         </div>
                       </div>
 			</div>
-			<div class="input-field col s6">
+			<div class="input-field col s12 m6">
 				<h5>Customer details</h5>
 				@php $url=route('edit_customer');@endphp
 				<a href="@php echo $url.'?customer_id='.$customer_id;@endphp"><i class="material-icons">edit</i></a>
