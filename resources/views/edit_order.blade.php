@@ -72,7 +72,7 @@
         ?>
 		 <div class="row">
 		  <input type="hidden" value="'.$row["order_id"].'" name="order_id">
-			<div class="input-field col s3">
+			<div class="input-field col s12 m3">
 				<div class="row">
 					<div class="col s12">
         				<p><b>Order number</b><br>
@@ -123,7 +123,7 @@
 				</div>
 	
 			</div>
-			<div class="input-field col s3">
+			<div class="input-field col s12 m3">
         		<b>Pay before:</b>
         		<input id="pay_before" type="text" class="datepicker"  name="pay_before" value="@php echo htmlspecialchars($pay_before);@endphp">	
 				@php
@@ -152,17 +152,17 @@
                           <div style="display:inline-block"><h4>Available invoices</h4></div><div style="display:inline-block"><a href="#!" class="modal-close waves-effect waves-white btn-flat">Close</a></div>
                           <div>
                           @php
-							if(file_exists('../app/files/invoice/'.$order_number.'.pdf')){echo '<br><b>Invoice :</b><br><a href="http://localhost/quotesystem/public/getDownload/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a><br>';}
+							if(file_exists('../app/files/invoice/'.$order_number.'.pdf')){echo '<br><b>Invoice :</b><br><a href="./getDownload/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a><br>';}
                 			$i=1;
-                			while (file_exists('../app/files/invoice/'.$order_number.$i.'.pdf')){echo '<a href="http://localhost/quotesystem/public/getDownload/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a><br>';$i+=1;}
+                			while (file_exists('../app/files/invoice/'.$order_number.$i.'.pdf')){echo '<a href="./getDownload/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a><br>';$i+=1;}
                 			if(file_exists('../app/fil/invoice/'.$order_number.'-2.pdf')){echo '<br><b>Invoice 2 :</b><br><a href="/getDownload/'.$order_number.'-2.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2</a><br>';}
                 			$i=1;
-                			while (file_exists('../app/files/invoice/'.$order_number.'-2'.$i.'.pdf')){echo '<a href="http://localhost/quotesystem/public/getDownload/'.$order_number.'-2'.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2'.$i.'</a><br>';$i+=1;}
+                			while (file_exists('../app/files/invoice/'.$order_number.'-2'.$i.'.pdf')){echo '<a href="./getDownload/'.$order_number.'-2'.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'-2'.$i.'</a><br>';$i+=1;}
                 			$i=1;
-							while(file_exists('../app/files/invoice/credit_'.$order_number.$i.'.pdf')){echo '<a href="http://localhost/quotesystem/public/getDownload/credit_'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>credit_'.$order_number.$i.'</a><br>';$i+=1;}
-                			if(file_exists('../app/files/confirmation/'.$order_number.'.pdf')){echo '<br><b>Order confirmation :</b><br><a href="http://localhost/quotesystem/public/getConfirmation/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a><br>';}
+							while(file_exists('../app/files/invoice/credit_'.$order_number.$i.'.pdf')){echo '<a href="./getDownload/credit_'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>credit_'.$order_number.$i.'</a><br>';$i+=1;}
+                			if(file_exists('../app/files/confirmation/'.$order_number.'.pdf')){echo '<br><b>Order confirmation :</b><br><a href="./getConfirmation/'.$order_number.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.'</a><br>';}
 							$i=1;
-							while(file_exists('../app/files/confirmation/'.$order_number.$i.'.pdf')){echo '<a href="http://localhost/quotesystem/public/getConfirmation/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a><br>';$i+=1;}
+							while(file_exists('../app/files/confirmation/'.$order_number.$i.'.pdf')){echo '<a href="./getConfirmation/'.$order_number.$i.'.pdf"><i class="material-icons dp48">picture_as_pdf</i>'.$order_number.$i.'</a><br>';$i+=1;}
                           @endphp
                           </div>
                         </div>
@@ -171,7 +171,7 @@
                         </div>
                       </div>
 			</div>
-			<div class="input-field col s6">
+			<div class="input-field col s12 m6">
 				<h5>Customer details</h5>
 				@php $url=route('edit_customer');@endphp
 				<a href="@php echo $url.'?customer_id='.$customer_id;@endphp"><i class="material-icons">edit</i></a>

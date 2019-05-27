@@ -1,5 +1,5 @@
 <?php
-$invoice_str='Tilausnumero';
+$invoice_str='Laskun numero';
 $creditinvoice_str='Hyvityslasku';
 $date_str='Tilauspäivä';
 $tel_str='Puhelin';
@@ -12,12 +12,12 @@ $email_str='Sähköposti ';
 $paybefore_str='Eräpäivä';
 $itemname_str='Tuote';
 $quantity_str='Määrä';
-$price_str='Hinta €';
+$price_str='Hinta kpl €';
 $sum_str='Yhteensä €';
 $total_str='Tuotteet yhteensä';
-$VAT_str='Arvonliävero 20%';
-$no_vat='Arvonliävero 0%';
-$totalvat_str='Arvonlisäverollinen hinta';
+$VAT_str='Arvonlisävero 20%';
+$no_vat='Arvonlisävero 0%';
+$totalvat_str='Nettohinta yhteensä';
 $transport_not_included_str='';
 $legal_text='Tämä lasku on samalla kertaluontoinen myyjän sekä ostajan osto-myyntisopimus.
 Tavaran myyjällä on oikeus vaatia viivästyskorkoa jokaisesta päivästä, joka ylittää laskussa merkityn
