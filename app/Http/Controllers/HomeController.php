@@ -156,10 +156,12 @@ class HomeController extends Controller
 	public function print_confirmation(){
 	    return view('print_confirmation');
 	}
-	public function items_view(){
-	    $items = DB::table('items')->paginate(10);
-	    $custom_items = DB::table('custom_items')->paginate(10);
-	    return view('items_view',compact('items','custom_items'));
+	public function items_view(Request $request){
+	    $search_term = $request->input('search_term');
+	    $search_term='%'.$search_term.'%';
+	    $items = DB::table('items')->where('item_name', 'like', $search_term)->paginate(10);
+	    $custom_items = DB::table('custom_items')->where('custom_items.item_name', 'like', $search_term)->paginate(10);
+	    return view('items_view',compact('items','custom_items','search_term'));
 	}
 	public function delete($item_id){
 	    if(Auth::user()->is_admin){
