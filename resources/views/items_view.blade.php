@@ -21,9 +21,6 @@ $result_custom_items = mysqli_query($conn, $sql_custom_items);
 </div>
 <button type="submit" class="waves-effect waves-light btn">Search</button>
 </form>
-@php
-if (isset($search_term)){echo $search_term;}
-@endphp
 <table>
 <tr><th></th><th>Name</th><th>SKU</th>@if (Auth::user()->is_admin)<th>Supplier</th>@endif<th>Price</th><th>Description</th>@if (Auth::user()->is_admin)<th></th>@endif</tr>
 @foreach($items as $item)

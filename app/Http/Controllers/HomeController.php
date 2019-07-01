@@ -161,7 +161,7 @@ class HomeController extends Controller
 	    $search_term='%'.$search_term.'%';
 	    $items = DB::table('items')->where('item_name', 'like', $search_term)->paginate(10);
 	    $custom_items = DB::table('custom_items')->where('custom_items.item_name', 'like', $search_term)->paginate(10);
-	    return view('items_view',compact('items','custom_items','search_term'));
+	    return view('items_view',compact('items','custom_items'));
 	}
 	public function delete($item_id){
 	    if(Auth::user()->is_admin){
