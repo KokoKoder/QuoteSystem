@@ -64,8 +64,19 @@ class HomeController extends Controller
 	        return view('home');
 	    }
 	}
-	public function orders_view(){
-		return view('orders_view');
+	public function orders_view(Request $request){
+	    $search_term = $request->input('search_term');
+	    $search_term='%'.$search_term.'%';
+	    $orders = DB::table('orders_table')
+	    ->join('customers', 'customers.customer_id', '=', 'orders_table.customer_id')
+	    ->join('vendor', 'vendor.vendor_id', '=', 'orders_table.vendor_id')
+	    ->join('orders_status', 'orders_status.order_id', '=', 'orders_table.order_id')
+	    ->join('order_status_list', 'order_status_list.order_status_id', '=', 'orders_status.order_status_id')
+	    ->where('customer_name', 'like', $search_term)
+	    ->orWhere('customer_mail',  'like', $search_term)
+	    ->orWhere('customer_phone',  'like', $search_term)
+	    ->paginate(10);
+		return view('orders_view',compact('orders','search_term'));
 	}
 	public function edit_order(){
 		return view('edit_order');

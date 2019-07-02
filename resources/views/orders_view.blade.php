@@ -8,7 +8,6 @@
 	include(app_path().'/includes/get_suppliers_list.php');
 	include(app_path().'/includes/get_order_status_list.php');
 	$user_id=auth()->user()->id;
-echo "something";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$status_id="";
 	$order_status_id="";
@@ -178,7 +177,38 @@ else{
 					</div>
 				</div>
 			  </section>
-
+<form action="<?php $_SERVER["PHP_SELF"] ?>">
+<div class="input-field col s6">
+	<input type="text" name="search_term" >
+	<label>Search order by customer name, phone or email</label>
+</div>
+<button type="submit" class="waves-effect waves-light btn">Search</button>
+</form>
+@if ($search_term !='%%')
+<table>
+<tr>
+	<th>id</th>
+    <th>Order Number</th>
+	<th>Customer Name</th>
+    <th>Vendor</th> 
+	<th>Order status</th> 
+    <th>Order date</th>
+	<th> </th>
+  </tr>
+@foreach($orders as $order)
+<tr>
+    <td>{{$order->order_id}}</td>
+	<td>{{$order->order_number}}</td>
+    <td>{{$order->customer_name}}</td>
+	<td>{{$order->vendor_name}}</td>
+	<td>{{$order->order_status_name}}</td> 	
+    <td>{{$order->order_date}}</td>
+	<td><a href="edit_order?order_id={{$order->order_id}}">edit</a></td>
+  </tr>
+@endforeach
+</tbody>
+</table>
+@endif
 			<?php
 				$result = mysqli_query($conn, $sql);
 				$container = array('content'=>''); 
