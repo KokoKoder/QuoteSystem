@@ -208,6 +208,7 @@ else{
 @endforeach
 </tbody>
 </table>
+<br><br><br>
 @endif
 			<?php
 				$result = mysqli_query($conn, $sql);

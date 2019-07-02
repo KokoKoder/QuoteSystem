@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$customer_mail=mysqli_real_escape_string($conn,$_POST["customer_mail"]);
 	$customer_phone=mysqli_real_escape_string($conn,$_POST["customer_phone"]);
 	$vat_id=mysqli_real_escape_string($conn,$_POST["vat_id"]);
+	$registration_nb=mysqli_real_escape_string($conn,$_POST["registration_nb"]);
 	
 	$sql_duplicate_name = "SELECT customer_name,customer_id FROM customers WHERE customer_name='$customer_name'";
 	$result_duplicate_name = mysqli_query($conn, $sql_duplicate_name);
@@ -23,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	        
 	    }
 	if (empty($err_duplicate_customer)){
-    	$sql_update="UPDATE customers SET customer_name='$customer_name', customer_address='$customer_address', customer_mail='$customer_mail',customer_phone='$customer_phone',vat_id='$vat_id' WHERE customer_id='$customer_id'";
+    	$sql_update="UPDATE customers SET customer_name='$customer_name', customer_address='$customer_address', customer_mail='$customer_mail',customer_phone='$customer_phone','registration_nb'=$registration_nb,vat_id='$vat_id' WHERE customer_id='$customer_id'";
     	echo "POST to customer ID : ".$customer_id."address".$customer_address."mail".$customer_mail."phone".$customer_phone;
     	if ($conn->query($sql_update) === TRUE) {
         echo "Record updated successfully";
@@ -41,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 if (isset($_GET["customer_id"])){
 	$_SESSION["customer_id"]=mysqli_real_escape_string($conn,$_GET["customer_id"]);
 	$customer_id=$_SESSION["customer_id"];
-	$sql="SELECT customer_name,customer_address,customer_mail,customer_phone,vat_id FROM customers WHERE customer_id='$customer_id'";
+	$sql="SELECT customer_name,customer_address,customer_mail,customer_phone,registration_nb,vat_id FROM customers WHERE customer_id='$customer_id'";
 	$customer_details=[];
 	$result=mysqli_query($conn,$sql);
 	if (mysqli_num_rows($result) > 0) {
@@ -51,11 +52,12 @@ if (isset($_GET["customer_id"])){
 			$customer_details[]=$row['customer_mail'];
 			$customer_details[]=$row['customer_phone'];
 			$customer_details[]=$row['vat_id'];
+			$customer_details[]=$row['registration_nb'];
 			};
 	}
 }else{
 	$customer_id=$_SESSION["customer_id"];
-	$sql="SELECT customer_name,customer_address,customer_mail,customer_phone,vat_id FROM customers WHERE customer_id='$customer_id'";
+	$sql="SELECT customer_name,customer_address,customer_mail,customer_phone,registration_nb,vat_id FROM customers WHERE customer_id='$customer_id'";
 	$customer_details=[];
 	$result=mysqli_query($conn,$sql);
 	if (mysqli_num_rows($result) > 0) {
@@ -65,6 +67,7 @@ if (isset($_GET["customer_id"])){
 			$customer_details[]=$row['customer_mail'];
 			$customer_details[]=$row['customer_phone'];
 			$customer_details[]=$row['vat_id'];
+			$customer_details[]=$row['registration_nb'];
 			};
 	}
 }
@@ -106,21 +109,29 @@ if (isset($_GET["customer_id"])){
 	</div>
 	
 	<div class="row">
-		  <div class="input-field col s4">
+		  <div class="input-field col s6">
 		  <i class="material-icons prefix">mail</i>
 			<input id="email" name="customer_mail" type="email" class="validate" value="<?php if (isset($customer_id)){echo $customer_details[2];} ?>">
 			<span class="helper-text" data-error="wrong" data-success="right">Enter customer email</span>
 		  </div>
 		  
-		  <div class="input-field col s4">
+		  <div class="input-field col s6">
 		  <i class="material-icons prefix">phone</i>
 			<input id="phone" type="tel" name="customer_phone" class="validate" value="<?php if (isset($customer_id)){echo $customer_details[3];} ?>">
 			<span class="helper-text">Enter customer phone</span>
 		  </div>
-		  <div class="input-field col s4">
+
+	</div>
+	<div class="row">
+		  <div class="input-field col s6">
 		  <i class="material-icons prefix">V</i>
 			<input id="vat_id" type="text" name="vat_id"  value="<?php if (isset($customer_id)){echo $customer_details[4];} ?>">
 			<span class="helper-text">Enter VAT ID</span>
+		  </div>
+		  <div class="input-field col s6">
+		  <i class="material-icons prefix">R</i>
+			<input id="registration_nb" type="text" name="registration_nb"  value="<?php if (isset($customer_id)){echo $customer_details[5];} ?>">
+			<span class="helper-text">Enter Registration number</span>
 		  </div>
 	</div>
 	  <button class="waves-effect waves-light btn" type="submit" value="Submit">Edit customer details</button>

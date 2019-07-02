@@ -95,8 +95,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if(!empty($_POST["order_status_id"])){
 	$order_status_id=mysqli_real_escape_string($conn,$_POST["order_status_id"]);
 	}
+	if(!empty($_POST["registration_nb"])){
+	    $registration_nb=mysqli_real_escape_string($conn,$_POST["registration_nb"]);
+	}
 	else{
-		$order_status_id="";
+	    $registration_nb="";
 	}
 	
 
@@ -113,10 +116,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		//Check if customer id is set in which case a new entry won't be created.}
 		if ($customer_id==""){
 			if ($is_furnest){
-				$sql1 = "INSERT INTO customers (customer_name, customer_phone, customer_mail, customer_address,vat_id, is_furnest) VALUES ('$name', '$phone', '$email','$address','$vat_id','$is_furnest')";
+				$sql1 = "INSERT INTO customers (customer_name, customer_phone, customer_mail, customer_address,vat_id, registration_nb, is_furnest) VALUES ('$name', '$phone', '$email','$address','$vat_id','$registration_nb','$is_furnest')";
 			}
 			else{
-				$sql1 = "INSERT INTO customers (customer_name, customer_phone, customer_mail, customer_address,vat_id, is_furnest) VALUES ('$name', '$phone', '$email','$address','$vat_id','0')";
+				$sql1 = "INSERT INTO customers (customer_name, customer_phone, customer_mail, customer_address,registration_nb,vat_id, is_furnest) VALUES ('$name', '$phone', '$email','$address','$registration_nb','$vat_id','0')";
 			}
 			if ($conn->query($sql1) === TRUE) {
 				$customer_id = $conn->insert_id;
@@ -262,8 +265,13 @@ if (isset($is_duplicate) AND isset($check_for_duplicate)){echo $check_for_duplic
 		<i class="material-icons prefix">V</i>
 		<input id="vat_id" type="text" name="vat_id">
 		<span class="helper-text">Enter customer VAT ID</span>
+		<p><a href="http://ec.europa.eu/taxation_customs/vies/" target="_blank">Check VAT ID</a></p>
 		</div>
-		<div class="col 6"><p><a href="http://ec.europa.eu/taxation_customs/vies/" target="_blank">Check VAT ID</a></p></div>
+		<div class="input-field  col 6">
+		<i class="material-icons prefix">R</i>
+			<input id="registration_nb" type="text" name="registration_nb" >
+			<span class="helper-text">Registration number</span>
+		</div>
 	</div>
 	  <button id="submit_form" class="waves-effect waves-light btn" type="submit" value="Submit">Enter order</button>
     </form>
