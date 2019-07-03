@@ -149,6 +149,7 @@ function eur_format($value){return number_format($value,2,',',' ');}
 						<tr><td>'.htmlspecialchars($address_str).'</td><td>'.htmlspecialchars($row["customer_address"]).'</td></tr>
 						<tr><td>'.htmlspecialchars($tel_str).'</td><td>'.htmlspecialchars($row["customer_phone"]).'</td></tr>
 						<tr><td>'.htmlspecialchars($email_str).'</td><td>'.htmlspecialchars($row["customer_mail"]).'</td></tr>';
+						if($row["registration_nb"]){ echo '<tr><td>'.$rg_kood_str.'</td><td>'.$row["registration_nb"].'</td></tr>';};
 						if($row["vat_id"]){ echo '<tr><td>'.htmlspecialchars($eu_vat_str).'</td><td>'.htmlspecialchars($row["vat_id"]).'</td></tr>';};
 						echo '</table>';
 						}		

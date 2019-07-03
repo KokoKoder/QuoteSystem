@@ -92,6 +92,7 @@ function price($price,$coeff){return round($coeff*$price,2);}
 						$vendor_reg_nbr=htmlspecialchars($row['rg_kood']);
 						$vendor_eu_vat_nb=htmlspecialchars($row['eu_vat_nb']);
 						$pay_before=date("d.m.y",strtotime ($row['pay_before']));
+						$reference_nb=htmlspecialchars($row['reference_nb']);
 						if($pay_before!="01.01.70"){
 						    $pay_before=date("d.m.y",strtotime($row['pay_before']));
 						}else{
@@ -109,8 +110,10 @@ function price($price,$coeff){return round($coeff*$price,2);}
 					        default:
 					            $logo='<img src="./pictures/furnest-logo-md.jpg" alt="">';
 					    }
+					    if($row["reference_nb"]){$reference_nb=$reference_nb_str.': '.$reference_nb;}
+					    else{$reference_nb='';}
 					    echo '<table><tr><th style="width:50%"><h5>'.$order_confirmation_str.': <br>'. $row['order_number'].'</h5></th><th>'.$logo.'</th></tr>
-                        <tr><td>'.$date_str.': '.$order_date.'<br>'. $paybefore_str.': '.$pay_before.'<br>
+                        <tr><td>'.$date_str.': '.$order_date.'<br>'. $paybefore_str.': '.$pay_before.'<br>'.$reference_nb.'
                          '/*.$payment_condition_str*/.' './*$confirmation_condition.*/'</td>
                             <td>'.$company_name.'<br>'.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'</td>
                             </tr></table>';	
@@ -139,6 +142,7 @@ function price($price,$coeff){return round($coeff*$price,2);}
 						<tr><td>'.$address_str.'</td><td>'.$row["customer_address"].'</td></tr>
 						<tr><td>'.$tel_str.'</td><td>'.$row["customer_phone"].'</td></tr>
 						<tr><td>'.$email_str.'</td><td>'.$row["customer_mail"].'</td></tr>';
+						if($row["registration_nb"]){ echo '<tr><td>'.$rg_kood_str.'</td><td>'.$row["registration_nb"].'</td></tr>';};
 						if($row["vat_id"]){ echo '<tr><td>'.$eu_vat_str.'</td><td>'.$row["vat_id"].'</td></tr>';};
 						echo '</table>';
 						}		

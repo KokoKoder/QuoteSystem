@@ -28,5 +28,6 @@ $payment_condition_str='';
 $payment_condition='';
 $confirmation_condition='';
 $final_amount_str='';
+$reference_nb_str='Viitenumero';
 $order_confirmation_str='Tilausvahvistus';
 ?>

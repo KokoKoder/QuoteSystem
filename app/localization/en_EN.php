@@ -23,5 +23,6 @@ $payment_condition_str='Payment condition: ';
 $payment_condition='Payment in advance 50% ';
 $final_amount_str='Final settlement 50%';
 $order_confirmation_str='Order confirmation';
+$reference_nb_str='Reference number';
 $confirmation_condition='Pro forma 50%<br>50% 14 days net';
 ?>

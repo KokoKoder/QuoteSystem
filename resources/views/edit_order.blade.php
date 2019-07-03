@@ -26,7 +26,7 @@
 		$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
 		$_SESSION["order_id"]=$order_id;
 		$_SESSION["order_edit"]=TRUE;
-		$sql="SELECT orders_table.order_id, order_number, customer_name, customer_address,customer_phone,customer_mail, order_date,pay_before,orders_table.customer_id, orders_table.vendor_id, vendor.vendor_name,order_status_list.order_status_name 
+		$sql="SELECT orders_table.order_id, order_number, customer_name, customer_address,customer_phone,customer_mail, order_date,pay_before,orders_table.customer_id, orders_table.vendor_id, vendor.vendor_name,order_status_list.order_status_name, reference_nb
 		FROM orders_table 
 		JOIN customers ON orders_table.customer_id=customers.customer_id
 		JOIN vendor  ON orders_table.vendor_id=vendor.vendor_id 
@@ -50,6 +50,7 @@
 				$vendor_set_id=$row["vendor_id"];
 				$order_status_set_name=$row["order_status_name"];
 				$pay_before=$row["pay_before"];
+				$reference_nb=$row["reference_nb"];
 				};
 		}
 		else{
@@ -116,9 +117,13 @@
         				@endphp
         				</select>
         			</div>
-					<div class="input-field col s4">
+					<div class="input-field col s12">
         			<b>Order date:</b>
         			<input id="order_date" type="text" class="datepicker"  name="order_date" value="@php echo htmlspecialchars($order_date);@endphp">
+        			</div>
+        			<div class="input-field col s12">
+        			<b>Reference number:</b>
+        			<input id="reference_nb" type="text"  name="reference_nb" value="@php echo htmlspecialchars($reference_nb);@endphp">
         			</div>
 				</div>
 	

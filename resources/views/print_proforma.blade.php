@@ -136,6 +136,7 @@ function price($price,$coeff){return round($coeff*$price,2);}
 								<tr><td>'.$address_str.'</td><td>'.$row["customer_address"].'</td></tr>
 								<tr><td>'.$tel_str.'</td><td>'.$row["customer_phone"].'</td></tr>
 								<tr><td>'.$email_str.'</td><td>'.$row["customer_mail"].'</td></tr>';
+								if($row["registration_nb"]){ echo '<tr><td>'.$rg_kood_str.'</td><td>'.$row["registration_nb"].'</td></tr>';};
 								if($row["vat_id"]){ echo '<tr><td>'.$eu_vat_str.'</td><td>'.$row["vat_id"].'</td></tr>';};
 								echo '</table>';
 								}		

@@ -32,5 +32,6 @@ $payment_condition_str='Maksetingimus: ';
 $payment_condition='Ettemaks 50%';
 $final_amount_str='Lõppsumma';
 $order_confirmation_str='Tellimuse kinnitus';
+$reference_nb_str='Viitenumber';
 $confirmation_condition='Pro forma 50%<br>50% 14 p netto';
 ?>
