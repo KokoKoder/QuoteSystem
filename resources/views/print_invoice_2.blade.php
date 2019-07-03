@@ -97,6 +97,7 @@ echo $lang;
 					    $vendor_reg_nbr=htmlspecialchars($row['rg_kood']);
 					    $vendor_eu_vat_nb=htmlspecialchars($row['eu_vat_nb']);
 					    $pay_before=date("d.m.y",strtotime($row['pay_before']));
+					    $reference_nb=htmlspecialchars($row['reference_nb']);
 					    if($pay_before!="01.01.70"){
 					        $pay_before=date("d.m.y",strtotime($row['pay_before']));
 					    }else{
@@ -113,8 +114,10 @@ echo $lang;
 					        default:
 					            $logo='<img src="./pictures/furnest-logo-md.jpg" alt="">';
 					    }
+					    if($row["reference_nb"]){$reference_nb=$reference_nb_str.': '.$reference_nb;}
+					    else{$reference_nb='';}
 					    echo '<table><tr><th><h5 style="width:50%">'.$invoice_str.': '. $row['order_number'].'-2</h5></th><th>'.$logo.'</th></tr>
-                              <tr><td>'.$date_str.': '.date("d.m.y").'<br>'. $paybefore_str.': '.$pay_before.'<br>'.$payment_condition_str.' '.$final_amount_str.'</td>
+                              <tr><td>'.$reference_nb.'<br>'.$date_str.': '.date("d.m.y").'<br>'. $paybefore_str.': '.$pay_before.'<br>'.$payment_condition_str.' '.$final_amount_str.'</td>
                               <td>'.$company_name.'<br>'.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'</td></tr></table>';	
 						}		
 				}

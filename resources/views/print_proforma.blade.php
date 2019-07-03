@@ -92,6 +92,9 @@ function price($price,$coeff){return round($coeff*$price,2);}
 								$vendor_email=$row["email"];
 								$vendor_reg_nbr=$row["rg_kood"];
 								$vendor_eu_vat_nb=$row["eu_vat_nb"];
+								$reference_nb=htmlspecialchars($row['reference_nb']);
+								if($row["reference_nb"]){$reference_nb=$reference_nb_str.': '.$reference_nb;}
+								else{$reference_nb='';}
 								echo '<div class="col s12 " >
                                         <div >
                                             <h3>'.$invoice_str.': '. $row["order_number"].'</h3>

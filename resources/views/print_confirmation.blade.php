@@ -113,7 +113,7 @@ function price($price,$coeff){return round($coeff*$price,2);}
 					    if($row["reference_nb"]){$reference_nb=$reference_nb_str.': '.$reference_nb;}
 					    else{$reference_nb='';}
 					    echo '<table><tr><th style="width:50%"><h5>'.$order_confirmation_str.': <br>'. $row['order_number'].'</h5></th><th>'.$logo.'</th></tr>
-                        <tr><td>'.$date_str.': '.$order_date.'<br>'. $paybefore_str.': '.$pay_before.'<br>'.$reference_nb.'
+                        <tr><td>'.$reference_nb.'<br>'.$date_str.': '.$order_date.'<br>'. $paybefore_str.': '.$pay_before.'<br>
                          '/*.$payment_condition_str*/.' './*$confirmation_condition.*/'</td>
                             <td>'.$company_name.'<br>'.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'</td>
                             </tr></table>';	
