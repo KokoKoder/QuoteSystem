@@ -98,6 +98,7 @@ function eur_format($value){return number_format($value,2,',',' ');}
 					    $vendor_email=htmlspecialchars($row['email']);
 					    $vendor_reg_nbr=htmlspecialchars($row['rg_kood']);
 					    $vendor_eu_vat_nb=htmlspecialchars($row['eu_vat_nb']);
+					    $reference_nb=htmlspecialchars($row['reference_nb']);
 					    $pay_before=date("d.m.y",strtotime($row['pay_before']));
 					    if($pay_before!="01.01.70"){
 					        $pay_before=date("d.m.y",strtotime($row['pay_before']));
@@ -115,8 +116,10 @@ function eur_format($value){return number_format($value,2,',',' ');}
 					        default:
 					            $logo='<img src="./pictures/furnest-logo-md.jpg" alt="">';
 					    }
-
+					    if($row["reference_nb"]){$reference_nb=$reference_nb_str.': '.$reference_nb;}
+					    else{$reference_nb='';}
 						echo '<table><tr><th style="width:50%"><h5>'.$creditinvoice_str.': <br>'. $row['order_number'].'</h5></th><th>'.$logo.'</th></tr><tr><td>
+                                    '.$reference_nb.'<br>
                                     '.$date_str.': '.date("d.m.y").'<br>
                                     '. $paybefore_str.': '.$pay_before.'<br>
                                    '.$payment_condition_str.' '.$payment_condition.'
