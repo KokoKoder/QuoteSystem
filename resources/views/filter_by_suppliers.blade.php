@@ -61,6 +61,7 @@
 		JOIN orders_table ON orders_table.order_id= order_custom_items.order_id
 		JOIN status ON status.status_id=order_custom_items.status_id
         JOIN orders_status ON orders_table.order_id=orders_status.order_id
+        JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id
 		WHERE suppliers.supplier_id='$supplier_id' AND status_name<>'delivered' AND status_name<>'shipped' AND orders_status.order_status_id<>1";	
 		$custom_result = mysqli_query($conn, $sql2);
 		if (mysqli_num_rows($custom_result) > 0) {	
@@ -231,7 +232,7 @@
 			JOIN status ON status.status_id=order_items.status_id
 			JOIN orders_status ON orders_table.order_id=orders_status.order_id
 			JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id
-			WHERE status_name<>'delivered' AND orders_status.order_status_id <> 1	";		
+			WHERE status_name<>'delivered' AND status_name<>'shipped' AND orders_status.order_status_id <> 1	";		
 		$status_result = mysqli_query($conn, $status_sql);
 		if (mysqli_num_rows($status_result) > 0) {
 			while($row = mysqli_fetch_assoc($status_result)) {
@@ -262,7 +263,8 @@
 		JOIN order_custom_items ON custom_items.custom_item_id=order_custom_items.custom_item_id
 		JOIN orders_table ON orders_table.order_id= order_custom_items.order_id
 		JOIN status ON status.status_id=order_custom_items.status_id
-		WHERE status_name<>'delivered'";	
+        JOIN orders_status ON orders_table.order_id=orders_status.order_id
+		WHERE status_name<>'delivered' AND status_name<>'shipped' AND orders_status.order_id<>1";	
 		$custom_result = mysqli_query($conn, $sql2);
 		if (mysqli_num_rows($custom_result) > 0) {	
 			$Schedule_delivery_date=$row["Schedule_delivery_date"];
