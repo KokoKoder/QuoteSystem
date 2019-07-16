@@ -76,6 +76,7 @@ class HomeController extends Controller
 	    ->where('customer_name', 'like', $search_term)
 	    ->orWhere('customer_mail',  'like', $search_term)
 	    ->orWhere('customer_phone',  'like', $search_term)
+	    ->orWhere('order_number',  'like', $search_term)
 	    ->paginate(10);
 	    }
 	    else{
@@ -88,6 +89,7 @@ class HomeController extends Controller
 	        ->where('customer_name', 'like', $search_term)
 	        ->orWhere('customer_mail',  'like', $search_term)
 	        ->orWhere('customer_phone',  'like', $search_term)
+	        ->orWhere('order_number',  'like', $search_term)
 	        ->paginate(10);
 	    }
 		return view('orders_view',compact('orders','search_term'));
