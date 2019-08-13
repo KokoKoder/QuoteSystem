@@ -89,11 +89,6 @@ include(app_path().'/includes/get_suppliers_list.php');
 			  <span class="helper-text">2 for 2 items per pack <br> 1/2 for 2 packs per item <br> 1/3 for item coming in 3 packs</span>
 			</div>
 		</div>  
-  
-  
-  
-  
-  
   <button type="submit" class="waves-effect waves-light btn " href="">Edit item</button>
   @csrf
   </div>

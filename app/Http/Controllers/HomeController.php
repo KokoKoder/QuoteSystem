@@ -213,17 +213,23 @@ class HomeController extends Controller
 	    }
 	}
 	public function update($item_id, Request $request){
-	    $item=DB::table('items')
+	    $pattern = '[,]';
+	    $replacement = '.';
+	    $package_weight=preg_replace($pattern,$replacement,$request->input('package_weight'));
+	    if (empty($package_weight)){$package_weight=0.00;}
+	    $item_weight=preg_replace($pattern,$replacement,$request->input('item_weight'));
+	    if (empty($item_weight)){$item_weight=0.00;}
+	    DB::table('items')
 	       ->where('item_id','=',$item_id)
 	       ->update(['item_name'=>$request->input('item_name'),
 	           'supplier_sku'=>$request->input('supplier_sku'),
 	           'item_supplier_id'=>$request->input('supplier_id'),
 	           'item_price'=>$request->input('item_price'),
-	           'item_weight'=>$request->input('item_weight'),
+	           'item_weight'=>$item_weight,
 	           'item_length'=>$request->input('item_length'),
 	           'item_width'=>$request->input('item_width'),
 	           'item_height'=>$request->input('item_height'),
-	           'package_weight'=>$request->input('package_weight'),
+	           'package_weight'=>$package_weight,
 	           'package_length'=>$request->input('package_length'),
 	           'package_width'=>$request->input('package_width'),
 	           'package_height'=>$request->input('package_height'),
