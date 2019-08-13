@@ -34,7 +34,7 @@ include(app_path().'/includes/get_suppliers_list.php');
 			 </div>
 			 <div class="input-field col s6">
 			  <input id="supplier_sku" type="text" value="{{$item->supplier_sku}}" name="supplier_sku" class="validate" >
-			  <label>supplier_sku*</label>
+			  <label for="supplier_sku">supplier_sku*</label>
 			 </div>
 		</div>
 		<div class="row">
