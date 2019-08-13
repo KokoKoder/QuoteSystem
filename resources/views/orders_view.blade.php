@@ -177,14 +177,25 @@ else{
 					</div>
 				</div>
 			  </section>
-<form action="<?php $_SERVER["PHP_SELF"] ?>">
-<div class="input-field col s6">
-	<input type="text" name="search_term" >
+
+<form action="{{route('orders_view')}}" class="row">
+	<div class="input-field col s12">
+	<input type="text" name="search_term">
 	<label>Search order by customer name, phone or email</label>
-</div>
-<button type="submit" class="waves-effect waves-light btn">Search</button>
+	</div>
+	<div class="input-field col s6">
+	<input type="text" name="start_date" class="datepicker">
+	<label>Start date</label>
+	</div>
+    <div class="input-field col s6">
+    <input type="text" name="end_date" class="datepicker">
+    <label>end date
+    
+    </label>
+    </div>
+    <button type="submit" class="waves-effect waves-light btn">search</button>
 </form>
-@if ($search_term !='%%')
+@if ($search_term !='%%' or !empty($start_date))
 <table>
 <tr>
 	<th>id</th>
