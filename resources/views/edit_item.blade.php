@@ -5,6 +5,16 @@
 include(app_path().'/includes/get_suppliers_list.php');
 @endphp
 <h1>Edit Item</h1>
+@if($errors->any())
+<h4>{{$errors->first()}}</h4>
+@endif
+@if (\Session::has('success'))
+    <div class="alert alert-success">
+        <ul>
+            <li>{!! \Session::get('success') !!}</li>
+        </ul>
+    </div>
+@endif
 <form method="POST" action="{{ route('update',['id'=>$item->item_id]) }}" class="col s12">
 		<div class="row">
 			<div class="input-field col s6">

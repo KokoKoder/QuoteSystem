@@ -219,6 +219,12 @@ class HomeController extends Controller
 	    if (empty($package_weight)){$package_weight=0.00;}
 	    $item_weight=preg_replace($pattern,$replacement,$request->input('item_weight'));
 	    if (empty($item_weight)){$item_weight=0.00;}
+	    if (empty($request->input('item_name')) or empty($request->input('supplier_sku')) or empty($request->input('item_price')) or empty($request->input('supplier_id')) )
+	       {
+	       $missing_fields="Make sure to provide product name, price, sku and provider";  
+	       return redirect()->back()->withErrors([$missing_fields, $missing_fields]);
+	       }
+	    else{
 	    DB::table('items')
 	       ->where('item_id','=',$item_id)
 	       ->update(['item_name'=>$request->input('item_name'),
@@ -234,7 +240,9 @@ class HomeController extends Controller
 	           'package_width'=>$request->input('package_width'),
 	           'package_height'=>$request->input('package_height'),
 	           'item_per_pack'=>$request->input('item_per_pack')]);
-        return redirect()->back();
+	           return redirect()->back()->with('success', 'item succesfully edited');
+	    }
+	    
 	}
 	public function generate_pdf(){
 	    $is_invoice_2=$_GET['invoice_2'];
