@@ -264,7 +264,7 @@
 				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&invoice_2=FALSE&proforma=FALSE&is_credit=FALSE&pay_full=FALSE'.'&order_number='.htmlspecialchars($order_number);@endphp';
 				if(!$('#printLinkIframe')[0]) {
 					console.log(print_url);
-					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
+					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overflow:visible; z-index:-1"></iframe>';
 					$('body').append(iframe);
 					$('#printLinkIframe').on('load',function() {  
 						frames['printLinkIframe'].focus();
@@ -276,14 +276,14 @@
 					$('#printLinkIframe').attr('src', print_url);
 					frames['printLinkIframe'].focus();
 				}
-				reload();
+				location.reload();
 			}
 			
 			function print_creditinvoice(){
 				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&invoice_2=FALSE&proforma=FALSE&is_credit=is_credit&pay_full=FALSE'.'&order_number='.htmlspecialchars($order_number);@endphp';
 				if(!$('#printLinkIframe')[0]) {
 					console.log(print_url);
-					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
+					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overflow:visible; z-index:-1"></iframe>';
 					$('body').append(iframe);
 					$('#printLinkIframe').on('load',function() {  
 						frames['printLinkIframe'].focus();
@@ -295,14 +295,14 @@
 					$('#printLinkIframe').attr('src', print_url);
 					frames['printLinkIframe'].focus();
 				}
-				reload();
+				location.reload();
 			}
 			
 			function print_invoice_2(){
 				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&invoice_2=is_invoice_2&is_credit=FALSE&proforma=FALSE&pay_full=FALSE'.'&order_number='.htmlspecialchars($order_number);@endphp';
 				if(!$('#printLinkIframe')[0]) {
 					console.log(print_url);
-					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
+					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overflow:visible; z-index:-1"></iframe>';
 					$('body').append(iframe);
 					$('#printLinkIframe').on('load',function() {  
 					frames['printLinkIframe'].focus();
@@ -314,13 +314,13 @@
 					$('#printLinkIframe').attr('src', print_url); ;
 					frames['printLinkIframe'].focus();
 				}
-				reload();
+				location.reload();
 			}
 			function print_full_invoice(){
 				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&invoice_2=FALSE&is_credit=FALSE&proforma=FALSE&pay_full=full'.'&order_number='.htmlspecialchars($order_number);@endphp';
 				if(!$('#printLinkIframe')[0]) {
 					console.log(print_url);
-					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
+					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overflow:visible; z-index:-1"></iframe>';
 					$('body').append(iframe);
 					$('#printLinkIframe').on('load',function() {  
 						frames['printLinkIframe'].focus();
@@ -332,13 +332,13 @@
 					$('#printLinkIframe').attr('src', print_url);
 					frames['printLinkIframe'].focus();
 				}
-				reload();
+				location.reload();
 			}
 			function print_confirmation(){
 				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&invoice_2=FALSE&is_credit=FALSE&proforma=is_proforma&pay_full=FALSE'.'&order_number='.htmlspecialchars($order_number);@endphp';
 				if(!$('#printLinkIframe')[0]) {
 					console.log(print_url);
-					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overfow:none; z-index:-1"></iframe>';
+					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overflow:visible; z-index:-1"></iframe>';
 					$('body').append(iframe);
 					$('#printLinkIframe').on('load',function() {  
 					frames['printLinkIframe'].focus();
@@ -350,7 +350,7 @@
 					console.log('iframe already exists'); 
 					frames['printLinkIframe'].focus();
 				}
-				reload();
+				location.reload();
 			}
 
 @endpush

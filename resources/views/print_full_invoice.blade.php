@@ -25,7 +25,8 @@ if(isset($has_vat_id) && $lang=="fi"){
 }
 $today=date("d.m.y");
 function price($price,$coeff){return round($coeff*$price,2);}
-function eur_format($value){return number_format($value,2,',',' ');}
+function eur_format($value){return number_format(round($value,2),2,',',' ');}
+echo(round(13,356984,2));
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -207,7 +208,7 @@ function eur_format($value){return number_format($value,2,',',' ');}
 						<tr><td></td><td></td><th>'.$total_str.'</th><th class="price_align">'.$total_display.'</th></tr>';
 						if(isset($has_vat_id) && $lang=="fi"){echo '<tr class="item_list"><td></td><td></td><th>'.$no_vat.'</th><td class="price_align">'.$VAT.'</td></tr>';}
 						else{echo '<tr class="item_list"><td></td><td></td><td><b>'.$VAT_str.'</b></td><td class="price_align">'.$VAT.'</td></tr>';}
-						echo '<tr><td></td><td></td><th>'.$totalvat_str.'</th><th class="price_align">'.$kogumaksumus_display.'</th></tr>';	
+						echo '<tr><td></td><td></td><th>'.$totalvat_str.'</th><th class="price_align">'.round($kogumaksumus_display,2).'</th></tr>';	
 						?>		
 					</table>
 			</div>

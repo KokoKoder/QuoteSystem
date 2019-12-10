@@ -59,5 +59,6 @@ Route::middleware(['auth'])->group(function () {
 	Route::post('/update/{item_id}','HomeController@update')->name('update');
 	Route::get('/getDownload/{filename}','HomeController@getDownload')->name('getDownload');
 	Route::get('/getConfirmation/{filename}','HomeController@getConfirmation')->name('getConfirmation');
+	Route::any('/most_sold/','HomeController@most_sold')->name('most_sold');
 });
     Route::get('/home', 'HomeController@index')->name('home');

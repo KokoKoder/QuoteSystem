@@ -27,6 +27,7 @@ if(isset($has_vat_id) && $lang=="fi"){
 $today=date("d.m.y");
 function price($price,$coeff){return round($coeff*$price,2);}
 echo $lang;
+echo(round(13,356984,2));
 ?>
 <!DOCTYPE html>
 <html lang="en">

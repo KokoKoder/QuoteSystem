@@ -78,16 +78,16 @@ class HomeController extends Controller
 	        $end_date = $request->input('end_date');
 	    } 
 	    if(Auth::user()->is_admin){
-	    $orders = DB::table('orders_table')
-	    ->join('customers', 'customers.customer_id', '=', 'orders_table.customer_id')
-	    ->join('vendor', 'vendor.vendor_id', '=', 'orders_table.vendor_id')
-	    ->join('orders_status', 'orders_status.order_id', '=', 'orders_table.order_id')
-	    ->join('order_status_list', 'order_status_list.order_status_id', '=', 'orders_status.order_status_id')
-	    ->where('customer_name', 'like', $search_term)
-	    ->orWhere('customer_mail',  'like', $search_term)
-	    ->orWhere('customer_phone',  'like', $search_term) 
-	    ->orWhere('order_number',  'like', $search_term) 
-	    ->paginate(10);
+			$orders = DB::table('orders_table')
+			->join('customers', 'customers.customer_id', '=', 'orders_table.customer_id')
+			->join('vendor', 'vendor.vendor_id', '=', 'orders_table.vendor_id')
+			->join('orders_status', 'orders_status.order_id', '=', 'orders_table.order_id')
+			->join('order_status_list', 'order_status_list.order_status_id', '=', 'orders_status.order_status_id')
+			->where('customer_name', 'like', $search_term)
+			->orWhere('customer_mail',  'like', $search_term)
+			->orWhere('customer_phone',  'like', $search_term) 
+			->orWhere('order_number',  'like', $search_term) 
+			->paginate(10);
 	    }
 	    else{
 	        $orders = DB::table('orders_table')
@@ -225,10 +225,23 @@ class HomeController extends Controller
 	public function update($item_id, Request $request){
 	    $pattern = '[,]';
 	    $replacement = '.';
+		$item_price=preg_replace($pattern,$replacement,$request->input('item_price'));
 	    $package_weight=preg_replace($pattern,$replacement,$request->input('package_weight'));
+		$item_length=preg_replace($pattern,$replacement,$request->input('item_length'));
+		if(empty($item_length)){$item_length=000;}
 	    if (empty($package_weight)){$package_weight=0.00;}
 	    $item_weight=preg_replace($pattern,$replacement,$request->input('item_weight'));
 	    if (empty($item_weight)){$item_weight=0.00;}
+		$item_width=preg_replace($pattern,$replacement,$request->input('item_width'));
+		if (empty($item_width)){$item_width=0;}
+		$item_height=preg_replace($pattern,$replacement,$request->input('item_height'));
+		if (empty($item_height)){$item_height=0;}
+		$package_length=preg_replace($pattern,$replacement,$request->input('package_length'));
+		if (empty($package_length)){$package_length=0;}
+		$package_width=preg_replace($pattern,$replacement,$request->input('package_width'));
+		if (empty($package_width)){$package_width=0;}
+		$package_height=preg_replace($pattern,$replacement,$request->input('package_height'));
+		if (empty($package_height)){$package_height=0;}
 	    if (empty($request->input('item_name')) or empty($request->input('supplier_sku')) or empty($request->input('item_price')) or empty($request->input('supplier_id')) )
 	       {
 	       $missing_fields="Make sure to provide product name, price, sku and provider";  
@@ -240,15 +253,15 @@ class HomeController extends Controller
 	       ->update(['item_name'=>$request->input('item_name'),
 	           'supplier_sku'=>$request->input('supplier_sku'),
 	           'item_supplier_id'=>$request->input('supplier_id'),
-	           'item_price'=>$request->input('item_price'),
+	           'item_price'=>$item_price,
 	           'item_weight'=>$item_weight,
-	           'item_length'=>$request->input('item_length'),
-	           'item_width'=>$request->input('item_width'),
-	           'item_height'=>$request->input('item_height'),
+	           'item_length'=>$item_length,
+	           'item_width'=>$item_width,
+	           'item_height'=>$item_height,
 	           'package_weight'=>$package_weight,
-	           'package_length'=>$request->input('package_length'),
-	           'package_width'=>$request->input('package_width'),
-	           'package_height'=>$request->input('package_height'),
+	           'package_length'=>$package_length,
+	           'package_width'=>$package_width,
+	           'package_height'=>$package_height,
 	           'item_per_pack'=>$request->input('item_per_pack')]);
 	           return redirect()->back()->with('success', 'item succesfully edited');
 	    }
@@ -337,6 +350,29 @@ class HomeController extends Controller
 	}
 	public function getConfirmation($filename){
 	    return response()->download("../app/files/confirmation/".$filename);
+	}
+	public function most_sold(Request $request){
+		$vendor_id=$request->input('vendor_id');
+		if(Auth::user()->is_admin){
+			if ($vendor_id!='0'){
+				$items = DB::table('order_items')
+				->join('orders_table','orders_table.order_id','=','order_items.order_id')
+				->where('vendor_id','=',$vendor_id)
+				->select(DB::raw('item_name,count(*) as item_count'))
+				->groupBy('item_name')
+				->orderBy('item_count','desc')
+				->get();
+			}
+			else{
+				$items = DB::table('order_items')
+				->select(DB::raw('item_name,count(*) as item_count'))
+				->groupBy('item_name')
+				->orderBy('item_count','desc')
+				->get();
+				return view('most_sold',compact('items'));	
+			}
+			return view('most_sold',compact('items'));
+	    }
 	}
 }
 ?>
