@@ -201,14 +201,14 @@ function eur_format($value){return number_format($value,2,',',' ');}
 						$total_display=eur_format($total);
 						$VAT=$VAT_rate*$total;
 						$kogumaksumus=$VAT+$total;
-						$kogumaksumus_display=eur_format($kogumaksumus);
+						$kogumaksumus_display=eur_format(round($kogumaksumus));
 						$kogumaksumus=(float)$kogumaksumus;
 						$VAT=number_format($VAT,2,',',' ');
 						echo '<tr class="item_list"><td></td><td></td><td></td><td></td></tr>
 						<tr><td></td><td></td><th>Tooted kokku</th><th class="price_align">-'.$total_display.'</th></tr>';
 						if(isset($has_vat_id) && $lang=="fi"){echo '<tr class="item_list"><td></td><td></td><th>'.$no_vat.'</th><td class="price_align">-'.$VAT.'</td></tr>';}
 						else{echo '<tr class="item_list"><td></td><td></td><td><b>'.$VAT_str.'</b></td><td class="price_align">-'.$VAT.'</td></tr>';}
-						echo '<tr><td></td><td></td><th>Kogumaksumus käibemaksuga</th><th class="price_align">-'.number_format(round($kogumaksumus_display,3),2,',',' ').'</th></tr>';	
+						echo '<tr><td></td><td></td><th>Kogumaksumus käibemaksuga</th><th class="price_align">-'.$kogumaksumus_display.'</th></tr>';	
 
 						?>		
 					</table>
