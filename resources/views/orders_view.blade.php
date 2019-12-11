@@ -219,6 +219,7 @@ else{
 </tbody>
 </table>
 <br><br><br>
+{{$orders->links('vendor.pagination.materializecss')}}
 @endif
 			<?php
 				$result = mysqli_query($conn, $sql);
