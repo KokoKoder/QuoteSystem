@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-
     public function index()
     {
         return view('index');
@@ -68,7 +67,7 @@ class HomeController extends Controller
 	    $search_term = $request->input('search_term');
 	    $search_term='%'.$search_term.'%';
 	    if (empty($request->input('start_date'))){
-	        $start_date = date('y-m-d',$request->input('start_date'));
+	        $start_date = date('y-m-d',0);
 	    }else{
 	        $start_date = $request->input('start_date');
 	    }
@@ -83,10 +82,15 @@ class HomeController extends Controller
 			->join('vendor', 'vendor.vendor_id', '=', 'orders_table.vendor_id')
 			->join('orders_status', 'orders_status.order_id', '=', 'orders_table.order_id')
 			->join('order_status_list', 'order_status_list.order_status_id', '=', 'orders_status.order_status_id')
-			->where('customer_name', 'like', $search_term)
-			->orWhere('customer_mail',  'like', $search_term)
-			->orWhere('customer_phone',  'like', $search_term) 
-			->orWhere('order_number',  'like', $search_term) 
+	        ->where('order_date', '>', $start_date)
+			->where('order_date', '<', $end_date)
+			->where( function ($query) use ($search_term) {
+				$query->where('customer_name', 'like', $search_term)
+					  ->orWhere('customer_mail',  'like', $search_term)
+					  ->orWhere('customer_phone',  'like', $search_term)
+					  ->orWhere('order_number',  'like', $search_term);
+				 })
+
 			->paginate(10);
 	    }
 	    else{
@@ -96,10 +100,14 @@ class HomeController extends Controller
 	        ->join('orders_status', 'orders_status.order_id', '=', 'orders_table.order_id')
 	        ->join('order_status_list', 'order_status_list.order_status_id', '=', 'orders_status.order_status_id')
 	        ->join('salesteam_orders', function($join){$join->on('salesteam_orders.order_id','=','orders_table.order_id')->where('salesteam_orders.user_id', '=', Auth::user()->id);})
-	        ->where('customer_name', 'like', $search_term)
-	        ->orWhere('customer_mail',  'like', $search_term)
-	        ->orWhere('customer_phone',  'like', $search_term)
-	        ->orWhere('order_number',  'like', $search_term)
+	        ->where(function ($query) {
+				$query->where('customer_name', 'like', $search_term)
+					  ->orWhere('customer_mail',  'like', $search_term)
+					  ->orWhere('customer_phone',  'like', $search_term)
+					  ->orWhere('order_number',  'like', $search_term);
+				 })
+			->where('order_date', '>', $start_date)
+			->where('order_date', '<', $end_date)
 	        ->paginate(10);
 	    }
 		return view('orders_view',compact('orders','search_term','start_date','end_date'));
@@ -264,8 +272,7 @@ class HomeController extends Controller
 	           'package_height'=>$package_height,
 	           'item_per_pack'=>$request->input('item_per_pack')]);
 	           return redirect()->back()->with('success', 'item succesfully edited');
-	    }
-	    
+	    }    
 	}
 	public function generate_pdf(){
 	    $is_invoice_2=$_GET['invoice_2'];
