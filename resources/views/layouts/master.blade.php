@@ -67,6 +67,8 @@
             <li><a class="white-text" href="{{route('enter_supplier')}}">Enter Supplier</a></li>
             <li><a class="white-text" href="{{route('enter_item')}}">Enter Item</a></li>
 			<li><a class="white-text" href="{{route('enter_order_status')}}">Enter order status</a></li>
+			<li><a class="white-text" href="{{route('enter_item')}}">Enter Item</a></li>
+			<li><a class="white-text" href="{{route('most_sold')}}">Most Sold Item</a></li>
 			@endisAdmin
           </ul>
         </div>

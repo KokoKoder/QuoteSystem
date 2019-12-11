@@ -219,7 +219,7 @@ else{
 </tbody>
 </table>
 <br><br><br>
-{{$orders->appends(['search_term'=>$search_term])->links('vendor.pagination.materializecss')}}
+{{$orders->appends(['search_term'=>$search_term])->appends(['start_date'=>$start_date])->appends(['end_date'=>$end_date])->links('vendor.pagination.materializecss')}}
 @endif
 			<?php
 				$result = mysqli_query($conn, $sql);

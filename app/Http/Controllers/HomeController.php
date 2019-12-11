@@ -65,7 +65,9 @@ class HomeController extends Controller
 	}
 	public function orders_view(Request $request){
 	    $search_term = $request->input('search_term');
-	    $search_term='%'.$search_term.'%';
+		if (substr($search_term,0,1)!='%'){
+			$search_term='%'.$search_term.'%';
+		}
 	    if (empty($request->input('start_date'))){
 	        $start_date = date('y-m-d',0);
 	    }else{
@@ -203,13 +205,15 @@ class HomeController extends Controller
 	}
 	public function items_view(Request $request){
 	    $search_term = $request->input('search_term');
-	    $search_term='%'.$search_term.'%';
+		if (substr($search_term,0,1)!='%'){
+			$search_term='%'.$search_term.'%';
+		}
 	    $items = DB::table('items')
 	       ->where('item_name', 'like', $search_term)
 	       ->orWhere('supplier_sku',  'like', $search_term)
 	    ->paginate(10);
 	    $custom_items = DB::table('custom_items')->where('custom_items.item_name', 'like', $search_term)->paginate(10);
-	    return view('items_view',compact('items','custom_items'));
+	    return view('items_view',compact('items','custom_items','search_term'));
 	}
 	public function delete($item_id){
 	    if(Auth::user()->is_admin){
