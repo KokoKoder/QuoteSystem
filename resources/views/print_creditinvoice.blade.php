@@ -16,6 +16,7 @@ if (!empty($_GET["lang"])){
     
 }
 $total="0";
+$totalvat=0;
 $order_id="94";
 $coeff=1;
 if(isset($has_vat_id) && $lang=="fi"){
@@ -179,6 +180,8 @@ function eur_format($value){return number_format($value,2,',',' ');}
 						if (mysqli_num_rows($result) > 0) {
 							while($row = mysqli_fetch_assoc($result)) {
 							    $subtotal=$row["item_quantity"]*price($row["item_price"],$coeff);
+								$subvat=$row["item_quantity"]*round($VAT_rate*price($row["item_price"],$coeff),2);
+								$totalvat+=$subvat;
 							    $total+=$subtotal;
 							    $subtotal_display=number_format($subtotal,2,',',' ');
 							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1),2,',',' ').'</td><td class="price_align">-'.$subtotal_display.'</td></tr>';	
@@ -192,16 +195,17 @@ function eur_format($value){return number_format($value,2,',',' ');}
 						$result2=mysqli_query($conn,$sql2);
 						if (mysqli_num_rows($result2) > 0) {
 							while($row = mysqli_fetch_assoc($result2)) {
-							    $subtotal=$row["item_quantity"]*price($row["custom_item_price"],$coeff);
+							    $subtotal=$row["item_quantity"]*round($VAT_rate*price($row["custom_item_price"],$coeff),2);
+								$totalvat+=$subvat;
 							    $total+=$subtotal;
 							    $subtotal_display=number_format($subtotal,2,',',' ');
 							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2,',',' ').'</td><td class="price_align">-'.$subtotal_display.'</td></tr>';
 								};		
 						}
 						$total_display=eur_format($total);
-						$VAT=$VAT_rate*$total;
+						$VAT=$totalvat;
 						$kogumaksumus=$VAT+$total;
-						$kogumaksumus_display=eur_format(round($kogumaksumus));
+						$kogumaksumus_display=eur_format(round($kogumaksumus,2));
 						$kogumaksumus=(float)$kogumaksumus;
 						$VAT=number_format($VAT,2,',',' ');
 						echo '<tr class="item_list"><td></td><td></td><td></td><td></td></tr>

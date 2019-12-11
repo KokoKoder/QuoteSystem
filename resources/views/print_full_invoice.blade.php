@@ -15,7 +15,7 @@ if (!empty($_GET["lang"])){
     }
     
 }
-$total="0";
+$total=$totalvat="0";
 $order_id="94";
 $coeff=1;
 if(isset($has_vat_id) && $lang=="fi"){
@@ -179,6 +179,8 @@ function eur_format($value){return number_format($value,2,',',' ');}
 							while($row = mysqli_fetch_assoc($result)) {
 							    $subtotal=$row["item_quantity"]*price($row["item_price"],$coeff);
 							    $total+=$subtotal;
+								$subvat=$row["item_quantity"]*round($VAT_rate*price(htmlspecialchars($row["item_price"]),$coeff),2);
+								$totalvat+=$subvat;
 							    $subtotal_display=number_format($subtotal,2,',',' ');
 							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1),2,',',' ').'</td><td class="price_align">'.$subtotal_display.'</td></tr>';	
 								}		
@@ -192,22 +194,24 @@ function eur_format($value){return number_format($value,2,',',' ');}
 						if (mysqli_num_rows($result2) > 0) {
 							while($row = mysqli_fetch_assoc($result2)) {
 							    $subtotal=$row["item_quantity"]*price(htmlspecialchars($row["custom_item_price"]),$coeff);
+								$subvat=$row["item_quantity"]*round($VAT_rate*price(htmlspecialchars($row["custom_item_price"]),$coeff),2);
+								$totalvat+=$subvat;
 							    $total+=$subtotal;
 							    $subtotal_display=number_format($subtotal,2,',',' ');
 							    echo '<tr><td>'.htmlspecialchars($row['item_name']).'<br>'.htmlspecialchars($row["custom_item_description"]).'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2,',',' ').'</td><td class="price_align">'.$subtotal_display.'</td></tr>';
 								};		
 						}
 						$total_display=eur_format($total);
-						$VAT=$VAT_rate*$total;
+						$VAT=$totalvat;
 						$kogumaksumus=$VAT+$total;
-						$kogumaksumus_display=eur_format($kogumaksumus);
+						$kogumaksumus_display=eur_format(round($kogumaksumus,2));
 						$kogumaksumus=(float)$kogumaksumus;
 						$VAT=number_format($VAT,2,',',' ');
 						echo '<tr class="item_list"><td></td><td></td><td></td><td></td></tr>
 						<tr><td></td><td></td><th>'.$total_str.'</th><th class="price_align">'.$total_display.'</th></tr>';
 						if(isset($has_vat_id) && $lang=="fi"){echo '<tr class="item_list"><td></td><td></td><th>'.$no_vat.'</th><td class="price_align">'.$VAT.'</td></tr>';}
 						else{echo '<tr class="item_list"><td></td><td></td><td><b>'.$VAT_str.'</b></td><td class="price_align">'.$VAT.'</td></tr>';}
-						echo '<tr><td></td><td></td><th>'.$totalvat_str.'</th><th class="price_align">'.number_format(round($kogumaksumus_display,3),2,',', ' ').'</th></tr>';	
+						echo '<tr><td></td><td></td><th>'.$totalvat_str.'</th><th class="price_align">'.$kogumaksumus_display.'</th></tr>';	
 						?>		
 					</table>
 			</div>

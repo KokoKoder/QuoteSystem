@@ -141,7 +141,6 @@ else{
 				  <br><br>
 				  <h1 class="header center orange-text">Orders</h1>
 				  <br><br>
-<?php echo(round(13.356984,2)); ?>
 				</div>
 			  </div>
 			  <section>
