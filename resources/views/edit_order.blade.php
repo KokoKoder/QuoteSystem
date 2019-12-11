@@ -276,7 +276,6 @@
 					$('#printLinkIframe').attr('src', print_url);
 					frames['printLinkIframe'].focus();
 				}
-				location.reload();
 			}
 			
 			function print_creditinvoice(){
@@ -295,7 +294,6 @@
 					$('#printLinkIframe').attr('src', print_url);
 					frames['printLinkIframe'].focus();
 				}
-				location.reload();
 			}
 			
 			function print_invoice_2(){
@@ -332,7 +330,6 @@
 					$('#printLinkIframe').attr('src', print_url);
 					frames['printLinkIframe'].focus();
 				}
-				location.reload();
 			}
 			function print_confirmation(){
 				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&invoice_2=FALSE&is_credit=FALSE&proforma=is_proforma&pay_full=FALSE'.'&order_number='.htmlspecialchars($order_number);@endphp';
@@ -350,7 +347,6 @@
 					console.log('iframe already exists'); 
 					frames['printLinkIframe'].focus();
 				}
-				location.reload();
 			}
 
 @endpush
