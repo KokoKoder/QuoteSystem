@@ -15,7 +15,7 @@ if (!empty($_GET["lang"])){
     }
     
 }
-$total="0";
+$total=$totalvat="0";
 $order_id=94;
 $coeff=1;
 $VAT_rate=0.2;
@@ -171,6 +171,8 @@ function price($price,$coeff){return round($coeff*$price,2);}
 							while($row = mysqli_fetch_assoc($result)) {
 							    $subtotal=$row['item_quantity']*price($row['item_price'],$coeff);
 							    $total+=$subtotal;
+							    $subvat=$row['item_quantity']*round($VAT_rate*price($row['item_price'],$coeff),2);
+							    $totalvat+=$subvat;
 							    $subtotal=number_format($subtotal,2,',',' ');
 							    echo '<tr><td>'.$row['item_name'].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['item_price'],1),2,',',' ').'</td><td class="price_align">'.$subtotal.'</td></tr>';	
 								}		
@@ -185,12 +187,14 @@ function price($price,$coeff){return round($coeff*$price,2);}
 							while($row = mysqli_fetch_assoc($result2)) {
 							    $subtotal=$row['item_quantity']*price($row['custom_item_price'],$coeff);
 							    $total+=$subtotal;
+							    $subvat=$row['item_quantity']*round($VAT_rate*price($row['custom_item_price'],$coeff),2);
+							    $totalvat+=$subvat;
 							    $subtotal=number_format($subtotal,2,',',' ');
 							    echo '<tr><td>'.$row['item_name'].'<br>'.$row["custom_item_description"].'</td><td>'.$row['item_quantity'].'</td><td class="price_align">'.number_format(price($row['custom_item_price'],1),2,',',' ').'</td><td class="price_align">'.$subtotal.'</td></tr>';
 								};		
 						}
 						$total_display=number_format($total,2,',',' ');
-						$VAT=$VAT_rate*$total;
+						$VAT=$totalvat;
 						$kogumaksumus=$VAT+$total;
 						$kogumaksumus_display=number_format($kogumaksumus,2,',',' ');
 						$kogumaksumus=(float)$kogumaksumus;

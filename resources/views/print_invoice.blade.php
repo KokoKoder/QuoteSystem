@@ -207,7 +207,7 @@ echo(round(13,356984,2));
 								};		
 						}
 						$total_display=eur_format($total);
-						$VAT=$VAT_rate*$total;
+						$VAT=$totalvat;
 						$kogumaksumus=$VAT+$total;
 						$kogumaksumus_display=eur_format($kogumaksumus);
 						$kogumaksumus=(float)$kogumaksumus;
