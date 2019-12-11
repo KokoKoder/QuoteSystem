@@ -27,7 +27,7 @@ $result_custom_items = mysqli_query($conn, $sql_custom_items);
 	<tr><td><!--  a title="delete" onclick="return confirm('Delete?');" href="{{route('delete',$item->item_id)}}"><i class="small material-icons">delete</i></a--></td><td>{{$item->item_name}}</td><td>{{$item->supplier_sku}}</td>@if (Auth::user()->is_admin)<td>{{$item->item_supplier_id}}</td>@endif<td>{{$item->item_price}}</td><td>{{$item->item_description}}</td>@if (Auth::user()->is_admin)<td><a title="editItem" href="{{route('edit_item',$item->item_id)}}"><i class="small material-icons">edit</i></a></td>@endif</tr>
 @endforeach
 </table>
-{{$items->links('vendor.pagination.materializecss')}}
+{{$items->appends(['search_term'=>$items])->links('vendor.pagination.materializecss')}}
 
 
 @endsection('content') 
