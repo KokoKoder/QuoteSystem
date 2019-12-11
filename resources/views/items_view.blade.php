@@ -3,6 +3,7 @@
 <?php
 include(app_path().'/includes/connect.php');
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
+	
 $sql_items="SELECT * FROM items JOIN suppliers ON suppliers.supplier_id=items.item_supplier_id";
 $sql_custom_items="SELECT * FROM custom_items JOIN suppliers ON suppliers.supplier_id=custom_items.custom_supplier_id";
 $result_items = mysqli_query($conn, $sql_items);
@@ -27,7 +28,10 @@ $result_custom_items = mysqli_query($conn, $sql_custom_items);
 	<tr><td><!--  a title="delete" onclick="return confirm('Delete?');" href="{{route('delete',$item->item_id)}}"><i class="small material-icons">delete</i></a--></td><td>{{$item->item_name}}</td><td>{{$item->supplier_sku}}</td>@if (Auth::user()->is_admin)<td>{{$item->item_supplier_id}}</td>@endif<td>{{$item->item_price}}</td><td>{{$item->item_description}}</td>@if (Auth::user()->is_admin)<td><a title="editItem" href="{{route('edit_item',$item->item_id)}}"><i class="small material-icons">edit</i></a></td>@endif</tr>
 @endforeach
 </table>
-{{$items->appends(['search_term'=>$items])->links('vendor.pagination.materializecss')}}
-
+@if (isset($search_term))
+{{$items->appends(['search_term'=>$search_term])->links('vendor.pagination.materializecss')}}
+@else
+{{$items->links('vendor.pagination.materializecss')}}
+@endif
 
 @endsection('content') 
