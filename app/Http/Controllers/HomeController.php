@@ -117,6 +117,7 @@ class HomeController extends Controller
 	public function edit_order(){
 		return view('edit_order');
 	}
+
 	public function validate_order_edit(){
 		return view('validate_order_edit');
 	}

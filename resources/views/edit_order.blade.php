@@ -26,7 +26,7 @@
 		$order_id=mysqli_real_escape_string($conn,$_GET["order_id"]);
 		$_SESSION["order_id"]=$order_id;
 		$_SESSION["order_edit"]=TRUE;
-		$sql="SELECT orders_table.order_id, order_number, customer_name, customer_address,customer_phone,customer_mail, order_date,pay_before,orders_table.customer_id, orders_table.vendor_id, vendor.vendor_name,order_status_list.order_status_name, reference_nb
+		$sql="SELECT orders_table.order_id, order_number, customer_name, customer_address,customer_phone,customer_mail, order_date,pay_before,orders_table.customer_id, orders_table.vendor_id, vendor.vendor_name,order_status_list.order_status_name, reference_nb,note
 		FROM orders_table 
 		JOIN customers ON orders_table.customer_id=customers.customer_id
 		JOIN vendor  ON orders_table.vendor_id=vendor.vendor_id 
@@ -51,6 +51,7 @@
 				$order_status_set_name=$row["order_status_name"];
 				$pay_before=$row["pay_before"];
 				$reference_nb=$row["reference_nb"];
+				$order_note=$row["note"];
 				};
 		}
 		else{
@@ -125,6 +126,10 @@
         			<b>Reference number:</b>
         			<input id="reference_nb" type="text"  name="reference_nb" value="@php echo htmlspecialchars($reference_nb);@endphp">
         			</div>
+					<div class="input-field col s12">
+        			<b>Order note:</b>
+					<input id="order_note" type="text"  name="order_note" value="@php echo htmlspecialchars($order_note);@endphp">
+					</div>
 				</div>
 	
 			</div>
@@ -229,6 +234,7 @@
 	<p><a  href="{{route('add_item_to_order_form')}}">add item</a></p>
 	</div>
 </div>
+
 <script src="js/FileSaver.js"></script>
 @endsection('content') 
 @push('scripts')

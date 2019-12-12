@@ -8,12 +8,13 @@ $order_date=mysqli_real_escape_string($conn,$_POST["order_date"]);
 $pay_before=mysqli_real_escape_string($conn,$_POST["pay_before"]);
 $vendor_id=mysqli_real_escape_string($conn,$_POST["vendor_id"]);
 $reference_nb=mysqli_real_escape_string($conn,$_POST["reference_nb"]);
+$order_note=mysqli_real_escape_string($conn,$_POST["order_note"]);
 $order_status_id=mysqli_real_escape_string($conn,$_POST["order_status_id"]);
 $order_id=$_SESSION["order_id"];
 if(!empty($pay_before)){
-$sql = "UPDATE orders_table SET   pay_before='$pay_before', order_date='$order_date', vendor_id='$vendor_id',reference_nb='$reference_nb' WHERE order_id='$order_id'";
+$sql = "UPDATE orders_table SET   pay_before='$pay_before', order_date='$order_date', vendor_id='$vendor_id',reference_nb='$reference_nb',note='$order_note' WHERE order_id='$order_id'";
 }else{
-    $sql = "UPDATE orders_table SET   order_date='$order_date', vendor_id='$vendor_id',reference_nb='$reference_nb' WHERE order_id='$order_id'";
+    $sql = "UPDATE orders_table SET   order_date='$order_date', vendor_id='$vendor_id',reference_nb='$reference_nb',note='$order_note' WHERE order_id='$order_id'";
 }
 $sql2 = "UPDATE orders_status SET   order_status_id='$order_status_id' WHERE order_id='$order_id'";
 $check1=$conn->query($sql);

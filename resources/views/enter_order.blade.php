@@ -101,8 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	else{
 	    $registration_nb="";
 	}
-	
-
 	//Check that no required fields were left empty	
 	if (isset($order_number_err) OR isset($vendor_err) OR isset($name_err)) {
         $missing_required_fields="Check that <b>order number</b>, <b>order date</b>, <b>supplier</b> and <b>customer name</b> are filled properly before submitting the form.";
@@ -176,7 +174,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		exit;
 	}
 }
-
 ?>
 <div class="section">
 <?php if (isset($missing_required_fields)){echo $missing_required_fields; }
