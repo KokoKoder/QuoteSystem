@@ -138,12 +138,12 @@
         		<input id="pay_before" type="text" class="datepicker"  name="pay_before" value="@php echo htmlspecialchars($pay_before);@endphp">	
 				@php
 				if ($order_status_set_name=="Canceled"){
-					echo '<p><a onclick="print_creditinvoice()">Print credit invoice</a><br></p>';
+					echo '<p><a onclick="print_creditinvoice();alert_user()">Print credit invoice</a><br></p>';
 				}
 				else{
 					if ($vendor_set_name=="Furnest FI"){
     					echo '<p ><a onclick="print_confirmation()">Print order confirmation</a><br></p>
-    					<p><a onclick="print_invoice()">Print invoice</a><br></p>';
+    					<p><a onclick="print_invoice())">Print invoice</a><br></p>';
     				}
     				else{
     				echo '<p ><a onclick="print_confirmation()">Print order confirmation</a><br></p>
@@ -236,6 +236,11 @@
 </div>
 
 <script src="js/FileSaver.js"></script>
+<script>
+function alert_user(){
+	alert("invoice created, refresh and check in available order to retrieve it");
+}
+</script>
 @endsection('content') 
 @push('scripts')
     //initialize modal
