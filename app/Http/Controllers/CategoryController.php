@@ -1,10 +1,9 @@
-
 <?php
-
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Category;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -41,11 +40,30 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'detail' => 'required',
+			'URL' => 'required',
+			'vendor' => 'required',
         ]);
-  
-        category::create($request->all());
-   
+		var_dump($request->name);
+		if ($request->lang==""){
+			$vendor=$request->vendor;
+			if ($vendor==14 || $vendor==15){
+				$lang=1;
+			}else{$lang=2;}
+		}else{
+			$lang=$request->lang;
+		}
+        category::create(
+			['name'=>$request->name,
+			'URL'=>$request->URL,
+			'description'=>$request->desription,
+			'pictures'=>$request->pictures,
+			'metaDesc'=>$request->metaDesc,
+			'metaTitle'=>$request->metaTitle,
+			'lang'=>$lang,
+			'vendor'=>$request->vendor,
+			'parentCategory'=>$request->parentCategory
+			]);
+		
         return redirect()->route('categories.index')
                         ->with('success','category created successfully.');
     }
@@ -83,7 +101,9 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'detail' => 'required',
+			'URL' => 'required',
+			'lang' => 'required',
+			'vendor' => 'required',
         ]);
   
         $category->update($request->all());
