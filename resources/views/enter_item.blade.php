@@ -168,6 +168,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			 </div>
 		</div>
 		<div class="row">
+			<div class="input-field col s12">
+			  <input id="category_name" type="text" name="category" class="validate" >
+			  <label for="category_name">category</label>
+			  <span id="auto"></span>
+			</div>
+		</div>
+		<div class="row">
 			<div class="input-field col s6 m3">
 			  <input id="item_width" type="text" name="item_width" class="validate" >
 			  <label for="item_width">Product width in mm Ex: 1250</label>
@@ -224,5 +231,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </div>
  </div>
 </div> 
-
+@push('scripts')
+// Get list of categories
+	jQuery(document).ready(main); function main() {  
+	jQuery('#category_name').keyup(get_matching_categories);
+	};
+	function get_matching_categories(){
+		console.log('get matching categories on');
+		var search_query =jQuery('#category_name').val();
+		if(search_query != "" && search_query .length > 0 ) {
+			jQuery.get("get_category_live", { category_name:search_query }, write_item_suggestion_to_page);
+		}
+		else{
+			console.log('Search term empty or too short.');} 
+		};
+	function write_item_suggestion_to_page(data,status, xhr) {
+		if (status == "error") {
+			var msg = "Sorry but there was an error: ";
+			console.error(msg + xhr.status + " " + xhr.statusText);   
+			}   
+		else   {
+				var category_suggestions =  [];
+				category_suggestions =  data.split(',');
+				console.log(category_suggestions);
+				var selection='';
+				i=0;
+				for (x in category_suggestions){
+					selection=selection+'<li onclick=set_field_value("'+category_suggestions[x]+'") id='+i+'>'+category_suggestions[x]+'</li>';
+				}
+				document.getElementById("auto").innerHTML='<ul>'+selection+'</ul>';
+				autocomplete(document.getElementById("category_name"), category_suggestions);		
+		}		
+	}	 
+	function set_field_value(value){
+		document.getElementById("category_name").value = value;
+	}
+	@endpush
 @endsection('content')

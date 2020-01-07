@@ -39,6 +39,9 @@ class HomeController extends Controller
 	public function get_customer_details(){
 		return view('get_customer_details');
 	}
+	public function get_category_live(){
+		return view('get_category_live');
+	}
 	public function enter_item(){
 	    if(Auth::user()->is_admin){
 		  return view('enter_item');

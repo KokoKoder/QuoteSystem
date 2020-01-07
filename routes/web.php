@@ -25,6 +25,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::any('/enter_supplier', 'HomeController@enter_supplier')->name('enter_supplier');
 	Route::any('/enter_order_status','HomeController@enter_order_status')->name('enter_order_status');
 	Route::get('/get_customers_live', 'HomeController@get_customers_live');
+	Route::get('/get_category_live', 'HomeController@get_category_live');
 	Route::get('/get_customer_details', 'HomeController@get_customer_details');
 	Route::get('/verify_order_number_for_duplicate', 'HomeController@verify_order_number_for_duplicate');
 	Route::get('/add_item_to_order_form', 'HomeController@add_item_to_order_form')->name('add_item_to_order_form');
