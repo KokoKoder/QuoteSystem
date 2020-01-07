@@ -89,7 +89,12 @@ include(app_path().'/includes/connect.php');
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Parent category:</strong>
-                <textarea class="form-control" style="height:150px" name="parentCategory" placeholder="Parent Category"></textarea>
+				<select id="parentCategory" name="parentCategory" class="browser-default">
+				<option value="" disabled selected>Select parent category</option>
+				@foreach($categories as $category)
+					<option value="{{$category->id}}">{{$category->name}}</option>
+				@endforeach
+				</select>
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">

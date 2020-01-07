@@ -26,8 +26,9 @@ class CategoryController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('categories.create');
+    {	
+		$categories = \App\Category::all();
+        return view('categories.create',compact('categories'));
     }
   
     /**
@@ -87,7 +88,8 @@ class CategoryController extends Controller
      */
     public function edit(category $category)
     {
-        return view('categories.edit',compact('category'));
+		$categories = \App\Category::all();
+        return view('categories.edit',compact('category','categories'));
     }
   
     /**

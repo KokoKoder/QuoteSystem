@@ -76,7 +76,7 @@ include(app_path().'/includes/connect.php');
 			<div class="input-field col s12">
 				<b>Vendor:</b>
 				<select id="vendor_select" name="vendor" class="browser-default">
-					<option disabled selected>Vendor</option>
+					<option disabled selected>Select vendor</option>
 					@php 
 						echo $category->vendor;
 						foreach($vendors_list as $vendor){
@@ -95,7 +95,22 @@ include(app_path().'/includes/connect.php');
 			<div class="col-xs-12 col-sm-12 col-md-12">
 				<div class="form-group">
 					<strong>Parent category:</strong>
-					<textarea  type="text"  style="height:150px" name="parentCategory" value="{{ $category->parentCategory }}"></textarea>
+					
+					<select id="parentCategory" name="parentCategory" class="browser-default">
+					<option value="" disabled selected>Select parent category</option>
+					@foreach($categories as $parentCategory)
+						@if ($category->parentCategory==$parentCategory->id)
+							@php
+								$selected='selected';
+							@endphp
+						@else
+							@php
+								$selected='';
+							@endphp
+						@endif
+						<option {{$selected}} value="{{$parentCategory->id}}">{{$parentCategory->name}}</option>
+					@endforeach
+					</select>
 				</div>
 			</div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
