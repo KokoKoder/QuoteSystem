@@ -58,6 +58,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			if ($vendor_id==$vendor AND substr($vendor_name,0,3)=="Fur"){$is_furnest=TRUE;break;}
 		}
 	}
+	if (empty($_POST["order_status_id"])){
+	    $order_status_id=1;
+	}
+	else{ 
+	    $order_status_id=mysqli_real_escape_string($conn,$_POST["order_status_id"]);
+	}
 	if (empty($_POST["customer_name"])) {
 		$name_err="customer name is required";
 	}
@@ -103,7 +109,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 	//Check that no required fields were left empty	
 	if (isset($order_number_err) OR isset($vendor_err) OR isset($name_err)) {
-        $missing_required_fields="Check that <b>order number</b>, <b>order date</b>, <b>supplier</b> and <b>customer name</b> are filled properly before submitting the form.";
+        $missing_required_fields="Check that <b>order status</b>, <b>vendor name</b>, <b>supplier</b> and <b>customer name</b> are filled properly before submitting the form.";
 	}
 	elseif ($is_duplicate){
 		$edit_order = route('edit_order');
