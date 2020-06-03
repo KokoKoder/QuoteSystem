@@ -67,11 +67,14 @@ function eur_format($value){return number_format($value,2,',',' ');}
 		  position: relative;
 	min-height: 150px;
 	}
-#footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
+    #footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+	.cst_details{
+	width:50%;
+	}
   </style>
 </head>
 <body>

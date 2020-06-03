@@ -87,8 +87,8 @@ class HomeController extends Controller
 			->join('vendor', 'vendor.vendor_id', '=', 'orders_table.vendor_id')
 			->join('orders_status', 'orders_status.order_id', '=', 'orders_table.order_id')
 			->join('order_status_list', 'order_status_list.order_status_id', '=', 'orders_status.order_status_id')
-	        ->where('order_date', '>', $start_date)
-			->where('order_date', '<', $end_date)
+	        ->where('order_date', '>=', $start_date)
+			->where('order_date', '<=', $end_date)
 			->where( function ($query) use ($search_term) {
 				$query->where('customer_name', 'like', $search_term)
 					  ->orWhere('customer_mail',  'like', $search_term)
@@ -111,8 +111,8 @@ class HomeController extends Controller
 					  ->orWhere('customer_phone',  'like', $search_term)
 					  ->orWhere('order_number',  'like', $search_term);
 				 })
-			->where('order_date', '>', $start_date)
-			->where('order_date', '<', $end_date)
+			->where('order_date', '>=', $start_date)
+			->where('order_date', '<=', $end_date)
 	        ->paginate(10);
 	    }
 		return view('orders_view',compact('orders','search_term','start_date','end_date'));

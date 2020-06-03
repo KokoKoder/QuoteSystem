@@ -34,7 +34,7 @@ echo(round(13,356984,2));
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Integrated Order Management Tool </title>
+  <title>>Invoice</title>
 
   <!-- CSS  -->
 
@@ -65,11 +65,14 @@ echo(round(13,356984,2));
 		  position: relative;
 	min-height: 150px;
 	}
-#footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
+    #footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+	.cst_details{
+	   width:50%;
+	}
   </style>
 </head>
 <body>
@@ -97,6 +100,7 @@ echo(round(13,356984,2));
 					    $vendor_email=htmlspecialchars($row['email']);
 					    $vendor_reg_nbr=htmlspecialchars($row['rg_kood']);
 					    $vendor_eu_vat_nb=htmlspecialchars($row['eu_vat_nb']);
+					    $note=htmlspecialchars($row['note']);
 					    $pay_before=date("d.m.y",strtotime($row['pay_before']));
 					    $reference_nb=htmlspecialchars($row['reference_nb']);
 					    if($pay_before!="01.01.70"){
@@ -120,7 +124,8 @@ echo(round(13,356984,2));
 					    echo '<table><tr><th><h5 style="width:50%">'.$invoice_str.': '. $row['order_number'].'-2</h5></th><th>'.$logo.'</th></tr>
                               <tr><td>'.$reference_nb.'<br>'.$date_str.': '.date("d.m.y").'<br>'. $paybefore_str.': '.$pay_before.'<br>'.$payment_condition_str.' '.$final_amount_str.'</td>
                               <td>'.$company_name.'<br>'.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'</td></tr></table>';	
-						}		
+					   	
+					}		
 				}
 				?>
 			</div>
@@ -147,7 +152,9 @@ echo(round(13,356984,2));
 						<tr><td>'.$email_str.'</td><td>'.htmlspecialchars($row["customer_mail"]).'</td></tr>';
 						if($row["registration_nb"]){ echo '<tr><td>'.$rg_kood_str.'</td><td>'.$row["registration_nb"].'</td></tr>';};
 						if($row["vat_id"]){ echo '<tr><td>'.$eu_vat_str.'</td><td>'.$row["vat_id"].'</td></tr>';};
+						if($row["note"]){echo '<tr><td colspan="2">'.$note.'</td></tr>';};
 						echo '</table>';
+						
 						}		
 				}
 				?>

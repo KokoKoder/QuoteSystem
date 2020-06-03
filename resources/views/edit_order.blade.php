@@ -314,8 +314,8 @@ function alert_user(){
 					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overflow:visible; z-index:-1"></iframe>';
 					$('body').append(iframe);
 					$('#printLinkIframe').on('load',function() {  
-					frames['printLinkIframe'].focus();
-					frames['printLinkIframe'].print();
+						frames['printLinkIframe'].focus();
+						frames['printLinkIframe'].print();
 					});
 				}else{
 					console.log(print_url);
@@ -323,7 +323,6 @@ function alert_user(){
 					$('#printLinkIframe').attr('src', print_url); ;
 					frames['printLinkIframe'].focus();
 				}
-				location.reload();
 			}
 			function print_full_invoice(){
 				var print_url='@php echo route('generate_pdf').'?order_id='.$order_id.'&lang='.$lang.'&invoice_2=FALSE&is_credit=FALSE&proforma=FALSE&pay_full=full'.'&order_number='.htmlspecialchars($order_number);@endphp';
@@ -349,8 +348,8 @@ function alert_user(){
 					var iframe = '<iframe id="printLinkIframe" name="printLinkIframe" src=' + print_url + ' style="position:absolute;top:-9999px;left:-9999px;border:0px;overflow:visible; z-index:-1"></iframe>';
 					$('body').append(iframe);
 					$('#printLinkIframe').on('load',function() {  
-					frames['printLinkIframe'].focus();
-					frames['printLinkIframe'].print();
+						frames['printLinkIframe'].focus();
+						frames['printLinkIframe'].print();
 					});
 				}else{
 				console.log(print_url);

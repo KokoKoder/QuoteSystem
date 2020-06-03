@@ -63,11 +63,14 @@ function eur_format($value){return number_format($value,2,',',' ');}
 		  position: relative;
 	min-height: 150px;
 	}
-#footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
+    #footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+	.cst_details{
+	   width:50%;
+	}
   </style>
 </head>
 <body>
@@ -97,6 +100,7 @@ function eur_format($value){return number_format($value,2,',',' ');}
 					    $vendor_eu_vat_nb=htmlspecialchars($row['eu_vat_nb']);
 					    $reference_nb=htmlspecialchars($row['reference_nb']);
 					    $pay_before=date("d.m.y",strtotime($row['pay_before']));
+					    $note=htmlspecialchars($row['note']);
 					    if($pay_before!="01.01.70"){
 					        $pay_before=date("d.m.y",strtotime($row['pay_before']));
 					    }else{
@@ -125,7 +129,7 @@ function eur_format($value){return number_format($value,2,',',' ');}
                         <td>'.$company_name.'<br>
                             '.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'
                         </td></tr></table>';
-
+echo $note;
 					}		
 				}
 				?>

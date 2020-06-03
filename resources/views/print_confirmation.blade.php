@@ -64,6 +64,9 @@ function price($price,$coeff){return round($coeff*$price,2);}
       bottom: 0;
       left: 0;
     }
+    .cst_details{
+	   width:50%;
+	}
   </style>
 </head>
 <body>
