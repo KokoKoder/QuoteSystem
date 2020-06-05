@@ -125,8 +125,6 @@ function eur_format($value){return number_format($value,2,',',' ');}
 						echo '<table><tr><th style="width:50%"><h5>'.$creditinvoice_str.': <br>'. $row['order_number'].'</h5></th><th>'.$logo.'</th></tr><tr><td>
                                     '.$reference_nb.'<br>
                                     '.$date_str.': '.date("d.m.y").'<br>
-                                    '. $paybefore_str.': '.$pay_before.'<br>
-                                   '.$payment_condition_str.' '.$payment_condition.'
                             </td>
                             <td>'.$company_name.'<br>
                                 '.$tel_str.' '.$vendor_telephone.'<br>'.$vendor_address.'<br>'.$rg_kood_str.' '.$vendor_reg_nbr.'<br>'.$bankaccount_str.' '.$vendor_bankaccount.'
