@@ -1,3 +1,22 @@
+<h1>Order Management Web App</h1>
+<h2>Built on Laravel framework</h2>
+<p><a href="https://ordermanagement.seobytes.eu/">Demo site</a></p>
+<p>Contact me for credential</p>
+<p>Features: </p>
+<ul>
+    <li>Manage several vendors</li>
+    <li>Manage several suppliers</li>
+    <li>Admin view to see all current orders with edit capabilities</li>
+    <li>Saleperson view to see only personal current orders</li>
+    <li>Filter pending orders by supplier to facilitate shipment</li>
+    <li>Numerous filter options for order and and product status</li>
+    <li>Color coded alert when delivery time approach</li>
+    <li>Add custom products on the go</li>
+    <li>Add products while creating the order</li>
+</ul>
+<br>
+
+<br>
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">
