@@ -13,7 +13,7 @@ foreach($required as $field) {
 }
 
 if ($error) {
-	$_SESSION["Err_missing_data"]="Name and quantity required";
+	echo 'error is detecte';
 	$_SESSION["Err_missing_data"] = "Name and quantity required";
 	$url = route('add_item_to_order_form');
 	header("Location: ".$url);
