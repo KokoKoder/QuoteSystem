@@ -51,7 +51,7 @@ else{
 #get standard delivery time if it was not set in the form and set the schedule delivery date
 if ($Schedule_delivery_date == ""){
 	#get the order date to calculate the schedule delivery date by adding the standard delivery time for the supplier
-	$order_date_sql="SELECT order_date  FROM orders_table  WHERE order_id='$order_id='";
+	$order_date_sql = "SELECT order_date  FROM orders_table  WHERE order_id='$order_id='";
 	$order_date_result = mysqli_query($conn, $order_date_sql);
 	if (mysqli_num_rows($order_date_result) > 0) {
 		while($row = mysqli_fetch_assoc($order_date_result)) {
