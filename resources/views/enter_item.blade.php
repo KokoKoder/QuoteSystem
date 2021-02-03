@@ -6,142 +6,150 @@ include(app_path().'/includes/connect.php');
 include(app_path().'/includes/get_suppliers_list.php');
 $pattern = '[,]';
 $replacement = '.';
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 	session_start();
 	#get the form value
-	if ($_POST["item_name"]!=""){
-	   $item_name=mysqli_real_escape_string($conn,$_POST["item_name"]);
+	if ($_POST['item_name'] != ''){
+	   $item_name = mysqli_real_escape_string($conn, $_POST['item_name']);
 	}
 	else{
-	    $err_empty_name="Name is mandatory - enter a name";
+	    $err_empty_name = 'Name is mandatory - enter a name';
 	}
-	$item_price=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_price"]));
-	
-	if (isset($_POST["supplier_id"]) and !empty($_POST["supplier_id"])){
-	   $item_supplier_id=mysqli_real_escape_string($conn,$_POST["supplier_id"]);
+	if ($_POST['item_price'] != ''){
+		$item_price = (float) mysqli_real_escape_string($conn, preg_replace($pattern, $replacement, $_POST['item_price']));
+		if (gettype($item_price) != 'double'){
+			$err_price="enter a price using only numeral and decimal coma or decimal point (both are supported)";
+		}
+	}
+	else {
+		$err_price = 'Price is a mandatory field';
+	}
+	if (isset($_POST['supplier_id']) and !empty($_POST['supplier_id'])){
+	   $item_supplier_id = mysqli_real_escape_string($conn,$_POST['supplier_id']);
 	}
 	else{
-	    $err_empty_supplier="supplier name is mandatory - choose a supplier from the list<br><a href='https://orders.furnest.ee/enter_supplier'>enter supplier</a>";
+	    $err_empty_supplier = 'supplier name is mandatory - choose a supplier from the list<br><a href = "https://orders.furnest.ee/enter_supplier">enter supplier</a>';
 	}
-	if ($_POST["supplier_sku"]!=''){
-	$supplier_sku=mysqli_real_escape_string($conn,$_POST["supplier_sku"]);
+	if ($_POST['supplier_sku'] != ''){
+		$supplier_sku = mysqli_real_escape_string($conn, $_POST['supplier_sku']);
 	}
 	else{
-	$supplier_sku="";
+		$supplier_sku = '';
 	}
-	if ($_POST["item_height"]!=""){
-	    $item_height=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_height"]));
+	if ($_POST['item_height'] != ''){
+	    $item_height = mysqli_real_escape_string($conn, preg_replace($pattern, $replacement, $_POST["item_height"]));
 	}
 	else{
 		$item_height='0';
 	}
-	if ($_POST["item_weight"]!=""){
-	    $item_weight=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_weight"]));
+	if ($_POST["item_weight"] != ""){
+	    $item_weight = mysqli_real_escape_string($conn, preg_replace($pattern, $replacement, $_POST["item_weight"]));
 	}
 	else{
-		$item_weight='0';
+		$item_weight = '0';
 	}
-	if ($_POST["item_length"]!=""){
-	    $item_length=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_length"]));
-	}
-	else{
-	    $item_length='0';
-	}
-	if ($_POST["item_width"]!=""){
-	    $item_width=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_width"]));
+	if ($_POST["item_length"] != ""){
+	    $item_length = mysqli_real_escape_string($conn, preg_replace($pattern, $replacement, $_POST["item_length"]));
 	}
 	else{
-	    $item_width='0';
+	    $item_length = '0';
 	}
-	if ($_POST["item_description"]!=""){
-	    $item_description=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["item_description"]));
-	}
-	else{
-	    $item_description='0';
-	}
-	if ($_POST["package_length"]!=""){
-	    $package_length=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["package_length"]));
+	if ($_POST["item_width"] != ""){
+	    $item_width = mysqli_real_escape_string($conn, preg_replace($pattern, $replacement, $_POST["item_width"]));
 	}
 	else{
-	    $package_length='0';
+	    $item_width = '0';
 	}
-	if ($_POST["package_width"]!=""){
-	    $package_width=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["package_width"]));
+	if ($_POST["item_description"] != ""){
+	    $item_description = mysqli_real_escape_string($conn, preg_replace($pattern, $replacement, $_POST["item_description"]));
 	}
 	else{
-	    $package_width='0';
+	    $item_description = '0';
 	}
-	if ($_POST["package_height"]!=""){
-	    $package_height=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["package_height"]));
+	if ($_POST["package_length"] != ""){
+	    $package_length = mysqli_real_escape_string($conn,preg_replace($pattern, $replacement, $_POST["package_length"]));
+	}
+	else{
+	    $package_length = '0';
+	}
+	if ($_POST["package_width"] != ""){
+	    $package_width = mysqli_real_escape_string($conn, preg_replace($pattern, $replacement, $_POST["package_width"]));
+	}
+	else{
+	    $package_width = '0';
+	}
+	if ($_POST["package_height"] != ""){
+	    $package_height = mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["package_height"]));
 	}
 	else{
 	    $package_height='0';
 	}
-	if ($_POST["package_weight"]!=""){
-	    $package_weight=mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["package_weight"]));
+	if ($_POST["package_weight"] != ""){
+	    $package_weight = mysqli_real_escape_string($conn,preg_replace($pattern,$replacement,$_POST["package_weight"]));
 	}
 	else{
-	    $package_weight='0';
+	    $package_weight = '0';
 	}
-	if ($_POST["item_per_pack"]!=""){
-	$item_per_pack=mysqli_real_escape_string($conn,$_POST["item_per_pack"]);
+	if ($_POST["item_per_pack"] != ""){
+	$item_per_pack = mysqli_real_escape_string($conn,$_POST["item_per_pack"]);
 	}
 	else{
-	    $item_per_pack='0';
+	    $item_per_pack = '0';
 	}
 	
 
-	if(!empty($item_name) and !empty($item_supplier_id) ){
+	if(!empty($item_name) and !empty($item_supplier_id) and !isset($err_price) ){
 	    $duplicate_check_sql = "SELECT item_name FROM items WHERE item_name = '$item_name'";
 	    $check_results = mysqli_query($conn, $duplicate_check_sql);
     	if (mysqli_num_rows($check_results) > 0) {
-    		$err_duplicate_item="Item already exists - change name";
+    		$err_duplicate_item = "Item already exists - change name";
     	}
-    
     	else{
     		$sql = "INSERT INTO items(item_name,supplier_sku,item_supplier_id,item_price,item_length,item_width,item_height,item_weight,item_description,package_length,package_width,package_height,package_weight,item_per_pack)
     		VALUES ('$item_name','$supplier_sku','$item_supplier_id','$item_price', '$item_length','$item_width','$item_height','$item_weight','$item_description','$package_length','$package_width','$package_height','$package_weight','$item_per_pack')";
     		if ($conn->query($sql) === TRUE) {
     			echo "New record created successfully in items tab";
+				$_SESSION['err_message'] = '';
     		} else {
-    		    $_SESSION['err_message']="Error: " . $sql . "<br>" . $conn->error;
+    		    $_SESSION['err_message'] = "Error: " . $sql . "<br>" . $conn->error;
     		    echo  $_SESSION['err_message'];
     		}
     		
     		$conn->close();
     		
     		if (isset($_SESSION["order_id"]) ){
-    		    if (!isset($_SESSION['err_message'])){$_SESSION['product_name']=$item_name;}
-        		$url=route('add_item_to_order_form');
-        		header("Location: ".$url);
+    		    if (!isset($_SESSION['err_message'])){$_SESSION['product_name'] = $item_name;}
+        		$url = route('add_item_to_order_form');
+        		header("Location: " . $url);
         		exit;
     		}
     		else{
-    			$url=route('enter_item');
-    			header("Location: ".$url);
+    			$url = route('enter_item');
+    			header("Location: " . $url);
     		}
     	}
 	}
 }
 ?>
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
+  <div class = "section no-pad-bot" id = "index-banner">
+    <div class = "container">
       <br><br>
-      <h1 class="header center orange-text">Enter product</h1>
+      <h1 class = "header center orange-text">Enter product</h1>
       <br><br>
     </div>
   </div>
-<div class="container">
-    <div class="section">
-  <div class="row">
-    <form method="post" action="{{route('enter_item')}}" class="col s12">
+<div class = "container">
+    <div class = "section">
+  <div class = "row">
+    <form method = "post" action="{{route('enter_item')}}" class="col s12">
 	@csrf
-		<div class="row">
-			<div class="input-field col s6">
-			  <input placeholder="Product name*" id="item_name" name="item_name" type="text" class="validate">
+		<div class = "row">
+			<div class = "input-field col s6">
+			  <input placeholder = "Product name*" id = "item_name" name = "item_name" type = "text" class = "validate">
 			  <span>@php if (isset($err_duplicate_item)){echo $err_duplicate_item;}
-			  if (isset($err_empty_name)){echo $err_empty_name;}
+			   if (isset($err_empty_name)){echo $err_empty_name;}
 			   if (isset($err_empty_supplier)){echo $err_empty_supplier;}
+			   if (isset($err_price)){echo $err_price;}
 			  @endphp</span>
 			</div>
 			<div class="input-field col s6">
@@ -153,10 +161,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			<div class="input-field col s6">
 				<select id="supplier_id" class="col s12 browser-default" style="display:block" name="supplier_id" >
 				<?php 
-					$item_supplier_filter="";
+					$item_supplier_filter = "";
 					foreach ($suppliers_list as $supplier){
-						list($option_supplier_id,$option_supplier_name)=preg_split("[,]",$supplier);
-						 $item_supplier_filter.='<option value="'.$option_supplier_id.'">'.$option_supplier_name.'</option>';
+						list($option_supplier_id,$option_supplier_name) = preg_split("[,]",$supplier);
+						 $item_supplier_filter .= '<option value="'.$option_supplier_id.'">'.$option_supplier_name.'</option>';
 					}
 					echo '<option selected disabled value="">supplier filter*</option>'.$item_supplier_filter;
 				?>
