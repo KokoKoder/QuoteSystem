@@ -220,8 +220,8 @@ class HomeController extends Controller
 	    return view('items_view',compact('items','custom_items','search_term'));
 	}
 	public function delete($item_id){
-	    if(Auth::user()->is_admin){
-    	    $item=DB::table('items')->where('item_id','=',$item_id);
+	    if (Auth::user()->is_admin){
+    	    $item = DB::table('items')->where('item_id','=',$item_id);
     	    $item->delete();
     	    return redirect()->back();
 	    }
@@ -304,7 +304,7 @@ class HomeController extends Controller
 	            $pdf->save('../app/files/invoice/'.$filename.'-2.pdf');
 	        }
 	    }
-	    elseif($is_proforma=='is_proforma'){
+	    elseif($is_proforma == 'is_proforma'){
 	        $pdf = PDF::loadView('print_confirmation', $data);
 	        if(file_exists('../app/files/confirmation/'.$filename.'.pdf')){
 	            $i=1;

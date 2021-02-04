@@ -14,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = ´product::latest()->paginate(10);
+        $products = product::latest()->paginate(10);
   
         return view('products.index',compact('products'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
@@ -43,15 +43,15 @@ class ProductController extends Controller
             'name' => 'required',
 			'vendor' => 'required',
         ]);
-		if ($request->lang==""){
-			$vendor=$request->vendor;
-			if ($vendor==14 || $vendor==15){
-				$lang=1;
-			}else{$lang=2;}
+		if ($request->lang == ""){
+			$vendor = $request->vendor;
+			if ($vendor == 14 || $vendor == 15){
+				$lang = 1;
+			}else{$lang = 2;}
 		}else{
-			$lang=$request->lang;
+			$lang = $request->lang;
 		}
-		if($request->URL==""){
+		if($request->URL == ""){
 			$URL = preg_replace('/\s+/', '_', $request->product_name);
 		}else{
 			$URL = $request->URL;
