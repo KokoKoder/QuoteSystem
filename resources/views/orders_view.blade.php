@@ -7,15 +7,14 @@
 	include(app_path().'/includes/get_status_list.php');
 	include(app_path().'/includes/get_suppliers_list.php');
 	include(app_path().'/includes/get_order_status_list.php');
-	$user_id=auth()->user()->id;
+	$user_id = auth()->user()->id;
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	$status_id="";
-	$order_status_id="";
+	$status_id = '';
+	$order_status_id = '';
 	if (Auth::user()->is_admin){
-	    echo "is admin" ;
     	#get the form value
     	if (!empty($_POST["status_id"]) AND empty($_POST["order_status_id"])){
-    		$status_id=mysqli_real_escape_string($conn,$_POST["status_id"]);
+    		$status_id = mysqli_real_escape_string($conn,$_POST["status_id"]);
     		$sql="SELECT DISTINCT orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, status.status_name, Schedule_delivery_date, order_status_name  FROM orders_table 
     			JOIN customers ON orders_table.customer_id= customers.customer_id
     			JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
@@ -26,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     			WHERE order_items.status_id='$status_id'";  
     	}
     	elseif (!empty($_POST["order_status_id"]) AND empty($_POST["status_id"])){
-    		$order_status_id=mysqli_real_escape_string($conn,$_POST["order_status_id"]);
+    		$order_status_id = mysqli_real_escape_string($conn,$_POST["order_status_id"]);
     		$sql="SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
     		FROM orders_table 
     		JOIN customers ON orders_table.customer_id= customers.customer_id
@@ -36,8 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     		WHERE orders_status.order_id=orders_table.order_id";  
     	}
     	elseif(!empty($_POST["status_id"]) AND !empty($_POST["order_status_id"])){
-    		$status_id=mysqli_real_escape_string($conn,$_POST["status_id"]);
-    		$order_status_id=mysqli_real_escape_string($conn,$_POST["order_status_id"]);
+    		$status_id = mysqli_real_escape_string($conn,$_POST["status_id"]);
+    		$order_status_id = mysqli_real_escape_string($conn,$_POST["order_status_id"]);
     		$sql="SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
     		FROM orders_table 
     		JOIN order_items ON order_items.status_id='$status_id'
@@ -48,19 +47,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     		WHERE orders_status.order_id=orders_table.order_id ";  		
     	}
     	else{
-    		$sql="SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
+    		$sql = "SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
     		FROM orders_table 
     		JOIN customers ON orders_table.customer_id= customers.customer_id 
     		JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
     		JOIN orders_status ON orders_status.order_id=orders_table.order_id AND orders_status.order_status_id<>'5' AND orders_status.order_status_id<>'6'
     		JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id";
-    
     	}
 	}
 	else{
 	    if (!empty($_POST["status_id"]) AND empty($_POST["order_status_id"])){
 	        echo "Not Admin status selected";
-	        $status_id=mysqli_real_escape_string($conn,$_POST["status_id"]);
+	        $status_id = mysqli_real_escape_string($conn,$_POST["status_id"]);
 	        $sql="SELECT DISTINCT salesteam_orders.order_id, salesteam_orders.user_id, orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, status.status_name, Schedule_delivery_date, order_status_name  
                 FROM orders_table
     			JOIN customers ON orders_table.customer_id= customers.customer_id
@@ -74,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	    }
 	    elseif (!empty($_POST["order_status_id"]) AND empty($_POST["status_id"])){
 	        echo "Not Admin orders status selected";
-	        $order_status_id=mysqli_real_escape_string($conn,$_POST["order_status_id"]);
+	        $order_status_id = mysqli_real_escape_string($conn,$_POST["order_status_id"]);
 	        $sql="SELECT DISTINCT  salesteam_orders.order_id, salesteam_orders.user_id, orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
     		FROM orders_table
     		JOIN customers ON orders_table.customer_id= customers.customer_id
@@ -86,8 +84,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	    }
 	    elseif(!empty($_POST["status_id"]) AND !empty($_POST["order_status_id"])){
 	        echo "Not Admin both filters selected";
-	        $status_id=mysqli_real_escape_string($conn,$_POST["status_id"]);
-	        $order_status_id=mysqli_real_escape_string($conn,$_POST["order_status_id"]);
+	        $status_id = mysqli_real_escape_string($conn,$_POST["status_id"]);
+	        $order_status_id = mysqli_real_escape_string($conn,$_POST["order_status_id"]);
 	        $sql="SELECT DISTINCT  salesteam_orders.order_id, salesteam_orders.user_id, orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
     		FROM orders_table
     		JOIN order_items ON order_items.status_id='$status_id'
@@ -100,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	    }
 	    else{
 	        echo "Not Admin no filter selected";
-	        $sql="SELECT DISTINCT  salesteam_orders.order_id, salesteam_orders.user_id, orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
+	        $sql = "SELECT DISTINCT  salesteam_orders.order_id, salesteam_orders.user_id, orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
     		FROM orders_table
     		JOIN customers ON orders_table.customer_id= customers.customer_id
     		JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
@@ -112,9 +110,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 }
 
-else{
+else{/*
     if (Auth::user()->is_admin){
-    	$sql="SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
+    	$sql = "SELECT DISTINCT  orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
     	FROM orders_table 
     	JOIN customers ON orders_table.customer_id= customers.customer_id 
     	JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
@@ -122,7 +120,7 @@ else{
     	JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id ";
     }
     else{
-        $sql="SELECT DISTINCT  salesteam_orders.user_id, orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
+        $sql = "SELECT DISTINCT  salesteam_orders.user_id, orders_table.order_id, order_number, customer_name, order_date, vendor.vendor_name, order_status_name
     	FROM orders_table
     	JOIN customers ON orders_table.customer_id= customers.customer_id
     	JOIN vendor ON orders_table.vendor_id=vendor.vendor_id
@@ -130,115 +128,127 @@ else{
     	JOIN order_status_list ON orders_status.order_status_id=order_status_list.order_status_id 
         JOIN salesteam_orders ON salesteam_orders.user_id='$user_id'
         WHERE orders_table.order_id=salesteam_orders.order_id";
-    }
+    }*/
 }
-
 ?>
-
 @section('content') 
-			  <div class="section no-pad-bot" id="index-banner">
-				<div class="container">
-				  <br><br>
-				  <h1 class="header center orange-text">Orders</h1>
-				  <br><br>
-				</div>
-			  </div>
-			  <section>
-				<div class="row">
-					<div class="col s12">
-					<form method="POST" action="{{route('orders_view')}}" >
-						@csrf
-						<select id="status_id" class="col s6 browser-default" style="display:block" name="status_id" >
-						<?php 
-							$item_status_filter="";
-							foreach ($options as $option){
-								list($option_status_id,$option_status_name)=preg_split("[,]",$option);
-								 $item_status_filter.='<option value="'.$option_status_id.'">'.$option_status_name.'</option>';
-							}
-							echo '<option selected disabled value="">Product status filter</option><option value="">All undelivered</option>'.$item_status_filter;
-						?>
-						</select>
-						<select id="order_status_id" class="col s6 browser-default"  name="order_status_id" >
-						<?php 
-							$order_status_filter="";
-							foreach ($order_status_list as $order_status_elem){
-								list($order_status_id,$order_status_name)=preg_split("[,]",$order_status_elem);
-								 $order_status_filter.='<option value="'.$order_status_id.'">'.$order_status_name.'</option>';
-							}
-							echo '<option selected disabled value="">Order status filter</option><option value="">All uncompleted</option>'.$order_status_filter;
-						?>
-						</select>
-						<div class="col s12">
-						<br><br>
-						<button class="btn" type="submit">Filter</button>
-						</div>
-					</form>
-					</div>
-				</div>
-			  </section>
+      <script type = "text/javascript"  
+         src = "https://code.jquery.com/jquery-2.1.1.min.js"></script>             
+      <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">  </script>
+  <div class="section no-pad-bot" id="index-banner">
+	<div class="container">
+	  <br><br>
+	  <h1 class="header center orange-text">Orders</h1>
+	  <br><br>
+	</div>
+  </div>
+  <section>
+	<div class="row">
+		<div class="col s12">
+			<ul class="tabs">
+				<li class="tab col s3"><a class="active" href="#search">Search</a></li>
+				<li class="tab col s3"><a href="#filter">Filter</a></li>
+			</ul>
 
-			<form action="{{route('orders_view')}}" class="row">
-				<div class="input-field col s12">
-				<input type="text" name="search_term">
-				<label>Search order by customer name, phone or email</label>
-				</div>
-				<div class="input-field col s6">
-				<input type="text" name="start_date" class="datepicker">
-				<label>Start date</label>
-				</div>
-				<div class="input-field col s6">
-				<input type="text" name="end_date" class="datepicker">
-				<label>end date
-				
-				</label>
-				</div>
-				<button type="submit" class="waves-effect waves-light btn">search</button>
-			</form>
-@if ($search_term !='%%' or !empty($start_date))
-<table>
-<tr>
-	<th>id</th>
-    <th>Order Number</th>
-	<th>Customer Name</th>
-    <th>Vendor</th> 
-	<th>Order status</th> 
-    <th>Order date</th>
-	<th> </th>
-  </tr>
-@foreach($orders as $order)
-<tr>
-    <td>{{$order->order_id}}</td>
-	<td>{{$order->order_number}}</td>
-    <td>{{$order->customer_name}}</td>
-	<td>{{$order->vendor_name}}</td>
-	<td>{{$order->order_status_name}}</td> 	
-    <td>{{$order->order_date}}</td>
-	<td><a href="edit_order?order_id={{$order->order_id}}">edit</a></td>
-  </tr>
-@endforeach
-</tbody>
-</table>
-<br><br><br>
-{{$orders->appends(['search_term'=>$search_term])->appends(['start_date'=>$start_date])->appends(['end_date'=>$end_date])->links('vendor.pagination.materializecss')}}
-@endif
-			<?php
-				$result = mysqli_query($conn, $sql);
-				$container = array('content'=>''); 
-				$single_tpl = file_get_contents( 'tpls/single_order.tpl');  
-				if (mysqli_num_rows($result) > 0) {
-					while($row = mysqli_fetch_assoc($result)) {
-						$container['content'] .= parse($single_tpl, $row );
-						if (isset($row['status_name'])){
-							$status_id=$row['status_name'];
+			<div id="search">
+				<form action="{{route('orders_view')}}" class="row">
+					<div class="input-field col s12">
+					<input type="text" name="search_term">
+					<label>Search order by customer name, phone or email</label>
+					</div>
+					<div class="input-field col s6">
+					<input type="text" name="start_date" class="datepicker">
+					<label>Start date</label>
+					</div>
+					<div class="input-field col s6">
+					<input type="text" name="end_date" class="datepicker">
+					<label>end date
+					
+					</label>
+					</div>
+					<button type="submit" class="waves-effect waves-light btn">search</button>
+				</form>
+				@if ($search_term !='%%' or !empty($start_date))
+				<table>
+				<tr>
+					<th>id</th>
+					<th>Order Number</th>
+					<th>Customer Name</th>
+					<th>Vendor</th> 
+					<th>Order status</th> 
+					<th>Order date</th>
+					<th> </th>
+				  </tr>
+				@foreach($orders as $order)
+				<tr>
+					<td>{{$order->order_id}}</td>
+					<td>{{$order->order_number}}</td>
+					<td>{{$order->customer_name}}</td>
+					<td>{{$order->vendor_name}}</td>
+					<td>{{$order->order_status_name}}</td> 	
+					<td>{{$order->order_date}}</td>
+					<td><a href="edit_order?order_id={{$order->order_id}}">edit</a></td>
+				  </tr>
+				@endforeach
+				</tbody>
+				</table>
+				<br><br><br>
+				{{$orders->appends(['search_term'=>$search_term])->appends(['start_date'=>$start_date])->appends(['end_date'=>$end_date])->links('vendor.pagination.materializecss')}}
+				@endif
+			</div>
+			<div id="filter">
+				<form method="POST" action="{{route('orders_view')}}" >
+					@csrf
+					<select id="status_id" class="col s6 browser-default" style="display:block" name="status_id" >
+					<?php 
+						$item_status_filter="";
+						foreach ($options as $option){
+							list($option_status_id,$option_status_name)=preg_split("[,]",$option);
+							 $item_status_filter.='<option value="'.$option_status_id.'">'.$option_status_name.'</option>';
 						}
-						};
-					// Wrap the results 
-					$orders_container_tpl = file_get_contents( 'tpls/orders_container.tpl');
-					print parse($orders_container_tpl, $container);
+						echo '<option selected disabled value="">Product status filter</option><option value="">All undelivered</option>'.$item_status_filter;
+					?>
+					</select>
+					<select id="order_status_id" class="col s6 browser-default"  name="order_status_id" >
+					<?php 
+						$order_status_filter = "";
+						foreach ($order_status_list as $order_status_elem){
+							list($order_status_id,$order_status_name) = preg_split("[,]",$order_status_elem);
+							 $order_status_filter.='<option value="'.$order_status_id.'">'.$order_status_name.'</option>';
+						}
+						echo '<option selected disabled value="">Order status filter</option><option value="">All uncompleted</option>'.$order_status_filter;
+					?>
+					</select>
+					<div class="col s12">
+					<br><br>
+					<button class="btn" type="submit">Filter</button>
+					</div>
+				</form>
+				@php
+				if ($_SERVER["REQUEST_METHOD"] == "POST"){
+					echo 'SQL is set';
+					$result = mysqli_query($conn, $sql);
+					$container = array('content'=>''); 
+					$single_tpl = file_get_contents( 'tpls/single_order.tpl');  
+					if (mysqli_num_rows($result) > 0) {
+						while($row = mysqli_fetch_assoc($result)) {
+							$container['content'] .= parse($single_tpl, $row );
+							if (isset($row['status_name'])){
+								$status_id=$row['status_name'];
+							}
+							};
+						// Wrap the results 
+						$orders_container_tpl = file_get_contents( 'tpls/orders_container.tpl');
+						print parse($orders_container_tpl, $container);
+					}
+					else{
+						$customer_details="No order entered";
+						echo '<div class="row"><div class="col s12"><h2>no results found</h2></div></div>';
+					}
 				}
-				else{
-					$customer_details="No order entered";
-					echo '<div class="row"><div class="col s12"><h2>no results found</h2></div></div>';
-				}
-?>
+				@endphp
+			</div>
+		</div>
+	</div>
+  </section>
 @endsection('content')

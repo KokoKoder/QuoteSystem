@@ -32,8 +32,8 @@
                         <div class="col s3"><p>'.htmlspecialchars($supplier_address).'</p></div>
                         <div class="col s2">
 							<p>
-								<a href="'.htmlspecialchars($url).'?supplier_id='.htmlspecialchars($supplier_id).'" >edit</a> 
-								<a href="deleteSupplier?supplier_id='.htmlspecialchars($supplier_id).'" style="margin-left: 40px;">delete</a>
+								<a href="'.htmlspecialchars($url).'?supplier_id='.htmlspecialchars($supplier_id).'" ><i class="small material-icons">edit</i></a> 
+								<a href="deleteSupplier?supplier_id='.htmlspecialchars($supplier_id).'" onclick="return confirm(\'Delete?\');" style="margin-left: 40px;"><i class="small material-icons">delete</i></a></a>
 							</p>	
 						</div>
 						<hr>

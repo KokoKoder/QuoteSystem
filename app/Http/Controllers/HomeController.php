@@ -69,7 +69,7 @@ class HomeController extends Controller
 	public function orders_view(Request $request){
 	    $search_term = $request->input('search_term');
 		if (substr($search_term,0,1)!='%'){
-			$search_term='%'.$search_term.'%';
+			$search_term = '%'.$search_term.'%';
 		}
 	    if (empty($request->input('start_date'))){
 	        $start_date = date('y-m-d',0);
